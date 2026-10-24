@@ -1,0 +1,6 @@
+# Build and installation directories, at any depth.
+build/
+build-*/
+build_*/
+*-build/
+*_build/
