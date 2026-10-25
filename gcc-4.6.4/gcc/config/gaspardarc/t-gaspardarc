@@ -1,0 +1,4 @@
+# GaspardARC target dependencies (GCC 4.6.4).
+gaspardarc.o: $(srcdir)/config/gaspardarc/gaspardarc.c $(CONFIG_H) $(SYSTEM_H) \
+ $(TREE_H) $(RTL_H) $(TM_P_H) $(TARGET_H) $(TARGET_DEF_H) $(FUNCTION_H) \
+ $(EXPR_H) $(DF_H) $(RECOG_H) $(REGS_H) output.h insn-config.h insn-flags.h

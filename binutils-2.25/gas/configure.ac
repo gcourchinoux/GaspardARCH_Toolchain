@@ -453,6 +453,7 @@ changequote([,])dnl
 	AC_MSG_RESULT($enable_audio_ext)
 	;;
 
+      gaspardarc) need_opcodes=yes ;;
       i386 | s390 | sparc)
 	if test $this_target = $target ; then
 	  AC_DEFINE_UNQUOTED(DEFAULT_ARCH, "${arch}", [Default architecture.])

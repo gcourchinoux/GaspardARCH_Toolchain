@@ -62,6 +62,7 @@
 #define ARCH_mmix
 #define ARCH_mn10200
 #define ARCH_mn10300
+#define ARCH_gaspardarc
 #define ARCH_moxie
 #define ARCH_mt
 #define ARCH_msp430
@@ -496,6 +497,11 @@ disassembler (abfd)
 #ifdef ARCH_frv
     case bfd_arch_frv:
       disassemble = print_insn_frv;
+      break;
+#endif
+#ifdef ARCH_gaspardarc
+    case bfd_arch_gaspardarc:
+      disassemble = print_insn_gaspardarc;
       break;
 #endif
 #ifdef ARCH_moxie

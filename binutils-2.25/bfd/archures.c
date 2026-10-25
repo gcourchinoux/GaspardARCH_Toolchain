@@ -375,6 +375,7 @@ DESCRIPTION
 .#define bfd_mach_frvtomcat	499	{* fr500 prototype *}
 .#define bfd_mach_fr500		500
 .#define bfd_mach_fr550		550
+.  bfd_arch_gaspardarc, {* GaspardARC Risc64. *}
 .  bfd_arch_moxie,       {* The moxie processor *}
 .#define bfd_mach_moxie		1
 .  bfd_arch_mcore,
@@ -585,6 +586,7 @@ extern const bfd_arch_info_type bfd_microblaze_arch;
 extern const bfd_arch_info_type bfd_mmix_arch;
 extern const bfd_arch_info_type bfd_mn10200_arch;
 extern const bfd_arch_info_type bfd_mn10300_arch;
+extern const bfd_arch_info_type bfd_gaspardarc_arch;
 extern const bfd_arch_info_type bfd_moxie_arch;
 extern const bfd_arch_info_type bfd_msp430_arch;
 extern const bfd_arch_info_type bfd_mt_arch;
@@ -674,6 +676,7 @@ static const bfd_arch_info_type * const bfd_archures_list[] =
     &bfd_mmix_arch,
     &bfd_mn10200_arch,
     &bfd_mn10300_arch,
+    &bfd_gaspardarc_arch,
     &bfd_moxie_arch,
     &bfd_msp430_arch,
     &bfd_mt_arch,

@@ -745,6 +745,7 @@ extern const bfd_target mips_elf64_tradfbsd_be_vec;
 extern const bfd_target mips_elf64_tradfbsd_le_vec;
 extern const bfd_target mips_pe_le_vec;
 extern const bfd_target mips_pei_le_vec;
+extern const bfd_target gaspardarc_elf64_le_vec;
 extern const bfd_target mmix_elf64_vec;
 extern const bfd_target mmix_mmo_vec;
 extern const bfd_target mn10200_elf32_vec;
@@ -1209,6 +1210,7 @@ static const bfd_target * const _bfd_target_vector[] =
 	&mips_pei_le_vec,
 
 #ifdef BFD64
+	&gaspardarc_elf64_le_vec,
 	&mmix_elf64_vec,
 	&mmix_mmo_vec,
 #endif

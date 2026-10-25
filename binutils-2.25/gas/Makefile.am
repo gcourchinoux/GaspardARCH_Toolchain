@@ -161,6 +161,7 @@ TARGET_CPU_CFILES = \
 	config/tc-mmix.c \
 	config/tc-mn10200.c \
 	config/tc-mn10300.c \
+	config/tc-gaspardarc.c \
 	config/tc-moxie.c \
 	config/tc-msp430.c \
 	config/tc-mt.c \
@@ -230,6 +231,7 @@ TARGET_CPU_HFILES = \
 	config/tc-metag.h \
 	config/tc-microblaze.h \
 	config/tc-mips.h \
+	config/tc-gaspardarc.h \
 	config/tc-mmix.h \
 	config/tc-mn10200.h \
 	config/tc-mn10300.h \

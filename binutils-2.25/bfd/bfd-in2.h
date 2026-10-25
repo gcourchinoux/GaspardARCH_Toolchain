@@ -2162,6 +2162,7 @@ enum bfd_architecture
 #define bfd_mach_frvtomcat     499     /* fr500 prototype */
 #define bfd_mach_fr500         500
 #define bfd_mach_fr550         550
+  bfd_arch_gaspardarc, /* GaspardARC Risc64. */
   bfd_arch_moxie,       /* The moxie processor */
 #define bfd_mach_moxie         1
   bfd_arch_mcore,
@@ -3022,6 +3023,10 @@ to compensate for the borrow when the low bits are added.  */
 
 
 /* Moxie ELF relocations.  */
+  BFD_RELOC_GASPARDARC_BRANCH,
+  BFD_RELOC_GASPARDARC_JAL,
+  BFD_RELOC_GASPARDARC_PCREL_HI20,
+  BFD_RELOC_GASPARDARC_PCREL_LO12_I,
   BFD_RELOC_MOXIE_10_PCREL,
 
 

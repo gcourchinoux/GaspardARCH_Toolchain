@@ -430,6 +430,7 @@ TARGET_CPU_CFILES = \
 	config/tc-mmix.c \
 	config/tc-mn10200.c \
 	config/tc-mn10300.c \
+	config/tc-gaspardarc.c \
 	config/tc-moxie.c \
 	config/tc-msp430.c \
 	config/tc-mt.c \
@@ -499,6 +500,7 @@ TARGET_CPU_HFILES = \
 	config/tc-metag.h \
 	config/tc-microblaze.h \
 	config/tc-mips.h \
+	config/tc-gaspardarc.h \
 	config/tc-mmix.h \
 	config/tc-mn10200.h \
 	config/tc-mn10300.h \
@@ -856,6 +858,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tc-mmix.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tc-mn10200.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tc-mn10300.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tc-gaspardarc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tc-moxie.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tc-msp430.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tc-mt.Po@am__quote@
@@ -1430,6 +1433,20 @@ tc-mn10300.obj: config/tc-mn10300.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='config/tc-mn10300.c' object='tc-mn10300.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o tc-mn10300.obj `if test -f 'config/tc-mn10300.c'; then $(CYGPATH_W) 'config/tc-mn10300.c'; else $(CYGPATH_W) '$(srcdir)/config/tc-mn10300.c'; fi`
+
+tc-gaspardarc.o: config/tc-gaspardarc.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT tc-gaspardarc.o -MD -MP -MF $(DEPDIR)/tc-gaspardarc.Tpo -c -o tc-gaspardarc.o `test -f 'config/tc-gaspardarc.c' || echo '$(srcdir)/'`config/tc-gaspardarc.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/tc-gaspardarc.Tpo $(DEPDIR)/tc-gaspardarc.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='config/tc-gaspardarc.c' object='tc-gaspardarc.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o tc-gaspardarc.o `test -f 'config/tc-gaspardarc.c' || echo '$(srcdir)/'`config/tc-gaspardarc.c
+
+tc-gaspardarc.obj: config/tc-gaspardarc.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT tc-gaspardarc.obj -MD -MP -MF $(DEPDIR)/tc-gaspardarc.Tpo -c -o tc-gaspardarc.obj `if test -f 'config/tc-gaspardarc.c'; then $(CYGPATH_W) 'config/tc-gaspardarc.c'; else $(CYGPATH_W) '$(srcdir)/config/tc-gaspardarc.c'; fi`
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/tc-gaspardarc.Tpo $(DEPDIR)/tc-gaspardarc.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='config/tc-gaspardarc.c' object='tc-gaspardarc.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o tc-gaspardarc.obj `if test -f 'config/tc-gaspardarc.c'; then $(CYGPATH_W) 'config/tc-gaspardarc.c'; else $(CYGPATH_W) '$(srcdir)/config/tc-gaspardarc.c'; fi`
 
 tc-moxie.o: config/tc-moxie.c
 @am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT tc-moxie.o -MD -MP -MF $(DEPDIR)/tc-moxie.Tpo -c -o tc-moxie.o `test -f 'config/tc-moxie.c' || echo '$(srcdir)/'`config/tc-moxie.c

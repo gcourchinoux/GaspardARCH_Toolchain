@@ -138,7 +138,7 @@ fi
 
 m4_changequote(,)
 case $target in
-	alpha*-*-* | \
+	gaspardarc-* | alpha*-*-* | \
 	arm*-*-*eabi* | \
 	arm*-*-rtems[.0-9]* | \
 	arm*-*-symbianelf* | \

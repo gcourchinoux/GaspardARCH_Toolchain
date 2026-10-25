@@ -466,6 +466,7 @@ ALL_64_EMULATION_SOURCES = \
 	eelf64lppc.c \
 	eelf64ltsmip.c \
 	eelf64ltsmip_fbsd.c \
+	eelf64gaspardarc.c \
 	eelf64mmix.c \
 	eelf64ppc.c \
 	eelf64ppc_fbsd.c \
@@ -1870,6 +1871,9 @@ eelf64ltsmip_fbsd.c: $(srcdir)/emulparams/elf64ltsmip_fbsd.sh \
   $(srcdir)/emulparams/elf64btsmip_fbsd.sh $(srcdir)/emulparams/elf64bmip-defs.sh \
   $(srcdir)/emulparams/elf32bmipn32-defs.sh $(ELF_DEPS) \
   $(srcdir)/emultempl/mipself.em $(srcdir)/scripttempl/elf.sc ${GEN_DEPENDS}
+
+eelf64gaspardarc.c: $(srcdir)/emulparams/elf64gaspardarc.sh $(ELF_DEPS) \
+  $(srcdir)/scripttempl/elf.sc ${GEN_DEPENDS}
 
 eelf64mmix.c: $(srcdir)/emulparams/elf64mmix.sh \
   $(ELF_DEPS) $(srcdir)/emultempl/mmix-elfnmmo.em \

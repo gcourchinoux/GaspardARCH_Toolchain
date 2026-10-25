@@ -129,6 +129,7 @@
 #include "elf/mn10200.h"
 #include "elf/mn10300.h"
 #include "elf/moxie.h"
+#include "elf/gaspardarc.h"
 #include "elf/mt.h"
 #include "elf/msp430.h"
 #include "elf/nds32.h"
@@ -1221,6 +1222,9 @@ dump_relocations (FILE * file,
 	  rtype = elf_mmix_reloc_type (type);
 	  break;
 
+	case EM_GASPARDARC:
+	  rtype = elf_gaspardarc_reloc_type (type);
+	  break;
 	case EM_MOXIE:
 	  rtype = elf_moxie_reloc_type (type);
 	  break;
@@ -2057,6 +2061,7 @@ get_machine_name (unsigned e_machine)
     case EM_MN10300:		return "mn10300";
     case EM_CYGNUS_MN10200:
     case EM_MN10200:		return "mn10200";
+    case EM_GASPARDARC: return "GaspardARC (private ABI v0)";
     case EM_MOXIE:		return "Moxie";
     case EM_CYGNUS_FR30:
     case EM_FR30:		return "Fujitsu FR30";

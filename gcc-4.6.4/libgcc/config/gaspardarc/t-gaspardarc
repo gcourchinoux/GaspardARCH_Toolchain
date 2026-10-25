@@ -1,0 +1,10 @@
+# Integer-only bootstrap. Floating helpers require a separate soft-float port.
+# Do not build unwinding support until CFI and exception ABI have been validated.
+LIB2ADDEH =
+LIB2ADDEHSTATIC =
+LIB2ADDEHSHARED =
+# No floating/complex helpers: a generic helper could otherwise call itself.
+LIB2FUNCS_EXCLUDE += _powisf2 _powidf2 _powixf2 _powitf2 \
+ _mulsc3 _muldc3 _mulxc3 _multc3 _divsc3 _divdc3 _divxc3 _divtc3 \
+ _trampoline _enable_execute_stack
+LIB2FUNCS_EXCLUDE += $(subst XX,si,$(swfloatfuncs)) $(subst XX,di,$(dwfloatfuncs))

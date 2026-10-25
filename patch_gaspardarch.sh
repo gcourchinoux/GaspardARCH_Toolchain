@@ -1,0 +1,9 @@
+git -c core.autocrlf=false apply GaspardARCH/Patchs/0001*
+git -c core.autocrlf=false apply GaspardARCH/Patchs/0002*
+git -c core.autocrlf=false apply GaspardARCH/Patchs/0003*
+git -c core.autocrlf=false apply GaspardARCH/Patchs/0004*
+git -c core.autocrlf=false apply GaspardARCH/Patchs/0005*
+git -c core.autocrlf=false apply GaspardARCH/Patchs/0006*
+git -c core.autocrlf=false apply GaspardARCH/Patchs/0007*
+git -c core.autocrlf=false apply GaspardARCH/Patchs/0008*
+git -c core.autocrlf=false apply GaspardARCH/Patchs/0009*

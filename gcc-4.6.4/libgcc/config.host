@@ -444,6 +444,11 @@ mmix-knuth-mmixware)
 	;;
 mn10300-*-*)
 	;;
+gaspardarc-*-elf)
+  cpu_type=gaspardarc
+  tmake_file="gaspardarc/t-gaspardarc"
+  extra_parts=
+  ;;
 moxie-*-*)
 	tmake_file="moxie/t-moxie moxie/t-moxie-softfp"
 	extra_parts="crtbegin.o crtend.o crti.o crtn.o"

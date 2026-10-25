@@ -92,6 +92,7 @@ esac
 targ_cpu=`echo $targ | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\1/'`
 case "${targ_cpu}" in
 aarch64*)	 targ_archs="bfd_aarch64_arch bfd_arm_arch";;
+gaspardarc*) targ_archs=bfd_gaspardarc_arch ;;
 alpha*)		 targ_archs=bfd_alpha_arch ;;
 am34*|am33_2.0*) targ_archs=bfd_mn10300_arch ;;
 arm*)		 targ_archs=bfd_arm_arch ;;
@@ -442,6 +443,10 @@ case "${targ}" in
     targ_selvecs=frv_elf32_vec
     ;;
 
+  gaspardarc-*-elf)
+    targ_defvec=gaspardarc_elf64_le_vec
+    want64=true
+    ;;
   moxie-*-elf | moxie-*-rtems* | moxie-*-uclinux)
     targ_defvec=moxie_elf32_be_vec
     targ_selvecs=moxie_elf32_le_vec

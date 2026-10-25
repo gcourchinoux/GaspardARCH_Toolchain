@@ -393,6 +393,7 @@
 
 #define EM_CYGNUS_MEP		0xF00D  /* Toshiba MeP */
 
+#define EM_GASPARDARC 0xfe64 /* Private prototype, NOT officially allocated. */
 #define EM_MOXIE                0xFEED  /* Moxie */
 
 /* Old Sunplus S+core7 backend magic number. Written in the absence of an ABI.  */

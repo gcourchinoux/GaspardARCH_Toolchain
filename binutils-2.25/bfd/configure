@@ -15468,6 +15468,7 @@ do
     mips_elf64_tradfbsd_le_vec)  tb="$tb elf64-mips.lo elf64.lo elfxx-mips.lo elf-vxworks.lo elf32.lo $elf ecofflink.lo"; target_size=64 ;;
     mips_pe_le_vec)		 tb="$tb pe-mips.lo peigen.lo cofflink.lo" ;;
     mips_pei_le_vec)		 tb="$tb pei-mips.lo peigen.lo cofflink.lo" ;;
+    gaspardarc_elf64_le_vec) tb="$tb elf64-gaspardarc.lo elf64.lo $elf" target_size=64 ;;
     mmix_elf64_vec)		 tb="$tb elf64-mmix.lo elf64.lo $elf" target_size=64 ;;
     mmix_mmo_vec)			 tb="$tb mmo.lo" target_size=64 ;;
     mn10200_elf32_vec)		 tb="$tb elf-m10200.lo elf32.lo $elf" ;;

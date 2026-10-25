@@ -280,7 +280,7 @@ case $basic_machine in
 	| mipsisa64sr71k | mipsisa64sr71kel \
 	| mipstx39 | mipstx39el \
 	| mn10200 | mn10300 \
-	| moxie \
+	| gaspardarc | moxie \
 	| mt \
 	| msp430 \
 	| nios | nios2 \
@@ -375,7 +375,7 @@ case $basic_machine in
 	| mipsisa64sb1-* | mipsisa64sb1el-* \
 	| mipsisa64sr71k-* | mipsisa64sr71kel-* \
 	| mipstx39-* | mipstx39el-* \
-	| mmix-* \
+	| gaspardarc-* | mmix-* \
 	| mt-* \
 	| msp430-* \
 	| nios-* | nios2-* \

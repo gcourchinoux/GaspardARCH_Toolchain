@@ -1010,6 +1010,15 @@ frv-*-*linux*)
 	tm_file="${tm_file} ../../libgcc/config/frv/frv-abi.h"
 	tmake_file="${tmake_file} frv/t-frv frv/t-linux"
 	;;
+gaspardarc-*-elf)
+  cpu_type=gaspardarc
+  gas=yes
+  gnu_ld=yes
+  need_64bit_hwint=yes
+  tm_file="dbxelf.h elfos.h newlib-stdint.h gaspardarc/gaspardarc.h"
+  tmake_file="gaspardarc/t-gaspardarc"
+  use_gcc_stdint=provide
+  ;;
 moxie-*-elf)
 	gas=yes
 	gnu_ld=yes

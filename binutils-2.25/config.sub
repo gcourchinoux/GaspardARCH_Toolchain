@@ -292,7 +292,7 @@ case $basic_machine in
 	| mipsr5900 | mipsr5900el \
 	| mipstx39 | mipstx39el \
 	| mn10200 | mn10300 \
-	| moxie \
+	| gaspardarc | moxie \
 	| mt \
 	| msp430 \
 	| nds32 | nds32le | nds32be \
@@ -411,7 +411,7 @@ case $basic_machine in
 	| mipsisa64sr71k-* | mipsisa64sr71kel-* \
 	| mipsr5900-* | mipsr5900el-* \
 	| mipstx39-* | mipstx39el-* \
-	| mmix-* \
+	| gaspardarc-* | mmix-* \
 	| mt-* \
 	| msp430-* \
 	| nds32-* | nds32le-* | nds32be-* \

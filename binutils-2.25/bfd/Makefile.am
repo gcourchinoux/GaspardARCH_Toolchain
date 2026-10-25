@@ -130,6 +130,7 @@ ALL_MACHINES = \
 	cpu-microblaze.lo \
 	cpu-mips.lo \
 	cpu-mmix.lo \
+	cpu-gaspardarc.lo \
 	cpu-moxie.lo \
 	cpu-msp430.lo \
 	cpu-mt.lo \
@@ -214,6 +215,7 @@ ALL_MACHINES_CFILES = \
 	cpu-microblaze.c \
 	cpu-mips.c \
 	cpu-mmix.c \
+	cpu-gaspardarc.c \
 	cpu-moxie.c \
 	cpu-msp430.c \
 	cpu-mt.c \
@@ -652,6 +654,7 @@ BFD64_BACKENDS = \
 	elf64-ia64.lo \
 	elf64-ia64-vms.lo \
 	elf64-mips.lo \
+	elf64-gaspardarc.lo \
 	elf64-mmix.lo \
 	elf64-ppc.lo \
 	elf64-s390.lo \
@@ -689,6 +692,7 @@ BFD64_BACKENDS_CFILES = \
 	elf64-hppa.c \
 	elf64-ia64-vms.c \
 	elf64-mips.c \
+	elf64-gaspardarc.c \
 	elf64-mmix.c \
 	elf64-ppc.c \
 	elf64-s390.c \
