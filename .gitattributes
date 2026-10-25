@@ -1,0 +1,7 @@
+# Unix toolchain sources, scripts, patches and reference files require LF,
+# including on Windows with core.autocrlf=true. Git leaves binary files alone.
+* text=auto eol=lf
+
+# Native Windows command scripts retain their conventional line endings.
+*.bat text eol=crlf
+*.cmd text eol=crlf
