@@ -1,0 +1,39 @@
+$ ROOT\.gaspardarc-work\build-binutils\gas\as-new.exe ROOT\.gaspardarc-work\tree\GaspardARCH\runtime\crt0.S -o ROOT\.gaspardarc-work\crt0.o
+
+exit=0
+$ ROOT\.gaspardarc-work\build-gcc\gcc\xgcc.exe -BROOT\.gaspardarc-work\build-gcc\gcc/ -O0 -ffreestanding -fno-builtin -S ROOT\.gaspardarc-work\test_program.c -o ROOT\.gaspardarc-work\program-O0.s
+
+exit=0
+$ ROOT\.gaspardarc-work\build-binutils\gas\as-new.exe ROOT\.gaspardarc-work\program-O0.s -o ROOT\.gaspardarc-work\program-O0.o
+
+exit=0
+$ ROOT\.gaspardarc-work\build-binutils\ld\ld-new.exe -T ROOT\.gaspardarc-work\tree\GaspardARCH\runtime\board.ld ROOT\.gaspardarc-work\crt0.o ROOT\.gaspardarc-work\program-O0.o -o ROOT\.gaspardarc-work\program-O0.elf
+
+exit=0
+$ ROOT\.gaspardarc-work\build-gcc\gcc\xgcc.exe -BROOT\.gaspardarc-work\build-gcc\gcc/ -O2 -ffreestanding -fno-builtin -S ROOT\.gaspardarc-work\test_program.c -o ROOT\.gaspardarc-work\program-O2.s
+
+exit=0
+$ ROOT\.gaspardarc-work\build-binutils\gas\as-new.exe ROOT\.gaspardarc-work\program-O2.s -o ROOT\.gaspardarc-work\program-O2.o
+
+exit=0
+$ ROOT\.gaspardarc-work\build-binutils\ld\ld-new.exe -T ROOT\.gaspardarc-work\tree\GaspardARCH\runtime\board.ld ROOT\.gaspardarc-work\crt0.o ROOT\.gaspardarc-work\program-O2.o -o ROOT\.gaspardarc-work\program-O2.elf
+
+exit=0
+$ ROOT\.gaspardarc-work\build-gcc\gcc\xgcc.exe -BROOT\.gaspardarc-work\build-gcc\gcc/ -Os -ffreestanding -fno-builtin -S ROOT\.gaspardarc-work\test_program.c -o ROOT\.gaspardarc-work\program-Os.s
+
+exit=0
+$ ROOT\.gaspardarc-work\build-binutils\gas\as-new.exe ROOT\.gaspardarc-work\program-Os.s -o ROOT\.gaspardarc-work\program-Os.o
+
+exit=0
+$ ROOT\.gaspardarc-work\build-binutils\ld\ld-new.exe -T ROOT\.gaspardarc-work\tree\GaspardARCH\runtime\board.ld ROOT\.gaspardarc-work\crt0.o ROOT\.gaspardarc-work\program-Os.o -o ROOT\.gaspardarc-work\program-Os.elf
+
+exit=0
+$ ROOT\.gaspardarc-work\build-gcc\gcc\xgcc.exe -BROOT\.gaspardarc-work\build-gcc\gcc/ -S ROOT\.gaspardarc-work\varargs.c -o ROOT\.gaspardarc-work\varargs.s
+C:\projets\compilo-gaspardos\.gaspardarc-work\varargs.c: In function 'f':
+C:\projets\compilo-gaspardos\.gaspardarc-work\varargs.c:1:1: error: GaspardARC ABI v0: variadic functions are not supported
+
+exit=1
+$ ROOT\.gaspardarc-work\build-gcc\gcc\xgcc.exe -BROOT\.gaspardarc-work\build-gcc\gcc/ -S -fPIC ROOT\.gaspardarc-work\pic.c -o ROOT\.gaspardarc-work\pic.s
+C:\projets\compilo-gaspardos\.gaspardarc-work\pic.c:1:0: error: GaspardARC v0 does not support PIC
+
+exit=1

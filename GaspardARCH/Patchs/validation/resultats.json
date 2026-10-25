@@ -1,0 +1,107 @@
+[
+  [
+    "Série Git",
+    "OK",
+    "9 patchs : git apply --check, application, contenu exact et annulation complète dans une copie isolée."
+  ],
+  [
+    "Construction Binutils 2.25",
+    "OK",
+    "BFD, opcodes, GAS, GNU ld et outils binutils construits puis installés sous MinGW64."
+  ],
+  [
+    "Fixture fournie, assemblage + lien",
+    "OK",
+    "885/885 mots conformes ; 0 différences"
+  ],
+  [
+    "ELF et readelf",
+    "OK",
+    "ELF64 little endian, e_machine privé 0xfe64, noms des relocalisations reconnus."
+  ],
+  [
+    "objdump / désassemblage",
+    "OK",
+    "Décodage des instructions entières, FPU, atomiques, CSR et sauts."
+  ],
+  [
+    "Données et octets",
+    "OK",
+    ".dword little endian et .word de 4 octets vérifiés."
+  ],
+  [
+    "Diagnostics GAS",
+    "OK",
+    "10 instructions invalides rejetées (registres, bornes, FLI/rm, suffixe, désalignement)."
+  ],
+  [
+    "Relocalisations interobjets et ld -r",
+    "OK",
+    "Liens direct et partiel identiques ; pointeur ABS64 vers symbole externe correct."
+  ],
+  [
+    "Diagnostics ld",
+    "OK",
+    "Débordements BRANCH, JAL, HI20 et cible non alignée : liens refusés."
+  ],
+  [
+    "objcopy",
+    "OK",
+    "Copie objet avec relocalisations puis lien identique ; export binaire .text identique."
+  ],
+  [
+    "Construction GCC 4.6.4",
+    "OK",
+    "Compilateur C, générateurs et backend construits et installés ; compilateur hôte MinGW GCC 16.2.0."
+  ],
+  [
+    "C entier -O0",
+    "OK",
+    "Compilation, assemblage, lien et modèle entier limité : signature 0x600d, retour 0, 789 instructions."
+  ],
+  [
+    "C entier -O2",
+    "OK",
+    "Compilation, assemblage, lien et modèle entier limité : signature 0x600d, retour 0, 443 instructions."
+  ],
+  [
+    "C entier -Os",
+    "OK",
+    "Compilation, assemblage, lien et modèle entier limité : signature 0x600d, retour 0, 452 instructions."
+  ],
+  [
+    "Diagnostics GCC",
+    "OK",
+    "PIC et définitions de fonctions variadiques rejetés explicitement."
+  ],
+  [
+    "Couverture C exécutée dans le modèle",
+    "LIMITÉE",
+    "Récursion, 10 arguments, grandes frames, conversions signées/non signées, structures, appel indirect, switch, pointeurs globaux et décalages 64 bits. Aucun matériel ni simulateur officiel disponible."
+  ],
+  [
+    "libgcc entier",
+    "OK",
+    "Construction et liens réussis ; popcount, clz, ctz et bswap 64 bits exécutés dans le modèle à -O0 et -O2. Flottants/complexes exclus."
+  ],
+  [
+    "Outils installés / script livré",
+    "OK",
+    "tester_c.py --libgcc exécuté avec les outils installés : 5 scénarios réussis (-O0, -O2, -Os puis auxiliaires à -O0/-O2)."
+  ],
+  [
+    "__clear_cache",
+    "OK",
+    "Présence de fence.i vérifiée dans le désassemblage de l’auxiliaire libgcc."
+  ],
+  [
+    "Matériel / simulateur officiel",
+    "NON TESTÉ",
+    "Aucun processeur ni simulateur officiel connecté. Le modèle entier fourni ne couvre pas MMU, FPU, caches, interruptions ou atomiques."
+  ],
+  [
+    "Périmètre non validé",
+    "NON TESTÉ",
+    "ABI/opérations 128 bits, C++, PIC/TLS, exceptions, varargs et relaxation ; voir limites du profil."
+  ]
+]

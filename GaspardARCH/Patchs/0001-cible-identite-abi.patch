@@ -1,0 +1,177 @@
+diff --git a/binutils-2.25/config.sub b/binutils-2.25/config.sub
+--- a/binutils-2.25/config.sub
++++ b/binutils-2.25/config.sub
+@@ -292,7 +292,7 @@
+ 	| mipsr5900 | mipsr5900el \
+ 	| mipstx39 | mipstx39el \
+ 	| mn10200 | mn10300 \
+-	| moxie \
++	| gaspardarc | moxie \
+ 	| mt \
+ 	| msp430 \
+ 	| nds32 | nds32le | nds32be \
+@@ -411,7 +411,7 @@
+ 	| mipsisa64sr71k-* | mipsisa64sr71kel-* \
+ 	| mipsr5900-* | mipsr5900el-* \
+ 	| mipstx39-* | mipstx39el-* \
+-	| mmix-* \
++	| gaspardarc-* | mmix-* \
+ 	| mt-* \
+ 	| msp430-* \
+ 	| nds32-* | nds32le-* | nds32be-* \
+diff --git a/gcc-4.6.4/config.sub b/gcc-4.6.4/config.sub
+--- a/gcc-4.6.4/config.sub
++++ b/gcc-4.6.4/config.sub
+@@ -280,7 +280,7 @@
+ 	| mipsisa64sr71k | mipsisa64sr71kel \
+ 	| mipstx39 | mipstx39el \
+ 	| mn10200 | mn10300 \
+-	| moxie \
++	| gaspardarc | moxie \
+ 	| mt \
+ 	| msp430 \
+ 	| nios | nios2 \
+@@ -375,7 +375,7 @@
+ 	| mipsisa64sb1-* | mipsisa64sb1el-* \
+ 	| mipsisa64sr71k-* | mipsisa64sr71kel-* \
+ 	| mipstx39-* | mipstx39el-* \
+-	| mmix-* \
++	| gaspardarc-* | mmix-* \
+ 	| mt-* \
+ 	| msp430-* \
+ 	| nios-* | nios2-* \
+diff --git a/binutils-2.25/bfd/archures.c b/binutils-2.25/bfd/archures.c
+--- a/binutils-2.25/bfd/archures.c
++++ b/binutils-2.25/bfd/archures.c
+@@ -375,6 +375,7 @@
+ .#define bfd_mach_frvtomcat	499	{* fr500 prototype *}
+ .#define bfd_mach_fr500		500
+ .#define bfd_mach_fr550		550
++.  bfd_arch_gaspardarc, {* GaspardARC Risc64. *}
+ .  bfd_arch_moxie,       {* The moxie processor *}
+ .#define bfd_mach_moxie		1
+ .  bfd_arch_mcore,
+@@ -585,6 +586,7 @@
+ extern const bfd_arch_info_type bfd_mmix_arch;
+ extern const bfd_arch_info_type bfd_mn10200_arch;
+ extern const bfd_arch_info_type bfd_mn10300_arch;
++extern const bfd_arch_info_type bfd_gaspardarc_arch;
+ extern const bfd_arch_info_type bfd_moxie_arch;
+ extern const bfd_arch_info_type bfd_msp430_arch;
+ extern const bfd_arch_info_type bfd_mt_arch;
+@@ -674,6 +676,7 @@
+     &bfd_mmix_arch,
+     &bfd_mn10200_arch,
+     &bfd_mn10300_arch,
++    &bfd_gaspardarc_arch,
+     &bfd_moxie_arch,
+     &bfd_msp430_arch,
+     &bfd_mt_arch,
+diff --git a/binutils-2.25/bfd/bfd-in2.h b/binutils-2.25/bfd/bfd-in2.h
+--- a/binutils-2.25/bfd/bfd-in2.h
++++ b/binutils-2.25/bfd/bfd-in2.h
+@@ -2162,6 +2162,7 @@
+ #define bfd_mach_frvtomcat     499     /* fr500 prototype */
+ #define bfd_mach_fr500         500
+ #define bfd_mach_fr550         550
++  bfd_arch_gaspardarc, /* GaspardARC Risc64. */
+   bfd_arch_moxie,       /* The moxie processor */
+ #define bfd_mach_moxie         1
+   bfd_arch_mcore,
+diff --git a/binutils-2.25/bfd/cpu-gaspardarc.c b/binutils-2.25/bfd/cpu-gaspardarc.c
+new file mode 100644
+--- /dev/null
++++ b/binutils-2.25/bfd/cpu-gaspardarc.c
+@@ -0,0 +1,7 @@
++/* GaspardARC Risc64 architecture.  GPL-3.0-or-later.  */
++#include "sysdep.h"
++#include "bfd.h"
++#include "libbfd.h"
++const bfd_arch_info_type bfd_gaspardarc_arch =
++{ 64, 64, 8, bfd_arch_gaspardarc, 0, "gaspardarc", "gaspardarc",
++  2, TRUE, bfd_default_compatible, bfd_default_scan, bfd_arch_default_fill, NULL };
+diff --git a/binutils-2.25/bfd/Makefile.am b/binutils-2.25/bfd/Makefile.am
+--- a/binutils-2.25/bfd/Makefile.am
++++ b/binutils-2.25/bfd/Makefile.am
+@@ -130,6 +130,7 @@
+ 	cpu-microblaze.lo \
+ 	cpu-mips.lo \
+ 	cpu-mmix.lo \
++	cpu-gaspardarc.lo \
+ 	cpu-moxie.lo \
+ 	cpu-msp430.lo \
+ 	cpu-mt.lo \
+@@ -214,6 +215,7 @@
+ 	cpu-microblaze.c \
+ 	cpu-mips.c \
+ 	cpu-mmix.c \
++	cpu-gaspardarc.c \
+ 	cpu-moxie.c \
+ 	cpu-msp430.c \
+ 	cpu-mt.c \
+diff --git a/binutils-2.25/bfd/Makefile.in b/binutils-2.25/bfd/Makefile.in
+--- a/binutils-2.25/bfd/Makefile.in
++++ b/binutils-2.25/bfd/Makefile.in
+@@ -431,6 +431,7 @@
+ 	cpu-microblaze.lo \
+ 	cpu-mips.lo \
+ 	cpu-mmix.lo \
++	cpu-gaspardarc.lo \
+ 	cpu-moxie.lo \
+ 	cpu-msp430.lo \
+ 	cpu-mt.lo \
+@@ -515,6 +516,7 @@
+ 	cpu-microblaze.c \
+ 	cpu-mips.c \
+ 	cpu-mmix.c \
++	cpu-gaspardarc.c \
+ 	cpu-moxie.c \
+ 	cpu-msp430.c \
+ 	cpu-mt.c \
+@@ -1342,6 +1344,7 @@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cpu-microblaze.Plo@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cpu-mips.Plo@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cpu-mmix.Plo@am__quote@
++@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cpu-gaspardarc.Plo@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cpu-moxie.Plo@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cpu-msp430.Plo@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cpu-mt.Plo@am__quote@
+diff --git a/GaspardARCH/docs/ABI-v0.md b/GaspardARCH/docs/ABI-v0.md
+new file mode 100644
+--- /dev/null
++++ b/GaspardARCH/docs/ABI-v0.md
+@@ -0,0 +1,34 @@
++# ABI expérimentale GaspardARC v0
++
++Triplet : gaspardarc-unknown-elf. ISA : CSV fourni (SHA-256 dans le manifeste).
++ELF64 little endian, octets de 8 bits, instructions de 4 octets.
++Identifiant ELF privé 0xFE64 : non attribué officiellement, collision possible.
++Ne pas distribuer des objets comme une ABI officielle ; figer/changer cet identifiant ensemble.
++
++Les alias du test fourni sont utilisés : r0/zero, r1/ra, r2/sp, r3/gp,
++r4/tp, r5-r7/t0-t2, r8/s0/fp, r9/s1, r10-r17/a0-a7,
++r18-r27/s2-s11, r28-r31/t3-t6. x0-x31 sont aussi acceptés.
++ABI C proposée (absente du CSV, expérimentalement définie par cette série) :
++LP64, char signé, float32/double64/long double64, alignement de pile 16 octets.
++Arguments scalaires d'au plus 8 octets dans a0-a7 puis pile (slots de 8 octets).
++Agrégats et valeurs de plus de 8 octets passés par référence ; agrégats retournés
++en mémoire via un argument caché. Résultat scalaire dans a0.
++Les registres s0-s11 sont préservés ; ra et les temporaires sont volatils.
++gp/tp réservés, t6 réservé au backend pour les grandes frames.
++Flottants dans les GPR selon l'ABI logicielle ; sélection FPU GCC non fournie.
++Le GAS supporte les instructions flottantes du CSV indépendamment de GCC.
++GCC : pas de PIC/TLS, pas de fonctions imbriquées avec trampoline, pas de C++.
++Profil validé : entiers jusqu'à 64 bits. Opérations et interfaces 128 bits non validées.
++Les auxiliaires flottants et complexes sont exclus de la libgcc initiale.
++Les fonctions variadiques seront explicitement rejetées dans cette première série.
++
++Relocalisations RELA privées : NONE=0, 64=1, 32=2, BRANCH=3, JAL=4,
++PCREL_HI20=5, PCREL_LO12_I=6. Les deux dernières forment une paire adjacente.
++HI20 calcule S+A-P ; LO12 calcule S+A-(P-4), en référençant le même symbole.
++Le LO12 ne référence PAS une étiquette de la HI20 (convention distincte de RISC-V).
++Portée paire : valeur dont le hi arrondi tient dans un signé 20 bits.
++Branches : déplacement signé 12 bits multiplié par 4, champs S.
++JAL : déplacement signé 20 bits multiplié par 4, champ contigu 31:12.
++Pas de relaxation ; dépassements signalés. Toutes les relocalisations symboliques
++sont conservées jusqu'au lien pour assurer le même calcul local/interobjets.
++CSR nommés : numéros dérivés des mots du fichier expected fourni, pas du standard RISC-V.

@@ -4,3 +4,5 @@ build-*/
 build_*/
 *-build/
 *_build/
+.gaspardarc-work/
+

@@ -1,0 +1,38 @@
+[
+  {
+    "patch": "0001-cible-identite-abi.patch",
+    "apply_check": "OK"
+  },
+  {
+    "patch": "0002-opcodes-desassemblage.patch",
+    "apply_check": "OK"
+  },
+  {
+    "patch": "0003-bfd-elf64-relocations.patch",
+    "apply_check": "OK"
+  },
+  {
+    "patch": "0004-ld-readelf.patch",
+    "apply_check": "OK"
+  },
+  {
+    "patch": "0005-gas-assemblage-pseudos.patch",
+    "apply_check": "OK"
+  },
+  {
+    "patch": "0006-gcc-configuration-abi.patch",
+    "apply_check": "OK"
+  },
+  {
+    "patch": "0007-gcc-rtl-instructions.patch",
+    "apply_check": "OK"
+  },
+  {
+    "patch": "0008-libgcc-runtime-tests.patch",
+    "apply_check": "OK"
+  },
+  {
+    "patch": "0009-construction-tests-integration.patch",
+    "apply_check": "OK"
+  }
+]

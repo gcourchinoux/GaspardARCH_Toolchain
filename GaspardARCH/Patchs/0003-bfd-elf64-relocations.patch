@@ -1,0 +1,591 @@
+diff --git a/binutils-2.25/bfd/bfd-in2.h b/binutils-2.25/bfd/bfd-in2.h
+--- a/binutils-2.25/bfd/bfd-in2.h
++++ b/binutils-2.25/bfd/bfd-in2.h
+@@ -3023,6 +3023,10 @@
+ 
+ 
+ /* Moxie ELF relocations.  */
++  BFD_RELOC_GASPARDARC_BRANCH,
++  BFD_RELOC_GASPARDARC_JAL,
++  BFD_RELOC_GASPARDARC_PCREL_HI20,
++  BFD_RELOC_GASPARDARC_PCREL_LO12_I,
+   BFD_RELOC_MOXIE_10_PCREL,
+ 
+ 
+diff --git a/binutils-2.25/bfd/Makefile.am b/binutils-2.25/bfd/Makefile.am
+--- a/binutils-2.25/bfd/Makefile.am
++++ b/binutils-2.25/bfd/Makefile.am
+@@ -654,6 +654,7 @@
+ 	elf64-ia64.lo \
+ 	elf64-ia64-vms.lo \
+ 	elf64-mips.lo \
++	elf64-gaspardarc.lo \
+ 	elf64-mmix.lo \
+ 	elf64-ppc.lo \
+ 	elf64-s390.lo \
+@@ -691,6 +692,7 @@
+ 	elf64-hppa.c \
+ 	elf64-ia64-vms.c \
+ 	elf64-mips.c \
++	elf64-gaspardarc.c \
+ 	elf64-mmix.c \
+ 	elf64-ppc.c \
+ 	elf64-s390.c \
+diff --git a/binutils-2.25/bfd/Makefile.in b/binutils-2.25/bfd/Makefile.in
+--- a/binutils-2.25/bfd/Makefile.in
++++ b/binutils-2.25/bfd/Makefile.in
+@@ -957,6 +957,7 @@
+ 	elf64-ia64.lo \
+ 	elf64-ia64-vms.lo \
+ 	elf64-mips.lo \
++	elf64-gaspardarc.lo \
+ 	elf64-mmix.lo \
+ 	elf64-ppc.lo \
+ 	elf64-s390.lo \
+@@ -994,6 +995,7 @@
+ 	elf64-hppa.c \
+ 	elf64-ia64-vms.c \
+ 	elf64-mips.c \
++	elf64-gaspardarc.c \
+ 	elf64-mmix.c \
+ 	elf64-ppc.c \
+ 	elf64-s390.c \
+@@ -1471,6 +1473,7 @@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/elf64-ia64-vms.Plo@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/elf64-ia64.Plo@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/elf64-mips.Plo@am__quote@
++@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/elf64-gaspardarc.Plo@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/elf64-mmix.Plo@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/elf64-ppc.Plo@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/elf64-s390.Plo@am__quote@
+diff --git a/binutils-2.25/bfd/reloc.c b/binutils-2.25/bfd/reloc.c
+--- a/binutils-2.25/bfd/reloc.c
++++ b/binutils-2.25/bfd/reloc.c
+@@ -2435,6 +2435,22 @@
+ COMMENT
+ 
+ ENUM
++  BFD_RELOC_GASPARDARC_BRANCH
++ENUMDOC
++  Experimental GaspardARC BRANCH relocation.
++ENUM
++  BFD_RELOC_GASPARDARC_JAL
++ENUMDOC
++  Experimental GaspardARC JAL relocation.
++ENUM
++  BFD_RELOC_GASPARDARC_PCREL_HI20
++ENUMDOC
++  Experimental GaspardARC PCREL_HI20 relocation.
++ENUM
++  BFD_RELOC_GASPARDARC_PCREL_LO12_I
++ENUMDOC
++  Experimental GaspardARC PCREL_LO12_I relocation.
++ENUM
+   BFD_RELOC_MOXIE_10_PCREL
+ ENUMDOC
+   Moxie ELF relocations.
+diff --git a/binutils-2.25/bfd/libbfd.h b/binutils-2.25/bfd/libbfd.h
+--- a/binutils-2.25/bfd/libbfd.h
++++ b/binutils-2.25/bfd/libbfd.h
+@@ -1187,6 +1187,10 @@
+   "BFD_RELOC_MIPS_COPY",
+   "BFD_RELOC_MIPS_JUMP_SLOT",
+ 
++  "BFD_RELOC_GASPARDARC_BRANCH",
++  "BFD_RELOC_GASPARDARC_JAL",
++  "BFD_RELOC_GASPARDARC_PCREL_HI20",
++  "BFD_RELOC_GASPARDARC_PCREL_LO12_I",
+   "BFD_RELOC_MOXIE_10_PCREL",
+ 
+   "BFD_RELOC_FRV_LABEL16",
+diff --git a/binutils-2.25/include/elf/common.h b/binutils-2.25/include/elf/common.h
+--- a/binutils-2.25/include/elf/common.h
++++ b/binutils-2.25/include/elf/common.h
+@@ -393,6 +393,7 @@
+ 
+ #define EM_CYGNUS_MEP		0xF00D  /* Toshiba MeP */
+ 
++#define EM_GASPARDARC 0xfe64 /* Private prototype, NOT officially allocated. */
+ #define EM_MOXIE                0xFEED  /* Moxie */
+ 
+ /* Old Sunplus S+core7 backend magic number. Written in the absence of an ABI.  */
+diff --git a/binutils-2.25/include/elf/gaspardarc.h b/binutils-2.25/include/elf/gaspardarc.h
+new file mode 100644
+--- /dev/null
++++ b/binutils-2.25/include/elf/gaspardarc.h
+@@ -0,0 +1,14 @@
++/* Experimental GaspardARC ELF ABI v0. GPL-3.0-or-later. */
++#ifndef ELF_GASPARDARC_H
++#define ELF_GASPARDARC_H
++#include "elf/reloc-macros.h"
++START_RELOC_NUMBERS (elf_gaspardarc_reloc_type)
++  RELOC_NUMBER (R_GASPARDARC_NONE, 0)
++  RELOC_NUMBER (R_GASPARDARC_64, 1)
++  RELOC_NUMBER (R_GASPARDARC_32, 2)
++  RELOC_NUMBER (R_GASPARDARC_BRANCH, 3)
++  RELOC_NUMBER (R_GASPARDARC_JAL, 4)
++  RELOC_NUMBER (R_GASPARDARC_PCREL_HI20, 5)
++  RELOC_NUMBER (R_GASPARDARC_PCREL_LO12_I, 6)
++END_RELOC_NUMBERS (R_GASPARDARC_max)
++#endif
+diff --git a/binutils-2.25/bfd/elf64-gaspardarc.c b/binutils-2.25/bfd/elf64-gaspardarc.c
+new file mode 100644
+--- /dev/null
++++ b/binutils-2.25/bfd/elf64-gaspardarc.c
+@@ -0,0 +1,393 @@
++/* gaspardarc-specific support for 32-bit ELF.
++   Copyright (C) 2009-2014 Free Software Foundation, Inc.
++
++   Copied from elf32-fr30.c which is..
++   Copyright (C) 1998-2014 Free Software Foundation, Inc.
++
++   This file is part of BFD, the Binary File Descriptor library.
++
++   This program is free software; you can redistribute it and/or modify
++   it under the terms of the GNU General Public License as published by
++   the Free Software Foundation; either version 3 of the License, or
++   (at your option) any later version.
++
++   This program is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++   GNU General Public License for more details.
++
++   You should have received a copy of the GNU General Public License
++   along with this program; if not, write to the Free Software
++   Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston,
++   MA 02110-1301, USA.  */
++
++#include "sysdep.h"
++#include "bfd.h"
++#include "libbfd.h"
++#include "elf-bfd.h"
++#include "elf/gaspardarc.h"
++
++/* Forward declarations.  */
++
++static reloc_howto_type gaspardarc_elf_howto_table [] =
++{
++  HOWTO (R_GASPARDARC_NONE, 0, 2, 0, FALSE, 0, complain_overflow_dont, bfd_elf_generic_reloc, "R_GASPARDARC_NONE", FALSE, 0, 0, FALSE),
++  HOWTO (R_GASPARDARC_64, 0, 4, 64, FALSE, 0, complain_overflow_dont, bfd_elf_generic_reloc, "R_GASPARDARC_64", FALSE, 0, ~(bfd_vma)0, FALSE),
++  HOWTO (R_GASPARDARC_32, 0, 2, 32, FALSE, 0, complain_overflow_dont, bfd_elf_generic_reloc, "R_GASPARDARC_32", FALSE, 0, 0xffffffff, FALSE),
++  HOWTO (R_GASPARDARC_BRANCH, 0, 2, 12, TRUE, 0, complain_overflow_dont, bfd_elf_generic_reloc, "R_GASPARDARC_BRANCH", FALSE, 0, 0, TRUE),
++  HOWTO (R_GASPARDARC_JAL, 0, 2, 20, TRUE, 0, complain_overflow_dont, bfd_elf_generic_reloc, "R_GASPARDARC_JAL", FALSE, 0, 0, TRUE),
++  HOWTO (R_GASPARDARC_PCREL_HI20, 0, 2, 20, TRUE, 0, complain_overflow_dont, bfd_elf_generic_reloc, "R_GASPARDARC_PCREL_HI20", FALSE, 0, 0, TRUE),
++  HOWTO (R_GASPARDARC_PCREL_LO12_I, 0, 2, 12, TRUE, 0, complain_overflow_dont, bfd_elf_generic_reloc, "R_GASPARDARC_PCREL_LO12_I", FALSE, 0, 0, TRUE),
++};
++
++/* Map BFD reloc types to GASPARDARC ELF reloc types.  */
++
++struct gaspardarc_reloc_map
++{
++  bfd_reloc_code_real_type bfd_reloc_val;
++  unsigned int gaspardarc_reloc_val;
++};
++
++static const struct gaspardarc_reloc_map gaspardarc_reloc_map [] =
++{
++  { BFD_RELOC_NONE, R_GASPARDARC_NONE },
++  { BFD_RELOC_64, R_GASPARDARC_64 },
++  { BFD_RELOC_32, R_GASPARDARC_32 },
++  { BFD_RELOC_GASPARDARC_BRANCH, R_GASPARDARC_BRANCH },
++  { BFD_RELOC_GASPARDARC_JAL, R_GASPARDARC_JAL },
++  { BFD_RELOC_GASPARDARC_PCREL_HI20, R_GASPARDARC_PCREL_HI20 },
++  { BFD_RELOC_GASPARDARC_PCREL_LO12_I, R_GASPARDARC_PCREL_LO12_I },
++};
++
++static reloc_howto_type *
++gaspardarc_reloc_type_lookup (bfd *abfd ATTRIBUTE_UNUSED,
++			 bfd_reloc_code_real_type code)
++{
++  unsigned int i;
++
++  for (i = 0; i < sizeof (gaspardarc_reloc_map) / sizeof (gaspardarc_reloc_map[0]); ++i)
++    if (gaspardarc_reloc_map [i].bfd_reloc_val == code)
++      return & gaspardarc_elf_howto_table [gaspardarc_reloc_map[i].gaspardarc_reloc_val];
++
++  return NULL;
++}
++
++static reloc_howto_type *
++gaspardarc_reloc_name_lookup (bfd *abfd ATTRIBUTE_UNUSED, const char *r_name)
++{
++  unsigned int i;
++
++  for (i = 0;
++       i < sizeof (gaspardarc_elf_howto_table) / sizeof (gaspardarc_elf_howto_table[0]);
++       i++)
++    if (gaspardarc_elf_howto_table[i].name != NULL
++	&& strcasecmp (gaspardarc_elf_howto_table[i].name, r_name) == 0)
++      return &gaspardarc_elf_howto_table[i];
++
++  return NULL;
++}
++
++/* Set the howto pointer for an GASPARDARC ELF reloc.  */
++
++static void
++gaspardarc_info_to_howto_rela (bfd *abfd ATTRIBUTE_UNUSED,
++			  arelent *cache_ptr,
++			  Elf_Internal_Rela *dst)
++{
++  unsigned int r_type;
++
++  r_type = ELF64_R_TYPE (dst->r_info);
++  if (r_type >= R_GASPARDARC_max)
++    { bfd_set_error (bfd_error_bad_value); cache_ptr->howto = NULL; return; }
++  cache_ptr->howto = & gaspardarc_elf_howto_table [r_type];
++}
++
++/* Perform a single relocation.  By default we use the standard BFD
++   routines, but a few relocs, we have to do them ourselves.  */
++
++/* Branch/JAL differ from RISC-V. HI/LO are adjacent and use the same symbol. */
++static bfd_reloc_status_type
++gaspardarc_final_link_relocate (reloc_howto_type *howto, bfd *ibfd,
++  asection *sec, bfd_byte *buf, Elf_Internal_Rela *rel, bfd_vma value)
++{
++  bfd_signed_vma d, q, hi; bfd_vma p, w; unsigned type=howto->type;
++  bfd_size_type bytes = type==R_GASPARDARC_64 ? 8 : 4;
++  if (type==R_GASPARDARC_NONE) return bfd_reloc_ok;
++  if (rel->r_offset > sec->size || bytes > sec->size-rel->r_offset)
++    return bfd_reloc_outofrange;
++  if (type==R_GASPARDARC_64 || type==R_GASPARDARC_32)
++    {
++      value += rel->r_addend;
++      if (type==R_GASPARDARC_32 && value > 0xffffffff)
++        return bfd_reloc_overflow;
++      if (type==R_GASPARDARC_64) bfd_put_64(ibfd,value,buf+rel->r_offset);
++      else bfd_put_32(ibfd,value,buf+rel->r_offset);
++      return bfd_reloc_ok;
++    }
++  p = sec->output_section->vma + sec->output_offset + rel->r_offset;
++  if (type==R_GASPARDARC_PCREL_LO12_I) p-=4;
++  d=(bfd_signed_vma)(value+rel->r_addend-p);
++  w=bfd_get_32(ibfd,buf+rel->r_offset);
++  if (type==R_GASPARDARC_BRANCH || type==R_GASPARDARC_JAL)
++    {
++      if ((d & 3)!=0) return bfd_reloc_outofrange;
++      q=d/4;
++      if (type==R_GASPARDARC_BRANCH)
++        {
++          if (q < -2048 || q > 2047) return bfd_reloc_overflow;
++          w=(w&~(bfd_vma)0xfe000f80)|(((bfd_vma)q&0xfe0)<<20)|(((bfd_vma)q&31)<<7);
++        }
++      else
++        {
++          if (q < -524288 || q > 524287) return bfd_reloc_overflow;
++          w=(w&0xfff)|(((bfd_vma)q&0xfffff)<<12);
++        }
++    }
++  else
++    {
++      /* Check range BEFORE addition, avoiding signed overflow on hostile inputs. */
++      if (d < -2147485696LL || d > 2147481599LL) return bfd_reloc_overflow;
++      hi=(d+2048)>>12;
++      if(type==R_GASPARDARC_PCREL_HI20)
++        w=(w&0xfff)|(((bfd_vma)hi&0xfffff)<<12);
++      else if(type==R_GASPARDARC_PCREL_LO12_I)
++        w=(w&0xfffff)|(((bfd_vma)d&0xfff)<<20);
++      else return bfd_reloc_notsupported;
++    }
++  bfd_put_32(ibfd,w,buf+rel->r_offset); return bfd_reloc_ok;
++}
++
++
++/* Relocate an GASPARDARC ELF section.
++
++   The RELOCATE_SECTION function is called by the new ELF backend linker
++   to handle the relocations for a section.
++
++   The relocs are always passed as Rela structures; if the section
++   actually uses Rel structures, the r_addend field will always be
++   zero.
++
++   This function is responsible for adjusting the section contents as
++   necessary, and (if using Rela relocs and generating a relocatable
++   output file) adjusting the reloc addend as necessary.
++
++   This function does not have to worry about setting the reloc
++   address or the reloc symbol index.
++
++   LOCAL_SYMS is a pointer to the swapped in local symbols.
++
++   LOCAL_SECTIONS is an array giving the section in the input file
++   corresponding to the st_shndx field of each local symbol.
++
++   The global hash table entry for the global symbols can be found
++   via elf_sym_hashes (input_bfd).
++
++   When generating relocatable output, this function must handle
++   STB_LOCAL/STT_SECTION symbols specially.  The output symbol is
++   going to be the section symbol corresponding to the output
++   section, which means that the addend must be adjusted
++   accordingly.  */
++
++static bfd_boolean
++gaspardarc_elf_relocate_section (bfd *output_bfd,
++			    struct bfd_link_info *info,
++			    bfd *input_bfd,
++			    asection *input_section,
++			    bfd_byte *contents,
++			    Elf_Internal_Rela *relocs,
++			    Elf_Internal_Sym *local_syms,
++			    asection **local_sections)
++{
++  Elf_Internal_Shdr *symtab_hdr;
++  struct elf_link_hash_entry **sym_hashes;
++  Elf_Internal_Rela *rel;
++  Elf_Internal_Rela *relend;
++
++  symtab_hdr = & elf_tdata (input_bfd)->symtab_hdr;
++  sym_hashes = elf_sym_hashes (input_bfd);
++  relend     = relocs + input_section->reloc_count;
++
++  for (rel = relocs; rel < relend; rel ++)
++    {
++      reloc_howto_type *howto;
++      unsigned long r_symndx;
++      Elf_Internal_Sym *sym;
++      asection *sec;
++      struct elf_link_hash_entry *h;
++      bfd_vma relocation;
++      bfd_reloc_status_type r;
++      const char *name;
++      int r_type;
++
++      r_type = ELF64_R_TYPE (rel->r_info);
++      r_symndx = ELF64_R_SYM (rel->r_info);
++      if (r_type >= R_GASPARDARC_max)
++        { bfd_set_error (bfd_error_bad_value); return FALSE; }
++      if (r_symndx >= symtab_hdr->sh_size / sizeof (Elf64_External_Sym))
++        { bfd_set_error (bfd_error_bad_value); return FALSE; }
++      howto  = gaspardarc_elf_howto_table + r_type;
++      h      = NULL;
++      sym    = NULL;
++      sec    = NULL;
++
++      if (r_symndx < symtab_hdr->sh_info)
++	{
++	  sym = local_syms + r_symndx;
++	  sec = local_sections [r_symndx];
++	  relocation = _bfd_elf_rela_local_sym (output_bfd, sym, &sec, rel);
++
++	  name = bfd_elf_string_from_elf_section
++	    (input_bfd, symtab_hdr->sh_link, sym->st_name);
++	  name = (name == NULL) ? bfd_section_name (input_bfd, sec) : name;
++	}
++      else
++	{
++	  bfd_boolean unresolved_reloc, warned, ignored;
++
++	  RELOC_FOR_GLOBAL_SYMBOL (info, input_bfd, input_section, rel,
++				   r_symndx, symtab_hdr, sym_hashes,
++				   h, sec, relocation,
++				   unresolved_reloc, warned, ignored);
++
++	  name = h->root.root.string;
++	}
++
++      if (sec != NULL && discarded_section (sec))
++	RELOC_AGAINST_DISCARDED_SECTION (info, input_bfd, input_section,
++					 rel, 1, relend, howto, 0, contents);
++
++      if (info->relocatable)
++	continue;
++
++      r = gaspardarc_final_link_relocate (howto, input_bfd, input_section,
++				     contents, rel, relocation);
++
++      if (r != bfd_reloc_ok)
++	{
++	  const char * msg = NULL;
++
++	  switch (r)
++	    {
++	    case bfd_reloc_overflow:
++	      r = info->callbacks->reloc_overflow
++		(info, (h ? &h->root : NULL), name, howto->name,
++		 (bfd_vma) 0, input_bfd, input_section, rel->r_offset);
++	      break;
++
++	    case bfd_reloc_undefined:
++	      r = info->callbacks->undefined_symbol
++		(info, name, input_bfd, input_section, rel->r_offset,
++		 TRUE);
++	      break;
++
++	    case bfd_reloc_outofrange:
++	      msg = _("internal error: out of range error");
++	      break;
++
++	    case bfd_reloc_notsupported:
++	      msg = _("internal error: unsupported relocation error");
++	      break;
++
++	    case bfd_reloc_dangerous:
++	      msg = _("internal error: dangerous relocation");
++	      break;
++
++	    default:
++	      msg = _("internal error: unknown error");
++	      break;
++	    }
++
++	  if (msg)
++	    r = info->callbacks->warning
++	      (info, msg, name, input_bfd, input_section, rel->r_offset);
++
++	  /* Any relocation error must make the link fail, including misalignment. */
++          return FALSE;
++	}
++    }
++
++  return TRUE;
++}
++
++/* Return the section that should be marked against GC for a given
++   relocation.  */
++
++static asection *
++gaspardarc_elf_gc_mark_hook (asection *sec,
++			struct bfd_link_info *info,
++			Elf_Internal_Rela *rel,
++			struct elf_link_hash_entry *h,
++			Elf_Internal_Sym *sym)
++{
++  return _bfd_elf_gc_mark_hook (sec, info, rel, h, sym);
++}
++
++/* Look through the relocs for a section during the first phase.
++   Since we don't do .gots or .plts, we just need to consider the
++   virtual table relocs for gc.  */
++
++static bfd_boolean
++gaspardarc_elf_check_relocs (bfd *abfd,
++			struct bfd_link_info *info,
++			asection *sec,
++			const Elf_Internal_Rela *relocs)
++{
++  Elf_Internal_Shdr *symtab_hdr;
++  struct elf_link_hash_entry **sym_hashes;
++  const Elf_Internal_Rela *rel;
++  const Elf_Internal_Rela *rel_end;
++
++  if (info->relocatable)
++    return TRUE;
++
++  symtab_hdr = &elf_tdata (abfd)->symtab_hdr;
++  sym_hashes = elf_sym_hashes (abfd);
++
++  rel_end = relocs + sec->reloc_count;
++  for (rel = relocs; rel < rel_end; rel++)
++    {
++      struct elf_link_hash_entry *h;
++      unsigned long r_symndx;
++
++      r_symndx = ELF64_R_SYM (rel->r_info);
++      if (r_symndx < symtab_hdr->sh_info)
++        h = NULL;
++      else
++	{
++	  h = sym_hashes[r_symndx - symtab_hdr->sh_info];
++	  while (h->root.type == bfd_link_hash_indirect
++		 || h->root.type == bfd_link_hash_warning)
++	    h = (struct elf_link_hash_entry *) h->root.u.i.link;
++
++	  /* PR15323, ref flags aren't set for references in the same
++	     object.  */
++	  h->root.non_ir_ref = 1;
++	}
++    }
++
++  return TRUE;
++}
++
++#define ELF_ARCH		bfd_arch_gaspardarc
++#define ELF_MACHINE_CODE	EM_GASPARDARC
++#define ELF_MAXPAGESIZE		0x1000
++
++#define TARGET_LITTLE_SYM       gaspardarc_elf64_le_vec
++#define TARGET_LITTLE_NAME	"elf64-gaspardarc"
++
++#define elf_info_to_howto_rel			NULL
++#define elf_info_to_howto			gaspardarc_info_to_howto_rela
++#define elf_backend_relocate_section		gaspardarc_elf_relocate_section
++#define elf_backend_gc_mark_hook		gaspardarc_elf_gc_mark_hook
++#define elf_backend_check_relocs                gaspardarc_elf_check_relocs
++
++#define elf_backend_can_gc_sections		1
++#define elf_backend_rela_normal			1
++
++#define bfd_elf64_bfd_reloc_type_lookup		gaspardarc_reloc_type_lookup
++#define bfd_elf64_bfd_reloc_name_lookup		gaspardarc_reloc_name_lookup
++
++#define elf_backend_may_use_rel_p 0
++#define elf_backend_may_use_rela_p 1
++#define elf_backend_default_use_rela_p 1
++#include "elf64-target.h"
+diff --git a/binutils-2.25/bfd/config.bfd b/binutils-2.25/bfd/config.bfd
+--- a/binutils-2.25/bfd/config.bfd
++++ b/binutils-2.25/bfd/config.bfd
+@@ -92,6 +92,7 @@
+ targ_cpu=`echo $targ | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\1/'`
+ case "${targ_cpu}" in
+ aarch64*)	 targ_archs="bfd_aarch64_arch bfd_arm_arch";;
++gaspardarc*) targ_archs=bfd_gaspardarc_arch ;;
+ alpha*)		 targ_archs=bfd_alpha_arch ;;
+ am34*|am33_2.0*) targ_archs=bfd_mn10300_arch ;;
+ arm*)		 targ_archs=bfd_arm_arch ;;
+@@ -442,6 +443,10 @@
+     targ_selvecs=frv_elf32_vec
+     ;;
+ 
++  gaspardarc-*-elf)
++    targ_defvec=gaspardarc_elf64_le_vec
++    want64=true
++    ;;
+   moxie-*-elf | moxie-*-rtems* | moxie-*-uclinux)
+     targ_defvec=moxie_elf32_be_vec
+     targ_selvecs=moxie_elf32_le_vec
+diff --git a/binutils-2.25/bfd/configure.ac b/binutils-2.25/bfd/configure.ac
+--- a/binutils-2.25/bfd/configure.ac
++++ b/binutils-2.25/bfd/configure.ac
+@@ -869,6 +869,7 @@
+     mips_elf64_tradfbsd_le_vec)  tb="$tb elf64-mips.lo elf64.lo elfxx-mips.lo elf-vxworks.lo elf32.lo $elf ecofflink.lo"; target_size=64 ;;
+     mips_pe_le_vec)		 tb="$tb pe-mips.lo peigen.lo cofflink.lo" ;;
+     mips_pei_le_vec)		 tb="$tb pei-mips.lo peigen.lo cofflink.lo" ;;
++    gaspardarc_elf64_le_vec) tb="$tb elf64-gaspardarc.lo elf64.lo $elf" target_size=64 ;;
+     mmix_elf64_vec)		 tb="$tb elf64-mmix.lo elf64.lo $elf" target_size=64 ;;
+     mmix_mmo_vec)			 tb="$tb mmo.lo" target_size=64 ;;
+     mn10200_elf32_vec)		 tb="$tb elf-m10200.lo elf32.lo $elf" ;;
+diff --git a/binutils-2.25/bfd/configure b/binutils-2.25/bfd/configure
+--- a/binutils-2.25/bfd/configure
++++ b/binutils-2.25/bfd/configure
+@@ -15468,6 +15468,7 @@
+     mips_elf64_tradfbsd_le_vec)  tb="$tb elf64-mips.lo elf64.lo elfxx-mips.lo elf-vxworks.lo elf32.lo $elf ecofflink.lo"; target_size=64 ;;
+     mips_pe_le_vec)		 tb="$tb pe-mips.lo peigen.lo cofflink.lo" ;;
+     mips_pei_le_vec)		 tb="$tb pei-mips.lo peigen.lo cofflink.lo" ;;
++    gaspardarc_elf64_le_vec) tb="$tb elf64-gaspardarc.lo elf64.lo $elf" target_size=64 ;;
+     mmix_elf64_vec)		 tb="$tb elf64-mmix.lo elf64.lo $elf" target_size=64 ;;
+     mmix_mmo_vec)			 tb="$tb mmo.lo" target_size=64 ;;
+     mn10200_elf32_vec)		 tb="$tb elf-m10200.lo elf32.lo $elf" ;;
+diff --git a/binutils-2.25/bfd/targets.c b/binutils-2.25/bfd/targets.c
+--- a/binutils-2.25/bfd/targets.c
++++ b/binutils-2.25/bfd/targets.c
+@@ -745,6 +745,7 @@
+ extern const bfd_target mips_elf64_tradfbsd_le_vec;
+ extern const bfd_target mips_pe_le_vec;
+ extern const bfd_target mips_pei_le_vec;
++extern const bfd_target gaspardarc_elf64_le_vec;
+ extern const bfd_target mmix_elf64_vec;
+ extern const bfd_target mmix_mmo_vec;
+ extern const bfd_target mn10200_elf32_vec;
+@@ -1209,6 +1210,7 @@
+ 	&mips_pei_le_vec,
+ 
+ #ifdef BFD64
++	&gaspardarc_elf64_le_vec,
+ 	&mmix_elf64_vec,
+ 	&mmix_mmo_vec,
+ #endif

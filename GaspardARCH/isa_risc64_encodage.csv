@@ -1,0 +1,247 @@
+﻿Catégorie;Mnémonique;Syntaxe;Format;Taille (octets);Motif binaire [31..0];Masque;Match;Champs variables;Expansion (pseudo);Priv.;Commentaire
+Arithmétique/Logique;ADD;rd, rs1, rs2;R;4;0000000 bbbbb aaaaa 000 ddddd 0110011;0xFE00707F;0x00000033;rd[11:7] rs1[19:15] rs2[24:20];;U;rd ← rs1 + rs2 (64 bits, aucun flag)
+Arithmétique/Logique;SUB;rd, rs1, rs2;R;4;0100000 bbbbb aaaaa 000 ddddd 0110011;0xFE00707F;0x40000033;rd[11:7] rs1[19:15] rs2[24:20];;U;rd ← rs1 − rs2
+Arithmétique/Logique;AND;rd, rs1, rs2;R;4;0000000 bbbbb aaaaa 111 ddddd 0110011;0xFE00707F;0x00007033;rd[11:7] rs1[19:15] rs2[24:20];;U;ET bit à bit
+Arithmétique/Logique;OR;rd, rs1, rs2;R;4;0000000 bbbbb aaaaa 110 ddddd 0110011;0xFE00707F;0x00006033;rd[11:7] rs1[19:15] rs2[24:20];;U;OU bit à bit
+Arithmétique/Logique;XOR;rd, rs1, rs2;R;4;0000000 bbbbb aaaaa 100 ddddd 0110011;0xFE00707F;0x00004033;rd[11:7] rs1[19:15] rs2[24:20];;U;OU exclusif bit à bit
+Arithmétique/Logique;SLL;rd, rs1, rs2;R;4;0000000 bbbbb aaaaa 001 ddddd 0110011;0xFE00707F;0x00001033;rd[11:7] rs1[19:15] rs2[24:20];;U;Décalage logique à gauche de rs2[5:0]
+Arithmétique/Logique;SRL;rd, rs1, rs2;R;4;0000000 bbbbb aaaaa 101 ddddd 0110011;0xFE00707F;0x00005033;rd[11:7] rs1[19:15] rs2[24:20];;U;Décalage logique à droite de rs2[5:0]
+Arithmétique/Logique;SRA;rd, rs1, rs2;R;4;0100000 bbbbb aaaaa 101 ddddd 0110011;0xFE00707F;0x40005033;rd[11:7] rs1[19:15] rs2[24:20];;U;Décalage arithmétique à droite de rs2[5:0]
+Arithmétique/Logique;SLT;rd, rs1, rs2;R;4;0000000 bbbbb aaaaa 010 ddddd 0110011;0xFE00707F;0x00002033;rd[11:7] rs1[19:15] rs2[24:20];;U;rd ← 1 si rs1 < rs2 (signé), sinon 0
+Arithmétique/Logique;SLTU;rd, rs1, rs2;R;4;0000000 bbbbb aaaaa 011 ddddd 0110011;0xFE00707F;0x00003033;rd[11:7] rs1[19:15] rs2[24:20];;U;rd ← 1 si rs1 < rs2 (non signé), sinon 0
+Arithmétique/Logique;ADDI;rd, rs1, imm12;I;4;iiiiiii iiiii aaaaa 000 ddddd 0010011;0x0000707F;0x00000013;rd[11:7] rs1[19:15] imm12[31:20];;U;"rd ← rs1 + imm12 (signée) ; imm12 = 0 → copie de registre"
+Arithmétique/Logique;SLTI;rd, rs1, imm12;I;4;iiiiiii iiiii aaaaa 010 ddddd 0010011;0x0000707F;0x00002013;rd[11:7] rs1[19:15] imm12[31:20];;U;rd ← 1 si rs1 < imm12 (signé)
+Arithmétique/Logique;SLTIU;rd, rs1, imm12;I;4;iiiiiii iiiii aaaaa 011 ddddd 0010011;0x0000707F;0x00003013;rd[11:7] rs1[19:15] imm12[31:20];;U;rd ← 1 si rs1 < imm12 étendue en signe, comparée en non signé
+Arithmétique/Logique;XORI;rd, rs1, imm12;I;4;iiiiiii iiiii aaaaa 100 ddddd 0010011;0x0000707F;0x00004013;rd[11:7] rs1[19:15] imm12[31:20];;U;XOR avec imm12 signée (imm12 = −1 → NOT)
+Arithmétique/Logique;ORI;rd, rs1, imm12;I;4;iiiiiii iiiii aaaaa 110 ddddd 0010011;0x0000707F;0x00006013;rd[11:7] rs1[19:15] imm12[31:20];;U;OU avec imm12 signée
+Arithmétique/Logique;ANDI;rd, rs1, imm12;I;4;iiiiiii iiiii aaaaa 111 ddddd 0010011;0x0000707F;0x00007013;rd[11:7] rs1[19:15] imm12[31:20];;U;ET avec imm12 signée
+Arithmétique/Logique;SLLI;rd, rs1, shamt6;I (shamt6);4;000000s sssss aaaaa 001 ddddd 0010011;0xFC00707F;0x00001013;rd[11:7] rs1[19:15] shamt6[25:20];;U;Décalage logique à gauche, shamt 0–63
+Arithmétique/Logique;SRLI;rd, rs1, shamt6;I (shamt6);4;000000s sssss aaaaa 101 ddddd 0010011;0xFC00707F;0x00005013;rd[11:7] rs1[19:15] shamt6[25:20];;U;Décalage logique à droite, shamt 0–63
+Arithmétique/Logique;SRAI;rd, rs1, shamt6;I (shamt6);4;010000s sssss aaaaa 101 ddddd 0010011;0xFC00707F;0x40005013;rd[11:7] rs1[19:15] shamt6[25:20];;U;Décalage arithmétique à droite, shamt 0–63
+Arithmétique/Logique;ADDW;rd, rs1, rs2;R;4;0000000 bbbbb aaaaa 000 ddddd 0111011;0xFE00707F;0x0000003B;rd[11:7] rs1[19:15] rs2[24:20];;U;Addition 32 bits, résultat étendu en SIGNE sur 64 bits
+Arithmétique/Logique;SUBW;rd, rs1, rs2;R;4;0100000 bbbbb aaaaa 000 ddddd 0111011;0xFE00707F;0x4000003B;rd[11:7] rs1[19:15] rs2[24:20];;U;Soustraction 32 bits, résultat étendu en signe
+Arithmétique/Logique;SLLW;rd, rs1, rs2;R;4;0000000 bbbbb aaaaa 001 ddddd 0111011;0xFE00707F;0x0000103B;rd[11:7] rs1[19:15] rs2[24:20];;U;Décalage gauche 32 bits (rs2[4:0]), résultat étendu en signe
+Arithmétique/Logique;SRLW;rd, rs1, rs2;R;4;0000000 bbbbb aaaaa 101 ddddd 0111011;0xFE00707F;0x0000503B;rd[11:7] rs1[19:15] rs2[24:20];;U;Décalage logique droit 32 bits, résultat étendu en signe
+Arithmétique/Logique;SRAW;rd, rs1, rs2;R;4;0100000 bbbbb aaaaa 101 ddddd 0111011;0xFE00707F;0x4000503B;rd[11:7] rs1[19:15] rs2[24:20];;U;Décalage arithmétique droit 32 bits, résultat étendu en signe
+Arithmétique/Logique;ADDIW;rd, rs1, imm12;I;4;iiiiiii iiiii aaaaa 000 ddddd 0011011;0x0000707F;0x0000001B;rd[11:7] rs1[19:15] imm12[31:20];;U;ADDI 32 bits, résultat étendu en signe (imm12 = 0 → extension de signe 32→64)
+Arithmétique/Logique;SLLIW;rd, rs1, shamt5;I (shamt5);4;0000000 sssss aaaaa 001 ddddd 0011011;0xFE00707F;0x0000101B;rd[11:7] rs1[19:15] shamt5[24:20];;U;Décalage gauche 32 bits par constante 0–31
+Arithmétique/Logique;SRLIW;rd, rs1, shamt5;I (shamt5);4;0000000 sssss aaaaa 101 ddddd 0011011;0xFE00707F;0x0000501B;rd[11:7] rs1[19:15] shamt5[24:20];;U;Décalage logique droit 32 bits par constante 0–31
+Arithmétique/Logique;SRAIW;rd, rs1, shamt5;I (shamt5);4;0100000 sssss aaaaa 101 ddddd 0011011;0xFE00707F;0x4000501B;rd[11:7] rs1[19:15] shamt5[24:20];;U;Décalage arithmétique droit 32 bits par constante 0–31
+Arithmétique/Logique;LUI;rd, imm20;U;4;iiiiiii iiiii iiiii iii ddddd 0110111;0x0000007F;0x00000037;rd[11:7] imm20[31:12];;U;"rd ← sext(imm20 << 12) ; charge les bits 31:12"
+Arithmétique/Logique;AUIPC;rd, imm20;U;4;iiiiiii iiiii iiiii iii ddddd 0010111;0x0000007F;0x00000017;rd[11:7] imm20[31:12];;U;"rd ← PC + sext(imm20 << 12) ; adressage relatif au PC"
+Arithmétique/Logique;CZERO.EQZ;rd, rs1, rs2;R;4;0000111 bbbbb aaaaa 101 ddddd 0110011;0xFE00707F;0x0E005033;rd[11:7] rs1[19:15] rs2[24:20];;U;"rd ← (rs2 = 0) ? 0 : rs1 ; sélection sans branche"
+Arithmétique/Logique;CZERO.NEZ;rd, rs1, rs2;R;4;0000111 bbbbb aaaaa 111 ddddd 0110011;0xFE00707F;0x0E007033;rd[11:7] rs1[19:15] rs2[24:20];;U;"rd ← (rs2 ≠ 0) ? 0 : rs1 ; sélection sans branche"
+Arithmétique/Logique;ANDN;rd, rs1, rs2;R;4;0100000 bbbbb aaaaa 111 ddddd 0110011;0xFE00707F;0x40007033;rd[11:7] rs1[19:15] rs2[24:20];;U;rd ← rs1 ET NON rs2
+Arithmétique/Logique;ORN;rd, rs1, rs2;R;4;0100000 bbbbb aaaaa 110 ddddd 0110011;0xFE00707F;0x40006033;rd[11:7] rs1[19:15] rs2[24:20];;U;rd ← rs1 OU NON rs2
+Arithmétique/Logique;XNOR;rd, rs1, rs2;R;4;0100000 bbbbb aaaaa 100 ddddd 0110011;0xFE00707F;0x40004033;rd[11:7] rs1[19:15] rs2[24:20];;U;rd ← NON (rs1 XOR rs2)
+Arithmétique/Logique;MIN;rd, rs1, rs2;R;4;0000101 bbbbb aaaaa 100 ddddd 0110011;0xFE00707F;0x0A004033;rd[11:7] rs1[19:15] rs2[24:20];;U;Minimum signé
+Arithmétique/Logique;MINU;rd, rs1, rs2;R;4;0000101 bbbbb aaaaa 101 ddddd 0110011;0xFE00707F;0x0A005033;rd[11:7] rs1[19:15] rs2[24:20];;U;Minimum non signé
+Arithmétique/Logique;MAX;rd, rs1, rs2;R;4;0000101 bbbbb aaaaa 110 ddddd 0110011;0xFE00707F;0x0A006033;rd[11:7] rs1[19:15] rs2[24:20];;U;Maximum signé
+Arithmétique/Logique;MAXU;rd, rs1, rs2;R;4;0000101 bbbbb aaaaa 111 ddddd 0110011;0xFE00707F;0x0A007033;rd[11:7] rs1[19:15] rs2[24:20];;U;Maximum non signé
+Multiplication/Division;MUL;rd, rs1, rs2;R;4;0000001 bbbbb aaaaa 000 ddddd 0110011;0xFE00707F;0x02000033;rd[11:7] rs1[19:15] rs2[24:20];;U;64 bits de poids faible du produit
+Multiplication/Division;MULH;rd, rs1, rs2;R;4;0000001 bbbbb aaaaa 001 ddddd 0110011;0xFE00707F;0x02001033;rd[11:7] rs1[19:15] rs2[24:20];;U;64 bits de poids fort, signé × signé
+Multiplication/Division;MULHSU;rd, rs1, rs2;R;4;0000001 bbbbb aaaaa 010 ddddd 0110011;0xFE00707F;0x02002033;rd[11:7] rs1[19:15] rs2[24:20];;U;64 bits de poids fort, signé × non signé
+Multiplication/Division;MULHU;rd, rs1, rs2;R;4;0000001 bbbbb aaaaa 011 ddddd 0110011;0xFE00707F;0x02003033;rd[11:7] rs1[19:15] rs2[24:20];;U;64 bits de poids fort, non signé × non signé
+Multiplication/Division;DIV;rd, rs1, rs2;R;4;0000001 bbbbb aaaaa 100 ddddd 0110011;0xFE00707F;0x02004033;rd[11:7] rs1[19:15] rs2[24:20];;U;"Division signée ; TRAP TT=0x009 si rs2 = 0"
+Multiplication/Division;DIVU;rd, rs1, rs2;R;4;0000001 bbbbb aaaaa 101 ddddd 0110011;0xFE00707F;0x02005033;rd[11:7] rs1[19:15] rs2[24:20];;U;"Division non signée ; TRAP TT=0x009 si rs2 = 0"
+Multiplication/Division;REM;rd, rs1, rs2;R;4;0000001 bbbbb aaaaa 110 ddddd 0110011;0xFE00707F;0x02006033;rd[11:7] rs1[19:15] rs2[24:20];;U;"Reste signé ; TRAP TT=0x009 si rs2 = 0"
+Multiplication/Division;REMU;rd, rs1, rs2;R;4;0000001 bbbbb aaaaa 111 ddddd 0110011;0xFE00707F;0x02007033;rd[11:7] rs1[19:15] rs2[24:20];;U;"Reste non signé ; TRAP TT=0x009 si rs2 = 0"
+Multiplication/Division;MULW;rd, rs1, rs2;R;4;0000001 bbbbb aaaaa 000 ddddd 0111011;0xFE00707F;0x0200003B;rd[11:7] rs1[19:15] rs2[24:20];;U;Produit 32 bits, résultat étendu en signe
+Multiplication/Division;DIVW;rd, rs1, rs2;R;4;0000001 bbbbb aaaaa 100 ddddd 0111011;0xFE00707F;0x0200403B;rd[11:7] rs1[19:15] rs2[24:20];;U;"Division signée 32 bits ; trap si rs2[31:0] = 0"
+Multiplication/Division;DIVUW;rd, rs1, rs2;R;4;0000001 bbbbb aaaaa 101 ddddd 0111011;0xFE00707F;0x0200503B;rd[11:7] rs1[19:15] rs2[24:20];;U;"Division non signée 32 bits ; trap si rs2[31:0] = 0"
+Multiplication/Division;REMW;rd, rs1, rs2;R;4;0000001 bbbbb aaaaa 110 ddddd 0111011;0xFE00707F;0x0200603B;rd[11:7] rs1[19:15] rs2[24:20];;U;"Reste signé 32 bits ; trap si rs2[31:0] = 0"
+Multiplication/Division;REMUW;rd, rs1, rs2;R;4;0000001 bbbbb aaaaa 111 ddddd 0111011;0xFE00707F;0x0200703B;rd[11:7] rs1[19:15] rs2[24:20];;U;"Reste non signé 32 bits ; trap si rs2[31:0] = 0"
+Manipulation de bits;CLZ;rd, rs1;I (imm12 fixe);4;0110000 00000 aaaaa 001 ddddd 0010011;0xFFF0707F;0x60001013;rd[11:7] rs1[19:15];;U;Nombre de zéros de tête (64 si rs1 = 0)
+Manipulation de bits;CTZ;rd, rs1;I (imm12 fixe);4;0110000 00001 aaaaa 001 ddddd 0010011;0xFFF0707F;0x60101013;rd[11:7] rs1[19:15];;U;Nombre de zéros de fin (64 si rs1 = 0)
+Manipulation de bits;CPOP;rd, rs1;I (imm12 fixe);4;0110000 00010 aaaaa 001 ddddd 0010011;0xFFF0707F;0x60201013;rd[11:7] rs1[19:15];;U;Nombre de bits à 1
+Manipulation de bits;SEXT.B;rd, rs1;I (imm12 fixe);4;0110000 00100 aaaaa 001 ddddd 0010011;0xFFF0707F;0x60401013;rd[11:7] rs1[19:15];;U;Extension de signe de l'octet bas
+Manipulation de bits;SEXT.H;rd, rs1;I (imm12 fixe);4;0110000 00101 aaaaa 001 ddddd 0010011;0xFFF0707F;0x60501013;rd[11:7] rs1[19:15];;U;Extension de signe du demi-mot bas
+Manipulation de bits;ZEXT.H;rd, rs1;I (imm12 fixe);4;0110000 00110 aaaaa 001 ddddd 0010011;0xFFF0707F;0x60601013;rd[11:7] rs1[19:15];;U;Extension par zéro du demi-mot bas (encodage propre à cette ISA)
+Manipulation de bits;REV8;rd, rs1;I (imm12 fixe);4;0110101 11000 aaaaa 101 ddddd 0010011;0xFFF0707F;0x6B805013;rd[11:7] rs1[19:15];;U;Inverse l'ordre des 8 octets (conversion d'endianness)
+Manipulation de bits;ROL;rd, rs1, rs2;R;4;0110000 bbbbb aaaaa 001 ddddd 0110011;0xFE00707F;0x60001033;rd[11:7] rs1[19:15] rs2[24:20];;U;Rotation à gauche de rs2[5:0]
+Manipulation de bits;ROR;rd, rs1, rs2;R;4;0110000 bbbbb aaaaa 101 ddddd 0110011;0xFE00707F;0x60005033;rd[11:7] rs1[19:15] rs2[24:20];;U;Rotation à droite de rs2[5:0]
+Manipulation de bits;RORI;rd, rs1, shamt6;I (shamt6);4;011000s sssss aaaaa 101 ddddd 0010011;0xFC00707F;0x60005013;rd[11:7] rs1[19:15] shamt6[25:20];;U;Rotation à droite par constante
+Manipulation de bits;BSET;rd, rs1, rs2;R;4;0010100 bbbbb aaaaa 001 ddddd 0110011;0xFE00707F;0x28001033;rd[11:7] rs1[19:15] rs2[24:20];;U;Met à 1 le bit rs2[5:0] de rs1
+Manipulation de bits;BCLR;rd, rs1, rs2;R;4;0100100 bbbbb aaaaa 001 ddddd 0110011;0xFE00707F;0x48001033;rd[11:7] rs1[19:15] rs2[24:20];;U;Met à 0 le bit rs2[5:0] de rs1
+Manipulation de bits;BINV;rd, rs1, rs2;R;4;0110100 bbbbb aaaaa 001 ddddd 0110011;0xFE00707F;0x68001033;rd[11:7] rs1[19:15] rs2[24:20];;U;Inverse le bit rs2[5:0] de rs1
+Manipulation de bits;BEXT;rd, rs1, rs2;R;4;0100100 bbbbb aaaaa 101 ddddd 0110011;0xFE00707F;0x48005033;rd[11:7] rs1[19:15] rs2[24:20];;U;rd ← bit rs2[5:0] de rs1 (0 ou 1)
+Manipulation de bits;BSETI;rd, rs1, shamt6;I (shamt6);4;001010s sssss aaaaa 001 ddddd 0010011;0xFC00707F;0x28001013;rd[11:7] rs1[19:15] shamt6[25:20];;U;Met à 1 le bit shamt
+Manipulation de bits;BCLRI;rd, rs1, shamt6;I (shamt6);4;010010s sssss aaaaa 001 ddddd 0010011;0xFC00707F;0x48001013;rd[11:7] rs1[19:15] shamt6[25:20];;U;Met à 0 le bit shamt
+Manipulation de bits;BINVI;rd, rs1, shamt6;I (shamt6);4;011010s sssss aaaaa 001 ddddd 0010011;0xFC00707F;0x68001013;rd[11:7] rs1[19:15] shamt6[25:20];;U;Inverse le bit shamt
+Manipulation de bits;BEXTI;rd, rs1, shamt6;I (shamt6);4;010010s sssss aaaaa 101 ddddd 0010011;0xFC00707F;0x48005013;rd[11:7] rs1[19:15] shamt6[25:20];;U;rd ← bit shamt de rs1
+Chargement/Rangement;LB;rd, imm12(rs1);I;4;iiiiiii iiiii aaaaa 000 ddddd 0000011;0x0000707F;0x00000003;rd[11:7] imm12[31:20] rs1[19:15];;U;"Lecture 8 bits, extension de signe ; adresse = rs1 + imm12 ; trap si non alignée"
+Chargement/Rangement;LH;rd, imm12(rs1);I;4;iiiiiii iiiii aaaaa 001 ddddd 0000011;0x0000707F;0x00001003;rd[11:7] imm12[31:20] rs1[19:15];;U;"Lecture 16 bits, extension de signe ; adresse = rs1 + imm12 ; trap si non alignée"
+Chargement/Rangement;LW;rd, imm12(rs1);I;4;iiiiiii iiiii aaaaa 010 ddddd 0000011;0x0000707F;0x00002003;rd[11:7] imm12[31:20] rs1[19:15];;U;"Lecture 32 bits, extension de signe ; adresse = rs1 + imm12 ; trap si non alignée"
+Chargement/Rangement;LD;rd, imm12(rs1);I;4;iiiiiii iiiii aaaaa 011 ddddd 0000011;0x0000707F;0x00003003;rd[11:7] imm12[31:20] rs1[19:15];;U;"Lecture 64 bits ; adresse = rs1 + imm12 ; trap si non alignée"
+Chargement/Rangement;LBU;rd, imm12(rs1);I;4;iiiiiii iiiii aaaaa 100 ddddd 0000011;0x0000707F;0x00004003;rd[11:7] imm12[31:20] rs1[19:15];;U;"Lecture 8 bits, extension par zéro ; adresse = rs1 + imm12 ; trap si non alignée"
+Chargement/Rangement;LHU;rd, imm12(rs1);I;4;iiiiiii iiiii aaaaa 101 ddddd 0000011;0x0000707F;0x00005003;rd[11:7] imm12[31:20] rs1[19:15];;U;"Lecture 16 bits, extension par zéro ; adresse = rs1 + imm12 ; trap si non alignée"
+Chargement/Rangement;LWU;rd, imm12(rs1);I;4;iiiiiii iiiii aaaaa 110 ddddd 0000011;0x0000707F;0x00006003;rd[11:7] imm12[31:20] rs1[19:15];;U;"Lecture 32 bits, extension par zéro ; adresse = rs1 + imm12 ; trap si non alignée"
+Chargement/Rangement;SB;rs2, imm12(rs1);S;4;iiiiiii bbbbb aaaaa 000 iiiii 0100011;0x0000707F;0x00000023;rs2[24:20] imm12[31:25|11:7] rs1[19:15];;U;"Écriture 8 bits ; adresse = rs1 + imm12 ; trap si non alignée"
+Chargement/Rangement;SH;rs2, imm12(rs1);S;4;iiiiiii bbbbb aaaaa 001 iiiii 0100011;0x0000707F;0x00001023;rs2[24:20] imm12[31:25|11:7] rs1[19:15];;U;"Écriture 16 bits ; adresse = rs1 + imm12 ; trap si non alignée"
+Chargement/Rangement;SW;rs2, imm12(rs1);S;4;iiiiiii bbbbb aaaaa 010 iiiii 0100011;0x0000707F;0x00002023;rs2[24:20] imm12[31:25|11:7] rs1[19:15];;U;"Écriture 32 bits ; adresse = rs1 + imm12 ; trap si non alignée"
+Chargement/Rangement;SD;rs2, imm12(rs1);S;4;iiiiiii bbbbb aaaaa 011 iiiii 0100011;0x0000707F;0x00003023;rs2[24:20] imm12[31:25|11:7] rs1[19:15];;U;"Écriture 64 bits ; adresse = rs1 + imm12 ; trap si non alignée"
+Chargement/Rangement;PREFETCH;imm12(rs1);I (rd=0);4;iiiiiii iiiii aaaaa 011 00000 0001111;0x00007FFF;0x0000300F;imm12[31:20] rs1[19:15];;U;Indice de préchargement de ligne de cache (encodage propre à cette ISA)
+Chargement/Rangement;CBO.FLUSH;(rs1);I (imm12 fixe);4;0000000 00010 aaaaa 010 00000 0001111;0xFFF07FFF;0x0020200F;rs1[19:15];;U;Vide la ligne de cache contenant rs1
+Chargement/Rangement;CBO.ZERO;(rs1);I (imm12 fixe);4;0000000 00100 aaaaa 010 00000 0001111;0xFFF07FFF;0x0040200F;rs1[19:15];;U;Met à zéro la ligne de cache contenant rs1
+Contrôle de flux;JAL;rd, label;J;4;iiiiiii iiiii iiiii iii ddddd 1101111;0x0000007F;0x0000006F;rd[11:7] simm20[31:12] (offset/4);;U;"rd ← PC+4 ; PC ← PC + 4×simm20 (±2 Mio). Forme courte : `jal label` ≡ `jal ra, label`"
+Contrôle de flux;JALR;rd, rs1, imm12;I;4;iiiiiii iiiii aaaaa 000 ddddd 1100111;0x0000707F;0x00000067;rd[11:7] rs1[19:15] imm12[31:20];;U;"rd ← PC+4 ; PC ← (rs1 + imm12) & ~3. Formes admises : `jalr rs1` (rd = ra) et `jalr rd, imm12(rs1)`"
+Contrôle de flux;BEQ;rs1, rs2, label;B;4;iiiiiii bbbbb aaaaa 000 iiiii 1100011;0x0000707F;0x00000063;rs1[19:15] rs2[24:20] simm12[31:25|11:7] (offset/4);;U;"Branche si rs1 = rs2 ; offset = 4×simm12 (±8 Kio), champ éclaté comme le format S"
+Contrôle de flux;BNE;rs1, rs2, label;B;4;iiiiiii bbbbb aaaaa 001 iiiii 1100011;0x0000707F;0x00001063;rs1[19:15] rs2[24:20] simm12[31:25|11:7] (offset/4);;U;"Branche si rs1 ≠ rs2 ; offset = 4×simm12 (±8 Kio), champ éclaté comme le format S"
+Contrôle de flux;BLT;rs1, rs2, label;B;4;iiiiiii bbbbb aaaaa 100 iiiii 1100011;0x0000707F;0x00004063;rs1[19:15] rs2[24:20] simm12[31:25|11:7] (offset/4);;U;"Branche si rs1 < rs2 (signé) ; offset = 4×simm12 (±8 Kio), champ éclaté comme le format S"
+Contrôle de flux;BGE;rs1, rs2, label;B;4;iiiiiii bbbbb aaaaa 101 iiiii 1100011;0x0000707F;0x00005063;rs1[19:15] rs2[24:20] simm12[31:25|11:7] (offset/4);;U;"Branche si rs1 ≥ rs2 (signé) ; offset = 4×simm12 (±8 Kio), champ éclaté comme le format S"
+Contrôle de flux;BLTU;rs1, rs2, label;B;4;iiiiiii bbbbb aaaaa 110 iiiii 1100011;0x0000707F;0x00006063;rs1[19:15] rs2[24:20] simm12[31:25|11:7] (offset/4);;U;"Branche si rs1 < rs2 (non signé) ; offset = 4×simm12 (±8 Kio), champ éclaté comme le format S"
+Contrôle de flux;BGEU;rs1, rs2, label;B;4;iiiiiii bbbbb aaaaa 111 iiiii 1100011;0x0000707F;0x00007063;rs1[19:15] rs2[24:20] simm12[31:25|11:7] (offset/4);;U;"Branche si rs1 ≥ rs2 (non signé) ; offset = 4×simm12 (±8 Kio), champ éclaté comme le format S"
+Atomique/Mémoire;LR.W;rd, (rs1);R (AMO);4;00010ql 00000 aaaaa 010 ddddd 0101111;0xF9F0707F;0x1000202F;rd[11:7] rs1[19:15] aq[26] rl[25];;U;"Lecture réservée 32 bits (load-linked) ; adresse alignée obligatoire"
+Atomique/Mémoire;SC.W;rd, rs2, (rs1);R (AMO);4;00011ql bbbbb aaaaa 010 ddddd 0101111;0xF800707F;0x1800202F;rd[11:7] rs2[24:20] rs1[19:15] aq[26] rl[25];;U;"Écriture conditionnelle 32 bits ; rd ← 0 si succès, ≠ 0 sinon"
+Atomique/Mémoire;CAS.W;rd, rs2, (rs1);R (AMO);4;00101ql bbbbb aaaaa 010 ddddd 0101111;0xF800707F;0x2800202F;rd[11:7] rs2[24:20] rs1[19:15] aq[26] rl[25];;U;"Compare-et-échange 32 bits : compare rd (ancienne valeur attendue) à [rs1] ; si égal écrit rs2 ; rd ← ancienne valeur"
+Atomique/Mémoire;AMOSWAP.W;rd, rs2, (rs1);R (AMO);4;00001ql bbbbb aaaaa 010 ddddd 0101111;0xF800707F;0x0800202F;rd[11:7] rs2[24:20] rs1[19:15] aq[26] rl[25];;U;"Opération atomique 32 bits : échange ; rd ← ancienne valeur"
+Atomique/Mémoire;AMOADD.W;rd, rs2, (rs1);R (AMO);4;00000ql bbbbb aaaaa 010 ddddd 0101111;0xF800707F;0x0000202F;rd[11:7] rs2[24:20] rs1[19:15] aq[26] rl[25];;U;"Opération atomique 32 bits : addition ; rd ← ancienne valeur"
+Atomique/Mémoire;AMOXOR.W;rd, rs2, (rs1);R (AMO);4;00100ql bbbbb aaaaa 010 ddddd 0101111;0xF800707F;0x2000202F;rd[11:7] rs2[24:20] rs1[19:15] aq[26] rl[25];;U;"Opération atomique 32 bits : XOR ; rd ← ancienne valeur"
+Atomique/Mémoire;AMOAND.W;rd, rs2, (rs1);R (AMO);4;01100ql bbbbb aaaaa 010 ddddd 0101111;0xF800707F;0x6000202F;rd[11:7] rs2[24:20] rs1[19:15] aq[26] rl[25];;U;"Opération atomique 32 bits : ET ; rd ← ancienne valeur"
+Atomique/Mémoire;AMOOR.W;rd, rs2, (rs1);R (AMO);4;01000ql bbbbb aaaaa 010 ddddd 0101111;0xF800707F;0x4000202F;rd[11:7] rs2[24:20] rs1[19:15] aq[26] rl[25];;U;"Opération atomique 32 bits : OU ; rd ← ancienne valeur"
+Atomique/Mémoire;AMOMIN.W;rd, rs2, (rs1);R (AMO);4;10000ql bbbbb aaaaa 010 ddddd 0101111;0xF800707F;0x8000202F;rd[11:7] rs2[24:20] rs1[19:15] aq[26] rl[25];;U;"Opération atomique 32 bits : minimum signé ; rd ← ancienne valeur"
+Atomique/Mémoire;AMOMAX.W;rd, rs2, (rs1);R (AMO);4;10100ql bbbbb aaaaa 010 ddddd 0101111;0xF800707F;0xA000202F;rd[11:7] rs2[24:20] rs1[19:15] aq[26] rl[25];;U;"Opération atomique 32 bits : maximum signé ; rd ← ancienne valeur"
+Atomique/Mémoire;AMOMINU.W;rd, rs2, (rs1);R (AMO);4;11000ql bbbbb aaaaa 010 ddddd 0101111;0xF800707F;0xC000202F;rd[11:7] rs2[24:20] rs1[19:15] aq[26] rl[25];;U;"Opération atomique 32 bits : minimum non signé ; rd ← ancienne valeur"
+Atomique/Mémoire;AMOMAXU.W;rd, rs2, (rs1);R (AMO);4;11100ql bbbbb aaaaa 010 ddddd 0101111;0xF800707F;0xE000202F;rd[11:7] rs2[24:20] rs1[19:15] aq[26] rl[25];;U;"Opération atomique 32 bits : maximum non signé ; rd ← ancienne valeur"
+Atomique/Mémoire;LR.D;rd, (rs1);R (AMO);4;00010ql 00000 aaaaa 011 ddddd 0101111;0xF9F0707F;0x1000302F;rd[11:7] rs1[19:15] aq[26] rl[25];;U;"Lecture réservée 64 bits (load-linked) ; adresse alignée obligatoire"
+Atomique/Mémoire;SC.D;rd, rs2, (rs1);R (AMO);4;00011ql bbbbb aaaaa 011 ddddd 0101111;0xF800707F;0x1800302F;rd[11:7] rs2[24:20] rs1[19:15] aq[26] rl[25];;U;"Écriture conditionnelle 64 bits ; rd ← 0 si succès, ≠ 0 sinon"
+Atomique/Mémoire;CAS.D;rd, rs2, (rs1);R (AMO);4;00101ql bbbbb aaaaa 011 ddddd 0101111;0xF800707F;0x2800302F;rd[11:7] rs2[24:20] rs1[19:15] aq[26] rl[25];;U;"Compare-et-échange 64 bits : compare rd (ancienne valeur attendue) à [rs1] ; si égal écrit rs2 ; rd ← ancienne valeur"
+Atomique/Mémoire;AMOSWAP.D;rd, rs2, (rs1);R (AMO);4;00001ql bbbbb aaaaa 011 ddddd 0101111;0xF800707F;0x0800302F;rd[11:7] rs2[24:20] rs1[19:15] aq[26] rl[25];;U;"Opération atomique 64 bits : échange ; rd ← ancienne valeur"
+Atomique/Mémoire;AMOADD.D;rd, rs2, (rs1);R (AMO);4;00000ql bbbbb aaaaa 011 ddddd 0101111;0xF800707F;0x0000302F;rd[11:7] rs2[24:20] rs1[19:15] aq[26] rl[25];;U;"Opération atomique 64 bits : addition ; rd ← ancienne valeur"
+Atomique/Mémoire;AMOXOR.D;rd, rs2, (rs1);R (AMO);4;00100ql bbbbb aaaaa 011 ddddd 0101111;0xF800707F;0x2000302F;rd[11:7] rs2[24:20] rs1[19:15] aq[26] rl[25];;U;"Opération atomique 64 bits : XOR ; rd ← ancienne valeur"
+Atomique/Mémoire;AMOAND.D;rd, rs2, (rs1);R (AMO);4;01100ql bbbbb aaaaa 011 ddddd 0101111;0xF800707F;0x6000302F;rd[11:7] rs2[24:20] rs1[19:15] aq[26] rl[25];;U;"Opération atomique 64 bits : ET ; rd ← ancienne valeur"
+Atomique/Mémoire;AMOOR.D;rd, rs2, (rs1);R (AMO);4;01000ql bbbbb aaaaa 011 ddddd 0101111;0xF800707F;0x4000302F;rd[11:7] rs2[24:20] rs1[19:15] aq[26] rl[25];;U;"Opération atomique 64 bits : OU ; rd ← ancienne valeur"
+Atomique/Mémoire;AMOMIN.D;rd, rs2, (rs1);R (AMO);4;10000ql bbbbb aaaaa 011 ddddd 0101111;0xF800707F;0x8000302F;rd[11:7] rs2[24:20] rs1[19:15] aq[26] rl[25];;U;"Opération atomique 64 bits : minimum signé ; rd ← ancienne valeur"
+Atomique/Mémoire;AMOMAX.D;rd, rs2, (rs1);R (AMO);4;10100ql bbbbb aaaaa 011 ddddd 0101111;0xF800707F;0xA000302F;rd[11:7] rs2[24:20] rs1[19:15] aq[26] rl[25];;U;"Opération atomique 64 bits : maximum signé ; rd ← ancienne valeur"
+Atomique/Mémoire;AMOMINU.D;rd, rs2, (rs1);R (AMO);4;11000ql bbbbb aaaaa 011 ddddd 0101111;0xF800707F;0xC000302F;rd[11:7] rs2[24:20] rs1[19:15] aq[26] rl[25];;U;"Opération atomique 64 bits : minimum non signé ; rd ← ancienne valeur"
+Atomique/Mémoire;AMOMAXU.D;rd, rs2, (rs1);R (AMO);4;11100ql bbbbb aaaaa 011 ddddd 0101111;0xF800707F;0xE000302F;rd[11:7] rs2[24:20] rs1[19:15] aq[26] rl[25];;U;"Opération atomique 64 bits : maximum non signé ; rd ← ancienne valeur"
+Atomique/Mémoire;FENCE;pred, succ;I (fence);4;0000PPP PQQQQ 00000 000 00000 0001111;0xF00FFFFF;0x0000000F;pred[27:24] succ[23:20];;U;"Barrière mémoire ; pred/succ ⊂ {i,o,r,w}. `fence` seul ≡ `fence iorw, iorw`"
+Atomique/Mémoire;FENCE.I;;I (fixe);4;0000000 00000 00000 001 00000 0001111;0xFFFFFFFF;0x0000100F;;;U;Synchronise la fetch d'instructions avec les écritures (JIT, code auto-modifiant)
+Atomique/Mémoire;PAUSE;;I (fixe);4;0000000 10000 00000 000 00000 0001111;0xFFFFFFFF;0x0100000F;;;U;"Indice d'attente active ; cas particulier de FENCE (pred=w, succ=0)"
+Flottant;FADD.S;fd, fs1, fs2[, rm];R (FP);4;0000000 bbbbb aaaaa mmm ddddd 1010011;0xFE00007F;0x00000053;fd[11:7] fs1[19:15] fs2[24:20] rm[14:12];;U;"fd ← fs1 + fs2 (simple précision) ; rm par défaut = dyn"
+Flottant;FSUB.S;fd, fs1, fs2[, rm];R (FP);4;0000100 bbbbb aaaaa mmm ddddd 1010011;0xFE00007F;0x08000053;fd[11:7] fs1[19:15] fs2[24:20] rm[14:12];;U;"fd ← fs1 − fs2 (simple précision) ; rm par défaut = dyn"
+Flottant;FMUL.S;fd, fs1, fs2[, rm];R (FP);4;0001000 bbbbb aaaaa mmm ddddd 1010011;0xFE00007F;0x10000053;fd[11:7] fs1[19:15] fs2[24:20] rm[14:12];;U;"fd ← fs1 × fs2 (simple précision) ; rm par défaut = dyn"
+Flottant;FDIV.S;fd, fs1, fs2[, rm];R (FP);4;0001100 bbbbb aaaaa mmm ddddd 1010011;0xFE00007F;0x18000053;fd[11:7] fs1[19:15] fs2[24:20] rm[14:12];;U;"fd ← fs1 ÷ fs2 (simple précision) ; rm par défaut = dyn"
+Flottant;FSQRT.S;fd, fs1[, rm];R (FP);4;0101100 00000 aaaaa mmm ddddd 1010011;0xFFF0007F;0x58000053;fd[11:7] fs1[19:15] rm[14:12];;U;Racine carrée correctement arrondie (simple précision)
+Flottant;FSGNJ.S;fd, fs1, fs2;R (FP);4;0010000 bbbbb aaaaa 000 ddddd 1010011;0xFE00707F;0x20000053;fd[11:7] fs1[19:15] fs2[24:20];;U;magnitude de fs1, signe de fs2 (simple précision)
+Flottant;FSGNJN.S;fd, fs1, fs2;R (FP);4;0010000 bbbbb aaaaa 001 ddddd 1010011;0xFE00707F;0x20001053;fd[11:7] fs1[19:15] fs2[24:20];;U;magnitude de fs1, signe opposé à fs2 (simple précision)
+Flottant;FSGNJX.S;fd, fs1, fs2;R (FP);4;0010000 bbbbb aaaaa 010 ddddd 1010011;0xFE00707F;0x20002053;fd[11:7] fs1[19:15] fs2[24:20];;U;magnitude de fs1, signe = XOR des signes (simple précision)
+Flottant;FMIN.S;fd, fs1, fs2;R (FP);4;0010100 bbbbb aaaaa 000 ddddd 1010011;0xFE00707F;0x28000053;fd[11:7] fs1[19:15] fs2[24:20];;U;Minimum IEEE 754-2019 (simple précision)
+Flottant;FMAX.S;fd, fs1, fs2;R (FP);4;0010100 bbbbb aaaaa 001 ddddd 1010011;0xFE00707F;0x28001053;fd[11:7] fs1[19:15] fs2[24:20];;U;Maximum IEEE 754-2019 (simple précision)
+Flottant;FROUND.S;fd, fs1[, rm];R (FP);4;0100000 00100 aaaaa mmm ddddd 1010011;0xFFF0007F;0x40400053;fd[11:7] fs1[19:15] rm[14:12];;U;Arrondi à l'entier, résultat dans le format flottant (simple précision)
+Flottant;FLI.S;fd, constante;R (FP, rs1 = indice);4;1111000 00001 aaaaa 000 ddddd 1010011;0xFFF0707F;0xF0100053;fd[11:7] indice[19:15];;U;"Charge une constante (simple précision) : 0.0 1.0 -1.0 0.5 2.0 0.25 4.0 0.125 8.0 16.0 0.0625 3.0 1.5 0.75 inf -inf nan = indices 0..16 ; 17..31 réservés"
+Flottant;FADD.D;fd, fs1, fs2[, rm];R (FP);4;0000001 bbbbb aaaaa mmm ddddd 1010011;0xFE00007F;0x02000053;fd[11:7] fs1[19:15] fs2[24:20] rm[14:12];;U;"fd ← fs1 + fs2 (double précision) ; rm par défaut = dyn"
+Flottant;FSUB.D;fd, fs1, fs2[, rm];R (FP);4;0000101 bbbbb aaaaa mmm ddddd 1010011;0xFE00007F;0x0A000053;fd[11:7] fs1[19:15] fs2[24:20] rm[14:12];;U;"fd ← fs1 − fs2 (double précision) ; rm par défaut = dyn"
+Flottant;FMUL.D;fd, fs1, fs2[, rm];R (FP);4;0001001 bbbbb aaaaa mmm ddddd 1010011;0xFE00007F;0x12000053;fd[11:7] fs1[19:15] fs2[24:20] rm[14:12];;U;"fd ← fs1 × fs2 (double précision) ; rm par défaut = dyn"
+Flottant;FDIV.D;fd, fs1, fs2[, rm];R (FP);4;0001101 bbbbb aaaaa mmm ddddd 1010011;0xFE00007F;0x1A000053;fd[11:7] fs1[19:15] fs2[24:20] rm[14:12];;U;"fd ← fs1 ÷ fs2 (double précision) ; rm par défaut = dyn"
+Flottant;FSQRT.D;fd, fs1[, rm];R (FP);4;0101101 00000 aaaaa mmm ddddd 1010011;0xFFF0007F;0x5A000053;fd[11:7] fs1[19:15] rm[14:12];;U;Racine carrée correctement arrondie (double précision)
+Flottant;FSGNJ.D;fd, fs1, fs2;R (FP);4;0010001 bbbbb aaaaa 000 ddddd 1010011;0xFE00707F;0x22000053;fd[11:7] fs1[19:15] fs2[24:20];;U;magnitude de fs1, signe de fs2 (double précision)
+Flottant;FSGNJN.D;fd, fs1, fs2;R (FP);4;0010001 bbbbb aaaaa 001 ddddd 1010011;0xFE00707F;0x22001053;fd[11:7] fs1[19:15] fs2[24:20];;U;magnitude de fs1, signe opposé à fs2 (double précision)
+Flottant;FSGNJX.D;fd, fs1, fs2;R (FP);4;0010001 bbbbb aaaaa 010 ddddd 1010011;0xFE00707F;0x22002053;fd[11:7] fs1[19:15] fs2[24:20];;U;magnitude de fs1, signe = XOR des signes (double précision)
+Flottant;FMIN.D;fd, fs1, fs2;R (FP);4;0010101 bbbbb aaaaa 000 ddddd 1010011;0xFE00707F;0x2A000053;fd[11:7] fs1[19:15] fs2[24:20];;U;Minimum IEEE 754-2019 (double précision)
+Flottant;FMAX.D;fd, fs1, fs2;R (FP);4;0010101 bbbbb aaaaa 001 ddddd 1010011;0xFE00707F;0x2A001053;fd[11:7] fs1[19:15] fs2[24:20];;U;Maximum IEEE 754-2019 (double précision)
+Flottant;FROUND.D;fd, fs1[, rm];R (FP);4;0100001 00100 aaaaa mmm ddddd 1010011;0xFFF0007F;0x42400053;fd[11:7] fs1[19:15] rm[14:12];;U;Arrondi à l'entier, résultat dans le format flottant (double précision)
+Flottant;FLI.D;fd, constante;R (FP, rs1 = indice);4;1111001 00001 aaaaa 000 ddddd 1010011;0xFFF0707F;0xF2100053;fd[11:7] indice[19:15];;U;"Charge une constante (double précision) : 0.0 1.0 -1.0 0.5 2.0 0.25 4.0 0.125 8.0 16.0 0.0625 3.0 1.5 0.75 inf -inf nan = indices 0..16 ; 17..31 réservés"
+Flottant;FMADD.S;fd, fs1, fs2, fs3[, rm];R4;4;ccccc00 bbbbb aaaaa mmm ddddd 1000011;0x0600007F;0x00000043;fd[11:7] fs1[19:15] fs2[24:20] fs3[31:27] rm[14:12];;U;fd ← (fs1×fs2) + fs3, un seul arrondi
+Flottant;FMADD.D;fd, fs1, fs2, fs3[, rm];R4;4;ccccc01 bbbbb aaaaa mmm ddddd 1000011;0x0600007F;0x02000043;fd[11:7] fs1[19:15] fs2[24:20] fs3[31:27] rm[14:12];;U;fd ← (fs1×fs2) + fs3, un seul arrondi
+Flottant;FMSUB.S;fd, fs1, fs2, fs3[, rm];R4;4;ccccc00 bbbbb aaaaa mmm ddddd 1000111;0x0600007F;0x00000047;fd[11:7] fs1[19:15] fs2[24:20] fs3[31:27] rm[14:12];;U;fd ← (fs1×fs2) − fs3, un seul arrondi
+Flottant;FMSUB.D;fd, fs1, fs2, fs3[, rm];R4;4;ccccc01 bbbbb aaaaa mmm ddddd 1000111;0x0600007F;0x02000047;fd[11:7] fs1[19:15] fs2[24:20] fs3[31:27] rm[14:12];;U;fd ← (fs1×fs2) − fs3, un seul arrondi
+Flottant;FNMSUB.S;fd, fs1, fs2, fs3[, rm];R4;4;ccccc00 bbbbb aaaaa mmm ddddd 1001011;0x0600007F;0x0000004B;fd[11:7] fs1[19:15] fs2[24:20] fs3[31:27] rm[14:12];;U;fd ← −(fs1×fs2) + fs3, un seul arrondi
+Flottant;FNMSUB.D;fd, fs1, fs2, fs3[, rm];R4;4;ccccc01 bbbbb aaaaa mmm ddddd 1001011;0x0600007F;0x0200004B;fd[11:7] fs1[19:15] fs2[24:20] fs3[31:27] rm[14:12];;U;fd ← −(fs1×fs2) + fs3, un seul arrondi
+Flottant;FNMADD.S;fd, fs1, fs2, fs3[, rm];R4;4;ccccc00 bbbbb aaaaa mmm ddddd 1001111;0x0600007F;0x0000004F;fd[11:7] fs1[19:15] fs2[24:20] fs3[31:27] rm[14:12];;U;fd ← −(fs1×fs2) − fs3, un seul arrondi
+Flottant;FNMADD.D;fd, fs1, fs2, fs3[, rm];R4;4;ccccc01 bbbbb aaaaa mmm ddddd 1001111;0x0600007F;0x0200004F;fd[11:7] fs1[19:15] fs2[24:20] fs3[31:27] rm[14:12];;U;fd ← −(fs1×fs2) − fs3, un seul arrondi
+Flottant - conversion;FCVT.W.S;rd, fs1[, rm];R (FP);4;1100000 00000 aaaaa mmm ddddd 1010011;0xFFF0007F;0xC0000053;rd[11:7] fs1[19:15] rm[14:12];;U;"Flottant → entier signé 32 bits ; rm=rtz équivaut au cast C ; saturation + flag NV si hors plage ou NaN"
+Flottant - conversion;FCVT.S.W;fd, rs1[, rm];R (FP);4;1101000 00000 aaaaa mmm ddddd 1010011;0xFFF0007F;0xD0000053;fd[11:7] rs1[19:15] rm[14:12];;U;Entier signé 32 bits → flottant
+Flottant - conversion;FCVT.WU.S;rd, fs1[, rm];R (FP);4;1100000 00001 aaaaa mmm ddddd 1010011;0xFFF0007F;0xC0100053;rd[11:7] fs1[19:15] rm[14:12];;U;"Flottant → entier non signé 32 bits ; rm=rtz équivaut au cast C ; saturation + flag NV si hors plage ou NaN"
+Flottant - conversion;FCVT.S.WU;fd, rs1[, rm];R (FP);4;1101000 00001 aaaaa mmm ddddd 1010011;0xFFF0007F;0xD0100053;fd[11:7] rs1[19:15] rm[14:12];;U;Entier non signé 32 bits → flottant
+Flottant - conversion;FCVT.L.S;rd, fs1[, rm];R (FP);4;1100000 00010 aaaaa mmm ddddd 1010011;0xFFF0007F;0xC0200053;rd[11:7] fs1[19:15] rm[14:12];;U;"Flottant → entier signé 64 bits ; rm=rtz équivaut au cast C ; saturation + flag NV si hors plage ou NaN"
+Flottant - conversion;FCVT.S.L;fd, rs1[, rm];R (FP);4;1101000 00010 aaaaa mmm ddddd 1010011;0xFFF0007F;0xD0200053;fd[11:7] rs1[19:15] rm[14:12];;U;Entier signé 64 bits → flottant
+Flottant - conversion;FCVT.LU.S;rd, fs1[, rm];R (FP);4;1100000 00011 aaaaa mmm ddddd 1010011;0xFFF0007F;0xC0300053;rd[11:7] fs1[19:15] rm[14:12];;U;"Flottant → entier non signé 64 bits ; rm=rtz équivaut au cast C ; saturation + flag NV si hors plage ou NaN"
+Flottant - conversion;FCVT.S.LU;fd, rs1[, rm];R (FP);4;1101000 00011 aaaaa mmm ddddd 1010011;0xFFF0007F;0xD0300053;fd[11:7] rs1[19:15] rm[14:12];;U;Entier non signé 64 bits → flottant
+Flottant - conversion;FCVT.W.D;rd, fs1[, rm];R (FP);4;1100001 00000 aaaaa mmm ddddd 1010011;0xFFF0007F;0xC2000053;rd[11:7] fs1[19:15] rm[14:12];;U;"Flottant → entier signé 32 bits ; rm=rtz équivaut au cast C ; saturation + flag NV si hors plage ou NaN"
+Flottant - conversion;FCVT.D.W;fd, rs1;R (FP);4;1101001 00000 aaaaa 000 ddddd 1010011;0xFFF0707F;0xD2000053;fd[11:7] rs1[19:15];;U;Entier signé 32 bits → double (conversion exacte : pas de rm, champ = 000)
+Flottant - conversion;FCVT.WU.D;rd, fs1[, rm];R (FP);4;1100001 00001 aaaaa mmm ddddd 1010011;0xFFF0007F;0xC2100053;rd[11:7] fs1[19:15] rm[14:12];;U;"Flottant → entier non signé 32 bits ; rm=rtz équivaut au cast C ; saturation + flag NV si hors plage ou NaN"
+Flottant - conversion;FCVT.D.WU;fd, rs1;R (FP);4;1101001 00001 aaaaa 000 ddddd 1010011;0xFFF0707F;0xD2100053;fd[11:7] rs1[19:15];;U;Entier non signé 32 bits → double (conversion exacte : pas de rm, champ = 000)
+Flottant - conversion;FCVT.L.D;rd, fs1[, rm];R (FP);4;1100001 00010 aaaaa mmm ddddd 1010011;0xFFF0007F;0xC2200053;rd[11:7] fs1[19:15] rm[14:12];;U;"Flottant → entier signé 64 bits ; rm=rtz équivaut au cast C ; saturation + flag NV si hors plage ou NaN"
+Flottant - conversion;FCVT.D.L;fd, rs1[, rm];R (FP);4;1101001 00010 aaaaa mmm ddddd 1010011;0xFFF0007F;0xD2200053;fd[11:7] rs1[19:15] rm[14:12];;U;Entier signé 64 bits → flottant
+Flottant - conversion;FCVT.LU.D;rd, fs1[, rm];R (FP);4;1100001 00011 aaaaa mmm ddddd 1010011;0xFFF0007F;0xC2300053;rd[11:7] fs1[19:15] rm[14:12];;U;"Flottant → entier non signé 64 bits ; rm=rtz équivaut au cast C ; saturation + flag NV si hors plage ou NaN"
+Flottant - conversion;FCVT.D.LU;fd, rs1[, rm];R (FP);4;1101001 00011 aaaaa mmm ddddd 1010011;0xFFF0007F;0xD2300053;fd[11:7] rs1[19:15] rm[14:12];;U;Entier non signé 64 bits → flottant
+Flottant - conversion;FCVT.S.D;fd, fs1[, rm];R (FP);4;0100000 00001 aaaaa mmm ddddd 1010011;0xFFF0007F;0x40100053;fd[11:7] fs1[19:15] rm[14:12];;U;double → float (arrondi)
+Flottant - conversion;FCVT.D.S;fd, fs1;R (FP);4;0100001 00000 aaaaa 000 ddddd 1010011;0xFFF0707F;0x42000053;fd[11:7] fs1[19:15];;U;float → double (conversion exacte : pas de rm, champ = 000)
+Flottant - conversion;FMV.X.W;rd, fs1;R (FP);4;1110000 00000 aaaaa 000 ddddd 1010011;0xFFF0707F;0xE0000053;rd[11:7] fs1[19:15];;U;Copie bit à bit des 32 bits bas de fs1, extension de signe
+Flottant - conversion;FMV.W.X;fd, rs1;R (FP);4;1111000 00000 aaaaa 000 ddddd 1010011;0xFFF0707F;0xF0000053;fd[11:7] rs1[19:15];;U;Copie bit à bit rs1[31:0] vers fd (NaN-boxing)
+Flottant - conversion;FMV.X.D;rd, fs1;R (FP);4;1110001 00000 aaaaa 000 ddddd 1010011;0xFFF0707F;0xE2000053;rd[11:7] fs1[19:15];;U;Copie bit à bit 64 bits flottant → entier
+Flottant - conversion;FMV.D.X;fd, rs1;R (FP);4;1111001 00000 aaaaa 000 ddddd 1010011;0xFFF0707F;0xF2000053;fd[11:7] rs1[19:15];;U;Copie bit à bit 64 bits entier → flottant
+Flottant - comparaison;FEQ.S;rd, fs1, fs2;R (FP);4;1010000 bbbbb aaaaa 010 ddddd 1010011;0xFE00707F;0xA0002053;rd[11:7] fs1[19:15] fs2[24:20];;U;"rd ← (fs1 = fs2) ? 1 : 0 ; 0 si NaN ; signale seulement pour sNaN"
+Flottant - comparaison;FLT.S;rd, fs1, fs2;R (FP);4;1010000 bbbbb aaaaa 001 ddddd 1010011;0xFE00707F;0xA0001053;rd[11:7] fs1[19:15] fs2[24:20];;U;"rd ← (fs1 < fs2) ? 1 : 0 ; 0 et flag NV si NaN"
+Flottant - comparaison;FLE.S;rd, fs1, fs2;R (FP);4;1010000 bbbbb aaaaa 000 ddddd 1010011;0xFE00707F;0xA0000053;rd[11:7] fs1[19:15] fs2[24:20];;U;"rd ← (fs1 ≤ fs2) ? 1 : 0 ; 0 et flag NV si NaN"
+Flottant - comparaison;FCLASS.S;rd, fs1;R (FP);4;1110000 00000 aaaaa 001 ddddd 1010011;0xFFF0707F;0xE0001053;rd[11:7] fs1[19:15];;U;Masque 10 bits : −Inf, −normal, −dénorm, −0, +0, +dénorm, +normal, +Inf, sNaN, qNaN
+Flottant - comparaison;FEQ.D;rd, fs1, fs2;R (FP);4;1010001 bbbbb aaaaa 010 ddddd 1010011;0xFE00707F;0xA2002053;rd[11:7] fs1[19:15] fs2[24:20];;U;"rd ← (fs1 = fs2) ? 1 : 0 ; 0 si NaN ; signale seulement pour sNaN"
+Flottant - comparaison;FLT.D;rd, fs1, fs2;R (FP);4;1010001 bbbbb aaaaa 001 ddddd 1010011;0xFE00707F;0xA2001053;rd[11:7] fs1[19:15] fs2[24:20];;U;"rd ← (fs1 < fs2) ? 1 : 0 ; 0 et flag NV si NaN"
+Flottant - comparaison;FLE.D;rd, fs1, fs2;R (FP);4;1010001 bbbbb aaaaa 000 ddddd 1010011;0xFE00707F;0xA2000053;rd[11:7] fs1[19:15] fs2[24:20];;U;"rd ← (fs1 ≤ fs2) ? 1 : 0 ; 0 et flag NV si NaN"
+Flottant - comparaison;FCLASS.D;rd, fs1;R (FP);4;1110001 00000 aaaaa 001 ddddd 1010011;0xFFF0707F;0xE2001053;rd[11:7] fs1[19:15];;U;Masque 10 bits : −Inf, −normal, −dénorm, −0, +0, +dénorm, +normal, +Inf, sNaN, qNaN
+Flottant - mémoire;FLW;fd, imm12(rs1);I;4;iiiiiii iiiii aaaaa 010 ddddd 0000111;0x0000707F;0x00002007;fd[11:7] imm12[31:20] rs1[19:15];;U;Lecture float32 (NaN-boxed dans fd)
+Flottant - mémoire;FLD;fd, imm12(rs1);I;4;iiiiiii iiiii aaaaa 011 ddddd 0000111;0x0000707F;0x00003007;fd[11:7] imm12[31:20] rs1[19:15];;U;Lecture float64
+Flottant - mémoire;FSW;fs2, imm12(rs1);S;4;iiiiiii bbbbb aaaaa 010 iiiii 0100111;0x0000707F;0x00002027;fs2[24:20] imm12[31:25|11:7] rs1[19:15];;U;Écriture float32
+Flottant - mémoire;FSD;fs2, imm12(rs1);S;4;iiiiiii bbbbb aaaaa 011 iiiii 0100111;0x0000707F;0x00003027;fs2[24:20] imm12[31:25|11:7] rs1[19:15];;U;Écriture float64
+Système/Trap;TRAP;imm8;I (imm8);4;0010iii iiiii 00000 000 00000 1110011;0xF00FFFFF;0x20000073;imm8[27:20];;U;"Trap logicielle : TT = 0x100 + imm8 ; TPC = PC de cette instruction ; retour par DONE. TRAP 0 = appel système"
+Système/Trap;BREAK;;I (fixe);4;0000000 00001 00000 000 00000 1110011;0xFFFFFFFF;0x00100073;;;U;Trap TT = 0x00A (point d'arrêt)
+Système/Trap;ILLEGAL;;fixe;4;0000000 00000 00000 000 00000 0000000;0xFFFFFFFF;0x00000000;;;U;Mot nul : instruction illégale garantie (TT = 0x004)
+Système/Trap;RETRY;;I (fixe);4;0001000 00010 00000 000 00000 1110011;0xFFFFFFFF;0x10200073;;;S;"Retour de trap : PC ← TPC ; STATUS ← TSTATE ; TL ← TL−1 (ré-exécute l'instruction fautive)"
+Système/Trap;DONE;;I (fixe);4;0001000 00011 00000 000 00000 1110011;0xFFFFFFFF;0x10300073;;;S;"Retour de trap : PC ← TPC + 4 ; STATUS ← TSTATE ; TL ← TL−1 (appel système terminé)"
+Système/Trap;WFI;;I (fixe);4;0001000 00101 00000 000 00000 1110011;0xFFFFFFFF;0x10500073;;;S;Attend une interruption
+Système/Trap;CSRRW;rd, csr, rs1;I (CSR);4;kkkkkkk kkkkk aaaaa 001 ddddd 1110011;0x0000707F;0x00001073;rd[11:7] csr[31:20] rs1[19:15];;U/S;"Échange atomique : rd ← CSR ; CSR ← rs1 ; #PRIV (TT 0x005) si CSR réservé à S en mode U ; csr = nom ou nombre 0–4095"
+Système/Trap;CSRRS;rd, csr, rs1;I (CSR);4;kkkkkkk kkkkk aaaaa 010 ddddd 1110011;0x0000707F;0x00002073;rd[11:7] csr[31:20] rs1[19:15];;U/S;"rd ← CSR ; CSR ← CSR OU rs1 (rs1 = zero : lecture seule, sans effet de bord) ; #PRIV (TT 0x005) si CSR réservé à S en mode U ; csr = nom ou nombre 0–4095"
+Système/Trap;CSRRC;rd, csr, rs1;I (CSR);4;kkkkkkk kkkkk aaaaa 011 ddddd 1110011;0x0000707F;0x00003073;rd[11:7] csr[31:20] rs1[19:15];;U/S;"rd ← CSR ; CSR ← CSR ET NON rs1 ; #PRIV (TT 0x005) si CSR réservé à S en mode U ; csr = nom ou nombre 0–4095"
+Système/Trap;CSRRWI;rd, csr, uimm5;I (CSR);4;kkkkkkk kkkkk uuuuu 101 ddddd 1110011;0x0000707F;0x00005073;rd[11:7] csr[31:20] uimm5[19:15];;U/S;"Comme CSRRW avec immédiate 5 bits ; #PRIV (TT 0x005) si CSR réservé à S en mode U ; csr = nom ou nombre 0–4095"
+Système/Trap;CSRRSI;rd, csr, uimm5;I (CSR);4;kkkkkkk kkkkk uuuuu 110 ddddd 1110011;0x0000707F;0x00006073;rd[11:7] csr[31:20] uimm5[19:15];;U/S;"Comme CSRRS avec immédiate 5 bits ; #PRIV (TT 0x005) si CSR réservé à S en mode U ; csr = nom ou nombre 0–4095"
+Système/Trap;CSRRCI;rd, csr, uimm5;I (CSR);4;kkkkkkk kkkkk uuuuu 111 ddddd 1110011;0x0000707F;0x00007073;rd[11:7] csr[31:20] uimm5[19:15];;U/S;"Comme CSRRC avec immédiate 5 bits ; #PRIV (TT 0x005) si CSR réservé à S en mode U ; csr = nom ou nombre 0–4095"
+MMU;TLBFLUSH;[rs1[, rs2]];R (rd=0);4;0001001 bbbbb aaaaa 000 00000 1110011;0xFE007FFF;0x12000073;rs1[19:15] rs2[24:20];;S;Invalide le TLB : rs1 = adresse virtuelle (zero = toutes), rs2 = ASID (zero = tous). Formes `tlbflush` et `tlbflush rs1` admises
+Pseudo-instructions;MV;rd, rs;pseudo;4;;;;;ADDI rd, rs, 0;U;Copie de registre
+Pseudo-instructions;LI;rd, imm64;pseudo;4–32;;;;;ADDI | LUI+ADDIW | séquence LUI/ADDIW/SLLI/ADDI (1 à 8 instr.);U;"Charge une constante 64 bits. 12 bits : ADDI ; 32 bits : LUI + ADDIW ; sinon hi = (v+0x800)>>12, décalage = ctz(hi), LI(hi>>ctz) ; SLLI (ctz+12) ; ADDI lo12"
+Pseudo-instructions;LA;rd, symbole;pseudo;8;;;;;"AUIPC rd, hi20(sym−pc) ; ADDI rd, rd, lo12(sym−pc)";U;Adresse d'un symbole, relatif au PC (hi = (off+0x800)>>12)
+Pseudo-instructions;NOP;;pseudo;4;;;;;ADDI zero, zero, 0;U;Ne fait rien (0x00000013)
+Pseudo-instructions;NOT;rd, rs;pseudo;4;;;;;XORI rd, rs, -1;U;Complément à un
+Pseudo-instructions;NEG;rd, rs;pseudo;4;;;;;SUB rd, zero, rs;U;Opposé
+Pseudo-instructions;SEQZ;rd, rs;pseudo;4;;;;;SLTIU rd, rs, 1;U;rd ← (rs = 0)
+Pseudo-instructions;SNEZ;rd, rs;pseudo;4;;;;;SLTU rd, zero, rs;U;rd ← (rs ≠ 0)
+Pseudo-instructions;BEQZ;rs, label;pseudo;4;;;;;BEQ rs, zero, label;U;Branche si rs = 0
+Pseudo-instructions;BNEZ;rs, label;pseudo;4;;;;;BNE rs, zero, label;U;Branche si rs ≠ 0
+Pseudo-instructions;BLTZ;rs, label;pseudo;4;;;;;BLT rs, zero, label;U;Branche si rs < 0
+Pseudo-instructions;BGEZ;rs, label;pseudo;4;;;;;BGE rs, zero, label;U;Branche si rs ≥ 0
+Pseudo-instructions;BGTZ;rs, label;pseudo;4;;;;;BLT zero, rs, label;U;Branche si rs > 0
+Pseudo-instructions;BLEZ;rs, label;pseudo;4;;;;;BGE zero, rs, label;U;Branche si rs ≤ 0
+Pseudo-instructions;BGT;rs1, rs2, label;pseudo;4;;;;;BLT rs2, rs1, label;U;Branche si rs1 > rs2 (signé)
+Pseudo-instructions;BLE;rs1, rs2, label;pseudo;4;;;;;BGE rs2, rs1, label;U;Branche si rs1 ≤ rs2 (signé)
+Pseudo-instructions;BGTU;rs1, rs2, label;pseudo;4;;;;;BLTU rs2, rs1, label;U;Branche si rs1 > rs2 (non signé)
+Pseudo-instructions;BLEU;rs1, rs2, label;pseudo;4;;;;;BGEU rs2, rs1, label;U;Branche si rs1 ≤ rs2 (non signé)
+Pseudo-instructions;J;label;pseudo;4;;;;;JAL zero, label;U;Saut inconditionnel
+Pseudo-instructions;JR;rs;pseudo;4;;;;;JALR zero, rs, 0;U;Saut indirect
+Pseudo-instructions;CALL;symbole;pseudo;8;;;;;"AUIPC ra, hi20(sym−pc) ; JALR ra, lo12(ra)";U;"Appel de fonction (portée ±2 Gio ; l'éditeur de liens peut relaxer en JAL)"
+Pseudo-instructions;RET;;pseudo;4;;;;;JALR zero, ra, 0;U;Retour de fonction
+Flottant;FMV.S;fd, fs;pseudo;4;;;;;FSGNJ.S fd, fs, fs;U;Copie de registre flottant
+Flottant;FNEG.S;fd, fs;pseudo;4;;;;;FSGNJN.S fd, fs, fs;U;Opposé (inverse le bit de signe)
+Flottant;FABS.S;fd, fs;pseudo;4;;;;;FSGNJX.S fd, fs, fs;U;Valeur absolue (efface le bit de signe)
+Flottant;FMV.D;fd, fs;pseudo;4;;;;;FSGNJ.D fd, fs, fs;U;Copie de registre flottant
+Flottant;FNEG.D;fd, fs;pseudo;4;;;;;FSGNJN.D fd, fs, fs;U;Opposé (inverse le bit de signe)
+Flottant;FABS.D;fd, fs;pseudo;4;;;;;FSGNJX.D fd, fs, fs;U;Valeur absolue (efface le bit de signe)
+Flottant - contrôle;FRCSR;rd;pseudo;4;;;;;CSRRS rd, fcsr, zero;U/S;Lit FCSR
+Flottant - contrôle;FSCSR;[rd,] rs;pseudo;4;;;;;CSRRW rd, fcsr, rs;U/S;Écrit FCSR (rd = zero si omis)
+Flottant - contrôle;FRRM;rd;pseudo;4;;;;;CSRRS rd, frm, zero;U/S;Lit le mode d'arrondi
+Flottant - contrôle;FSRM;[rd,] rs;pseudo;4;;;;;CSRRW rd, frm, rs;U/S;Écrit le mode d'arrondi
+Flottant - contrôle;FRFLAGS;rd;pseudo;4;;;;;CSRRS rd, fflags, zero;U/S;Lit les flags FP sticky
+Flottant - contrôle;FSFLAGS;[rd,] rs;pseudo;4;;;;;CSRRW rd, fflags, rs;U/S;Écrit les flags FP sticky
+Système/Trap;CSRR;rd, csr;pseudo;4;;;;;CSRRS rd, csr, zero;U/S;Lit un CSR
+Système/Trap;CSRW;csr, rs;pseudo;4;;;;;CSRRW zero, csr, rs;U/S;Écrit un CSR
+Système/Trap;CSRS;csr, rs;pseudo;4;;;;;CSRRS zero, csr, rs;U/S;Met à 1 des bits d'un CSR
+Système/Trap;CSRC;csr, rs;pseudo;4;;;;;CSRRC zero, csr, rs;U/S;Met à 0 des bits d'un CSR
+Système/Trap;CSRWI;csr, uimm5;pseudo;4;;;;;CSRRWI zero, csr, uimm5;U/S;Écrit un CSR (immédiate)
+Système/Trap;CSRSI;csr, uimm5;pseudo;4;;;;;CSRRSI zero, csr, uimm5;U/S;Met à 1 des bits d'un CSR (immédiate)
+Système/Trap;CSRCI;csr, uimm5;pseudo;4;;;;;CSRRCI zero, csr, uimm5;U/S;Met à 0 des bits d'un CSR (immédiate)
+Système/Trap;EI;;pseudo;4;;;;;CSRRSI zero, status, 1;S;Active les interruptions (STATUS.IE ← 1)
+Système/Trap;DI;;pseudo;4;;;;;CSRRCI zero, status, 1;S;Masque les interruptions (STATUS.IE ← 0)
+Système/Trap;RDCYCLE;rd;pseudo;4;;;;;CSRRS rd, cycle, zero;U;Lit le compteur de cycles
+Système/Trap;RDTIME;rd;pseudo;4;;;;;CSRRS rd, time, zero;U;Lit l'horloge temps réel
+Système/Trap;RDINSTRET;rd;pseudo;4;;;;;CSRRS rd, instret, zero;U;Lit le compteur d'instructions retirées
+Système/Trap;RDFEATURES;rd;pseudo;4;;;;;CSRRS rd, features, zero;S;Lit les extensions de l'ISA
+MMU;WRPTBR;rs;pseudo;4;;;;;CSRRW zero, ptbr, rs;S;Change la racine de pagination + ASID (suivre d'un TLBFLUSH si besoin)

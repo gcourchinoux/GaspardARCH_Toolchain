@@ -1,0 +1,265 @@
+diff --git a/GaspardARCH/build-toolchain.sh b/GaspardARCH/build-toolchain.sh
+new file mode 100644
+--- /dev/null
++++ b/GaspardARCH/build-toolchain.sh
+@@ -0,0 +1,46 @@
++#!/usr/bin/env bash
++# Run with: bash GaspardARCH/build-toolchain.sh binutils|gcc|libgcc
++set -euo pipefail
++ROOT=$(cd "$(dirname "$0")/.." && pwd)
++TARGET=gaspardarc-unknown-elf
++PREFIX=${PREFIX:-"$ROOT/build-gaspardarc-install"}
++JOBS=${JOBS:-4}
++BUILD_TRIPLET=${BUILD_TRIPLET:-x86_64-w64-mingw32}
++HOST_TRIPLET=${HOST_TRIPLET:-$BUILD_TRIPLET}
++export PATH="$PREFIX/bin:$PATH"
++LEGACY='-O1 -std=gnu89 -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=int-conversion -Wno-error=incompatible-pointer-types'
++export CC_FOR_BUILD=${CC_FOR_BUILD:-"gcc $LEGACY"}
++export CFLAGS_FOR_TARGET="${CFLAGS_FOR_TARGET:--O2 -ffreestanding}"
++case ${1:-binutils} in
++binutils)
++  mkdir -p "$ROOT/build-binutils-gaspardarc"
++  cd "$ROOT/build-binutils-gaspardarc"
++  CFLAGS="${CFLAGS:-$LEGACY}" "$ROOT/binutils-2.25/configure" \
++    --build="$BUILD_TRIPLET" --host="$HOST_TRIPLET" --target="$TARGET" \
++    --prefix="$PREFIX" --disable-nls --disable-werror --disable-shared \
++    --disable-gold --disable-gprof
++  make -j"$JOBS" MAKEINFO=true
++  make MAKEINFO=true install
++  ;;
++gcc)
++  command -v "$TARGET-as" >/dev/null
++  mkdir -p "$ROOT/build-gcc-gaspardarc"
++  cd "$ROOT/build-gcc-gaspardarc"
++  CFLAGS="${CFLAGS:-$LEGACY}" CXXFLAGS="${CXXFLAGS:--O1}" \
++  "$ROOT/gcc-4.6.4/configure" \
++    --build="$BUILD_TRIPLET" --host="$HOST_TRIPLET" --target="$TARGET" \
++    --prefix="$PREFIX" --enable-languages=c --without-headers --with-newlib \
++    --with-gnu-as --with-gnu-ld --disable-bootstrap --disable-nls \
++    --disable-werror --disable-multilib --disable-shared --disable-threads \
++    --disable-lto --disable-libssp --disable-libgomp --disable-libquadmath \
++    --disable-libmudflap --disable-decimal-float --without-ppl --without-cloog
++  make -j"$JOBS" MAKEINFO=true "CC_FOR_BUILD=$CC_FOR_BUILD" all-gcc
++  make MAKEINFO=true "CC_FOR_BUILD=$CC_FOR_BUILD" install-gcc
++  ;;
++libgcc)
++  cd "$ROOT/build-gcc-gaspardarc"
++  make -j"$JOBS" MAKEINFO=true "CC_FOR_BUILD=$CC_FOR_BUILD" all-target-libgcc
++  make MAKEINFO=true "CC_FOR_BUILD=$CC_FOR_BUILD" install-target-libgcc
++  ;;
++*) echo 'Usage: bash GaspardARCH/build-toolchain.sh binutils|gcc|libgcc' >&2;exit 2 ;;
++esac
+diff --git a/GaspardARCH/Tests/reloc-a.s b/GaspardARCH/Tests/reloc-a.s
+new file mode 100644
+--- /dev/null
++++ b/GaspardARCH/Tests/reloc-a.s
+@@ -0,0 +1,9 @@
++ .text
++ .globl _start
++_start:
++ beq a0, a1, target
++ jal ra, target
++ la a0, datum
++ call target
++ .data
++ .dword datum
+diff --git a/GaspardARCH/Tests/reloc-b.s b/GaspardARCH/Tests/reloc-b.s
+new file mode 100644
+--- /dev/null
++++ b/GaspardARCH/Tests/reloc-b.s
+@@ -0,0 +1,6 @@
++ .text
++ .globl target
++target: ret
++ .data
++ .globl datum
++datum: .dword 0x1122334455667788
+diff --git a/GaspardARCH/Tests/invalid.s b/GaspardARCH/Tests/invalid.s
+new file mode 100644
+--- /dev/null
++++ b/GaspardARCH/Tests/invalid.s
+@@ -0,0 +1,11 @@
++# Every instruction below must be rejected by GAS.
++ add r32, a0, a1
++ addi a0, a1, 2048
++ slli a0, a1, 64
++ slliw a0, a1, 32
++ trap 256
++ csrrw a0, 4096, a1
++ fadd.s fa0, fa1, fa2, reserved5
++ fli.d fa0, 17.0
++ add.aq a0, a1, a2
++ beq a0, a1, 2
+diff --git a/GaspardARCH/Tests/abi-integer.c b/GaspardARCH/Tests/abi-integer.c
+new file mode 100644
+--- /dev/null
++++ b/GaspardARCH/Tests/abi-integer.c
+@@ -0,0 +1,29 @@
++typedef unsigned long U;
++volatile U signature;
++#define NI __attribute__((noinline))
++NI long rec(long n) {return n<2?1:n*rec(n-1);}
++NI long ten(long a,long b,long c,long d,long e,long f,long g,long h,long i,long j)
++{return a+2*b+3*c+4*d+5*e+6*f+7*g+8*h+9*i+10*j;}
++NI U largeframe(U x) {volatile U a[600];a[0]=x;a[599]=7;return a[0]+a[599];}
++NI long cvt(signed char a,unsigned char b,short c,unsigned short d,int e,unsigned int f)
++{return a+b+c+d+e+(long)f;}
++struct pair {long a,b;};
++NI struct pair pairs(struct pair p) {struct pair q;q.a=p.b+1;q.b=p.a+2;return q;}
++NI int choice(int n) {switch(n){case 1:return 9;case 2:return 7;case 3:return 5;case 4:return 3;case 5:return 1;default:return -1;}}
++NI U shifts(U a,unsigned n){return (a>>n)^(a<<n);}
++NI long indirect(long (*f)(long),long n) {return f(n);}
++void *memcpy(void *d,const void *s,U n){unsigned char *a=d;const unsigned char*b=s;while(n--)*a++=*b++;return d;}
++void *memset(void *d,int c,U n){unsigned char*a=d;while(n--)*a++=c;return d;}
++int main(void)
++{
++ U errors=0;struct pair a={11,29},b;
++ if(rec(7)!=5040)errors|=1;
++ if(ten(1,2,3,4,5,6,7,8,9,10)!=385)errors|=2;
++ if(largeframe(35)!=42)errors|=4;
++ if(cvt(-7,250,-300,60000,-40000,4000000000U)!=4000019943L)errors|=8;
++ b=pairs(a);if(b.a!=30||b.b!=13)errors|=16;
++ if(choice(3)!=5||choice(9)!=-1)errors|=32;
++ if(indirect(rec,6)!=720)errors|=64;
++ if(shifts(0x123456789abcdef0UL,17)!=0xacf13c6396dc4d5eUL)errors|=128;
++ signature=errors?errors:0x600d;return errors!=0;
++}
+diff --git a/GaspardARCH/Tests/libgcc-integer.c b/GaspardARCH/Tests/libgcc-integer.c
+new file mode 100644
+--- /dev/null
++++ b/GaspardARCH/Tests/libgcc-integer.c
+@@ -0,0 +1,12 @@
++typedef unsigned long U;
++volatile U input=0x0123456789abcdefUL;
++volatile U signature;
++int main(void)
++{
++ U v=input;int bad=0;
++ if(__builtin_popcountl(v)!=32)bad|=1;
++ if(__builtin_clzl(v)!=7)bad|=2;
++ if(__builtin_ctzl(v)!=0)bad|=4;
++ if(__builtin_bswap64(v)!=0xefcdab8967452301UL)bad|=8;
++ signature=bad?bad:0x600d;return bad!=0;
++}
+diff --git a/GaspardARCH/Tests/modele_entier.py b/GaspardARCH/Tests/modele_entier.py
+new file mode 100644
+--- /dev/null
++++ b/GaspardARCH/Tests/modele_entier.py
+@@ -0,0 +1,78 @@
++"""Limited integer execution model used for compiler smoke tests, not a hardware simulator."""
++from pathlib import Path
++import struct
++MASK=(1<<64)-1
++def sx(v,n):return (v^(1<<(n-1)))-(1<<(n-1))
++def execute(path,limit=1000000):
++    b=Path(path).read_bytes();mem={};regs=[0]*32
++    pc=struct.unpack_from('<Q',b,24)[0];po=struct.unpack_from('<Q',b,32)[0];pe,pn=struct.unpack_from('<HH',b,54)
++    for i in range(pn):
++        typ,fl,off,va,pa,fs,ms,al=struct.unpack_from('<IIQQQQQQ',b,po+i*pe)
++        if typ==1:
++            for k,v in enumerate(b[off:off+fs]):mem[va+k]=v
++    def read(a,n):
++        if a%n:raise ValueError('unaligned read '+hex(a))
++        return sum(mem.get(a+i,0)<<(8*i) for i in range(n))
++    def write(a,v,n):
++        if a%n:raise ValueError('unaligned store '+hex(a))
++        for i in range(n):mem[a+i]=(v>>(8*i))&255
++    for steps in range(limit):
++        if pc&3:raise ValueError('unaligned PC')
++        w=read(pc,4);op=w&127;d=(w>>7)&31;f=(w>>12)&7;a=(w>>15)&31;c=(w>>20)&31;fun=w>>25
++        x=regs[a];y=regs[c];imm=sx(w>>20,12);nextpc=pc+4;val=None;word=False
++        if op in [0x33,0x3b]:
++            word=op==0x3b;n=32 if word else 64;xx=x&((1<<n)-1);yy=y&((1<<n)-1)
++            if fun==1:
++                if f==0:val=xx*yy
++                elif f in [4,5,6,7]:
++                    if not yy:raise ValueError('division by zero')
++                    v1=sx(xx,n) if f in [4,6] else xx;v2=sx(yy,n) if f in [4,6] else yy
++                    q=(abs(v1)//abs(v2))*(-1 if (v1<0)!=(v2<0) else 1)
++                    val=q if f in [4,5] else v1-q*v2
++                else:raise ValueError('unimplemented multiply-high')
++            elif f==0:val=xx-yy if fun==32 else xx+yy
++            elif f==1:val=xx<<(yy&(n-1))
++            elif f==2:val=int(sx(xx,n)<sx(yy,n))
++            elif f==3:val=int(xx<yy)
++            elif f==4:val=xx^yy
++            elif f==5:val=(sx(xx,n) if fun==32 else xx)>>(yy&(n-1))
++            elif f==6:val=xx|yy
++            elif f==7:val=xx&yy
++        elif op in [0x13,0x1b]:
++            word=op==0x1b;n=32 if word else 64;xx=x&((1<<n)-1);sh=c if word else (w>>20)&63
++            if f==0:val=xx+imm
++            elif f==1:val=xx<<sh
++            elif f==2:val=int(sx(x,64)<imm)
++            elif f==3:val=int(x<(imm&MASK))
++            elif f==4:val=x^(imm&MASK)
++            elif f==5:val=(sx(xx,n) if w&(1<<30) else xx)>>sh
++            elif f==6:val=x|(imm&MASK)
++            elif f==7:val=x&(imm&MASK)
++        elif op==0x37:val=sx(w&0xfffff000,32)
++        elif op==0x17:val=pc+sx(w&0xfffff000,32)
++        elif op==3:
++            size=1<<(f&3);v=read((x+imm)&MASK,size);val=v if f>=4 else sx(v,size*8)
++        elif op==0x23:
++            off=sx(((w>>25)<<5)|((w>>7)&31),12);write((x+off)&MASK,y,1<<f)
++        elif op==0x63:
++            cond={0:x==y,1:x!=y,4:sx(x,64)<sx(y,64),5:sx(x,64)>=sx(y,64),6:x<y,7:x>=y}[f]
++            if cond:nextpc=pc+sx(((w>>25)<<5)|((w>>7)&31),12)*4
++        elif op==0x6f:val=pc+4;nextpc=pc+sx(w>>12,20)*4
++        elif op==0x67:val=pc+4;nextpc=(x+imm)&~3
++        elif op!=0x0f:raise ValueError('unknown instruction '+hex(w)+' at '+hex(pc))
++        if val is not None and d:regs[d]=(sx(val&0xffffffff,32) if word else val)&MASK
++        regs[0]=0
++        if nextpc==pc and op==0x6f and d==0:return mem,steps+1
++        pc=nextpc&MASK
++    raise ValueError('instruction limit exceeded')
++
++def symbols(path):
++    b=Path(path).read_bytes();o=struct.unpack_from('<Q',b,40)[0];e,n,ss=struct.unpack_from('<HHH',b,58)
++    sh=[struct.unpack_from('<IIQQQQIIQQ',b,o+i*e) for i in range(n)];out={}
++    for s in sh:
++        if s[1]!=2:continue
++        strings=sh[s[6]];st=b[strings[4]:strings[4]+strings[5]]
++        for p in range(s[4],s[4]+s[5],s[9]):
++            name,info,other,ndx,value,size=struct.unpack_from('<IBBHQQ',b,p)
++            if name:out[st[name:st.index(0,name)].decode()]=value
++    return out
+diff --git a/GaspardARCH/Tests/tester_c.py b/GaspardARCH/Tests/tester_c.py
+new file mode 100644
+--- /dev/null
++++ b/GaspardARCH/Tests/tester_c.py
+@@ -0,0 +1,34 @@
++#!/usr/bin/env python3
++"""Compile/link/run ABI tests in a LIMITED INTEGER MODEL, not on real hardware.
++After installing the toolchain: python GaspardARCH/Tests/tester_c.py
++GASPARDARC_PREFIX can override build-gaspardarc-install.
++"""
++from pathlib import Path
++import subprocess,os,struct,sys
++from modele_entier import execute,symbols
++ROOT=Path(__file__).resolve().parents[2]
++PREFIX=Path(os.environ.get('GASPARDARC_PREFIX',str(ROOT/'build-gaspardarc-install')))
++OUT=ROOT/'build-tests-gaspardarc';OUT.mkdir(exist_ok=True)
++def tool(name):
++    p=PREFIX/'bin'/('gaspardarc-unknown-elf-'+name)
++    return str(p)+('.exe' if os.name=='nt' else '')
++def run(args):subprocess.run([str(a) for a in args],check=True)
++run([tool('as'),ROOT/'GaspardARCH/runtime/crt0.S','-o',OUT/'crt0.o'])
++for opt in ['-O0','-O2','-Os']:
++    out=OUT/('abi'+opt)
++    run([tool('gcc'),opt,'-ffreestanding','-fno-builtin','-c',ROOT/'GaspardARCH/Tests/abi-integer.c','-o',str(out)+'.o'])
++    run([tool('ld'),'-T',ROOT/'GaspardARCH/runtime/board.ld',OUT/'crt0.o',str(out)+'.o','-o',str(out)+'.elf'])
++    mem,steps=execute(str(out)+'.elf');syms=symbols(str(out)+'.elf')
++    def value(name):return sum(mem.get(syms[name]+i,0)<<(8*i) for i in range(8))
++    assert value('signature')==0x600d and value('__exit_code')==0, (opt,value('signature'))
++    print(opt+': OK, signature=0x600d, '+str(steps)+' instructions dans le modèle entier limité')
++if '--libgcc' in sys.argv:
++    lib=Path(subprocess.check_output([tool('gcc'),'-print-libgcc-file-name']).decode().strip())
++    if not lib.exists():raise SystemExit('Construire et installer libgcc avant --libgcc')
++    for opt in ['-O0','-O2']:
++        out=OUT/('libgcc'+opt)
++        run([tool('gcc'),opt,'-ffreestanding','-c',ROOT/'GaspardARCH/Tests/libgcc-integer.c','-o',str(out)+'.o'])
++        run([tool('ld'),'-T',ROOT/'GaspardARCH/runtime/board.ld',OUT/'crt0.o',str(out)+'.o',lib,'-o',str(out)+'.elf'])
++        mem,steps=execute(str(out)+'.elf');syms=symbols(str(out)+'.elf')
++        assert value('signature')==0x600d and value('__exit_code')==0
++        print(opt+': auxiliaires libgcc OK dans le modèle entier limité')

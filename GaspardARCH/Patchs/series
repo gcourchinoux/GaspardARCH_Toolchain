@@ -1,0 +1,9 @@
+0001-cible-identite-abi.patch
+0002-opcodes-desassemblage.patch
+0003-bfd-elf64-relocations.patch
+0004-ld-readelf.patch
+0005-gas-assemblage-pseudos.patch
+0006-gcc-configuration-abi.patch
+0007-gcc-rtl-instructions.patch
+0008-libgcc-runtime-tests.patch
+0009-construction-tests-integration.patch

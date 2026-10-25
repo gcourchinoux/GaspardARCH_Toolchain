@@ -1,0 +1,386 @@
+diff --git a/binutils-2.25/include/opcode/gaspardarc.h b/binutils-2.25/include/opcode/gaspardarc.h
+new file mode 100644
+--- /dev/null
++++ b/binutils-2.25/include/opcode/gaspardarc.h
+@@ -0,0 +1,9 @@
++/* GaspardARC opcode interface. GPL-3.0-or-later. */
++#ifndef OPCODE_GASPARDARC_H
++#define OPCODE_GASPARDARC_H
++struct ga_opcode { const char *name, *args; unsigned long mask, match; };
++extern const struct ga_opcode ga_opcodes[];
++extern const unsigned int ga_num_opcodes;
++extern const char *const ga_gpr_names[32];
++extern const char *const ga_fpr_names[32];
++#endif
+diff --git a/binutils-2.25/opcodes/gaspardarc-opc.c b/binutils-2.25/opcodes/gaspardarc-opc.c
+new file mode 100644
+--- /dev/null
++++ b/binutils-2.25/opcodes/gaspardarc-opc.c
+@@ -0,0 +1,206 @@
++/* Generated from GaspardARCH/isa_risc64_encodage.csv. GPL-3.0-or-later. */
++#include "sysdep.h"
++#include "opcode/gaspardarc.h"
++const char *const ga_gpr_names[32] = {"zero", "ra", "sp", "gp", "tp", "t0", "t1", "t2", "s0", "s1", "a0", "a1", "a2", "a3", "a4", "a5", "a6", "a7", "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"};
++const char *const ga_fpr_names[32] = {"ft0", "ft1", "ft2", "ft3", "ft4", "ft5", "ft6", "ft7", "fs0", "fs1", "fa0", "fa1", "fa2", "fa3", "fa4", "fa5", "fa6", "fa7", "fs2", "fs3", "fs4", "fs5", "fs6", "fs7", "fs8", "fs9", "fs10", "fs11", "ft8", "ft9", "ft10", "ft11"};
++const struct ga_opcode ga_opcodes[] = {
++  {"fence.i", "", 0xFFFFFFFFUL, 0x0000100FUL},
++  {"pause", "", 0xFFFFFFFFUL, 0x0100000FUL},
++  {"break", "", 0xFFFFFFFFUL, 0x00100073UL},
++  {"illegal", "", 0xFFFFFFFFUL, 0x00000000UL},
++  {"retry", "", 0xFFFFFFFFUL, 0x10200073UL},
++  {"done", "", 0xFFFFFFFFUL, 0x10300073UL},
++  {"wfi", "", 0xFFFFFFFFUL, 0x10500073UL},
++  {"cbo.flush", "(rs1)", 0xFFF07FFFUL, 0x0020200FUL},
++  {"cbo.zero", "(rs1)", 0xFFF07FFFUL, 0x0040200FUL},
++  {"fence", "pred, succ", 0xF00FFFFFUL, 0x0000000FUL},
++  {"trap", "imm8", 0xF00FFFFFUL, 0x20000073UL},
++  {"clz", "rd, rs1", 0xFFF0707FUL, 0x60001013UL},
++  {"ctz", "rd, rs1", 0xFFF0707FUL, 0x60101013UL},
++  {"cpop", "rd, rs1", 0xFFF0707FUL, 0x60201013UL},
++  {"sext.b", "rd, rs1", 0xFFF0707FUL, 0x60401013UL},
++  {"sext.h", "rd, rs1", 0xFFF0707FUL, 0x60501013UL},
++  {"zext.h", "rd, rs1", 0xFFF0707FUL, 0x60601013UL},
++  {"rev8", "rd, rs1", 0xFFF0707FUL, 0x6B805013UL},
++  {"fli.s", "fd, constante", 0xFFF0707FUL, 0xF0100053UL},
++  {"fli.d", "fd, constante", 0xFFF0707FUL, 0xF2100053UL},
++  {"fcvt.d.w", "fd, rs1", 0xFFF0707FUL, 0xD2000053UL},
++  {"fcvt.d.wu", "fd, rs1", 0xFFF0707FUL, 0xD2100053UL},
++  {"fcvt.d.s", "fd, fs1", 0xFFF0707FUL, 0x42000053UL},
++  {"fmv.x.w", "rd, fs1", 0xFFF0707FUL, 0xE0000053UL},
++  {"fmv.w.x", "fd, rs1", 0xFFF0707FUL, 0xF0000053UL},
++  {"fmv.x.d", "rd, fs1", 0xFFF0707FUL, 0xE2000053UL},
++  {"fmv.d.x", "fd, rs1", 0xFFF0707FUL, 0xF2000053UL},
++  {"fclass.s", "rd, fs1", 0xFFF0707FUL, 0xE0001053UL},
++  {"fclass.d", "rd, fs1", 0xFFF0707FUL, 0xE2001053UL},
++  {"tlbflush", "rs1, rs2", 0xFE007FFFUL, 0x12000073UL},
++  {"lr.w", "rd, (rs1)", 0xF9F0707FUL, 0x1000202FUL},
++  {"lr.d", "rd, (rs1)", 0xF9F0707FUL, 0x1000302FUL},
++  {"fsqrt.s", "fd, fs1, rm", 0xFFF0007FUL, 0x58000053UL},
++  {"fround.s", "fd, fs1, rm", 0xFFF0007FUL, 0x40400053UL},
++  {"fsqrt.d", "fd, fs1, rm", 0xFFF0007FUL, 0x5A000053UL},
++  {"fround.d", "fd, fs1, rm", 0xFFF0007FUL, 0x42400053UL},
++  {"fcvt.w.s", "rd, fs1, rm", 0xFFF0007FUL, 0xC0000053UL},
++  {"fcvt.s.w", "fd, rs1, rm", 0xFFF0007FUL, 0xD0000053UL},
++  {"fcvt.wu.s", "rd, fs1, rm", 0xFFF0007FUL, 0xC0100053UL},
++  {"fcvt.s.wu", "fd, rs1, rm", 0xFFF0007FUL, 0xD0100053UL},
++  {"fcvt.l.s", "rd, fs1, rm", 0xFFF0007FUL, 0xC0200053UL},
++  {"fcvt.s.l", "fd, rs1, rm", 0xFFF0007FUL, 0xD0200053UL},
++  {"fcvt.lu.s", "rd, fs1, rm", 0xFFF0007FUL, 0xC0300053UL},
++  {"fcvt.s.lu", "fd, rs1, rm", 0xFFF0007FUL, 0xD0300053UL},
++  {"fcvt.w.d", "rd, fs1, rm", 0xFFF0007FUL, 0xC2000053UL},
++  {"fcvt.wu.d", "rd, fs1, rm", 0xFFF0007FUL, 0xC2100053UL},
++  {"fcvt.l.d", "rd, fs1, rm", 0xFFF0007FUL, 0xC2200053UL},
++  {"fcvt.d.l", "fd, rs1, rm", 0xFFF0007FUL, 0xD2200053UL},
++  {"fcvt.lu.d", "rd, fs1, rm", 0xFFF0007FUL, 0xC2300053UL},
++  {"fcvt.d.lu", "fd, rs1, rm", 0xFFF0007FUL, 0xD2300053UL},
++  {"fcvt.s.d", "fd, fs1, rm", 0xFFF0007FUL, 0x40100053UL},
++  {"add", "rd, rs1, rs2", 0xFE00707FUL, 0x00000033UL},
++  {"sub", "rd, rs1, rs2", 0xFE00707FUL, 0x40000033UL},
++  {"and", "rd, rs1, rs2", 0xFE00707FUL, 0x00007033UL},
++  {"or", "rd, rs1, rs2", 0xFE00707FUL, 0x00006033UL},
++  {"xor", "rd, rs1, rs2", 0xFE00707FUL, 0x00004033UL},
++  {"sll", "rd, rs1, rs2", 0xFE00707FUL, 0x00001033UL},
++  {"srl", "rd, rs1, rs2", 0xFE00707FUL, 0x00005033UL},
++  {"sra", "rd, rs1, rs2", 0xFE00707FUL, 0x40005033UL},
++  {"slt", "rd, rs1, rs2", 0xFE00707FUL, 0x00002033UL},
++  {"sltu", "rd, rs1, rs2", 0xFE00707FUL, 0x00003033UL},
++  {"addw", "rd, rs1, rs2", 0xFE00707FUL, 0x0000003BUL},
++  {"subw", "rd, rs1, rs2", 0xFE00707FUL, 0x4000003BUL},
++  {"sllw", "rd, rs1, rs2", 0xFE00707FUL, 0x0000103BUL},
++  {"srlw", "rd, rs1, rs2", 0xFE00707FUL, 0x0000503BUL},
++  {"sraw", "rd, rs1, rs2", 0xFE00707FUL, 0x4000503BUL},
++  {"slliw", "rd, rs1, shamt5", 0xFE00707FUL, 0x0000101BUL},
++  {"srliw", "rd, rs1, shamt5", 0xFE00707FUL, 0x0000501BUL},
++  {"sraiw", "rd, rs1, shamt5", 0xFE00707FUL, 0x4000501BUL},
++  {"czero.eqz", "rd, rs1, rs2", 0xFE00707FUL, 0x0E005033UL},
++  {"czero.nez", "rd, rs1, rs2", 0xFE00707FUL, 0x0E007033UL},
++  {"andn", "rd, rs1, rs2", 0xFE00707FUL, 0x40007033UL},
++  {"orn", "rd, rs1, rs2", 0xFE00707FUL, 0x40006033UL},
++  {"xnor", "rd, rs1, rs2", 0xFE00707FUL, 0x40004033UL},
++  {"min", "rd, rs1, rs2", 0xFE00707FUL, 0x0A004033UL},
++  {"minu", "rd, rs1, rs2", 0xFE00707FUL, 0x0A005033UL},
++  {"max", "rd, rs1, rs2", 0xFE00707FUL, 0x0A006033UL},
++  {"maxu", "rd, rs1, rs2", 0xFE00707FUL, 0x0A007033UL},
++  {"mul", "rd, rs1, rs2", 0xFE00707FUL, 0x02000033UL},
++  {"mulh", "rd, rs1, rs2", 0xFE00707FUL, 0x02001033UL},
++  {"mulhsu", "rd, rs1, rs2", 0xFE00707FUL, 0x02002033UL},
++  {"mulhu", "rd, rs1, rs2", 0xFE00707FUL, 0x02003033UL},
++  {"div", "rd, rs1, rs2", 0xFE00707FUL, 0x02004033UL},
++  {"divu", "rd, rs1, rs2", 0xFE00707FUL, 0x02005033UL},
++  {"rem", "rd, rs1, rs2", 0xFE00707FUL, 0x02006033UL},
++  {"remu", "rd, rs1, rs2", 0xFE00707FUL, 0x02007033UL},
++  {"mulw", "rd, rs1, rs2", 0xFE00707FUL, 0x0200003BUL},
++  {"divw", "rd, rs1, rs2", 0xFE00707FUL, 0x0200403BUL},
++  {"divuw", "rd, rs1, rs2", 0xFE00707FUL, 0x0200503BUL},
++  {"remw", "rd, rs1, rs2", 0xFE00707FUL, 0x0200603BUL},
++  {"remuw", "rd, rs1, rs2", 0xFE00707FUL, 0x0200703BUL},
++  {"rol", "rd, rs1, rs2", 0xFE00707FUL, 0x60001033UL},
++  {"ror", "rd, rs1, rs2", 0xFE00707FUL, 0x60005033UL},
++  {"bset", "rd, rs1, rs2", 0xFE00707FUL, 0x28001033UL},
++  {"bclr", "rd, rs1, rs2", 0xFE00707FUL, 0x48001033UL},
++  {"binv", "rd, rs1, rs2", 0xFE00707FUL, 0x68001033UL},
++  {"bext", "rd, rs1, rs2", 0xFE00707FUL, 0x48005033UL},
++  {"fsgnj.s", "fd, fs1, fs2", 0xFE00707FUL, 0x20000053UL},
++  {"fsgnjn.s", "fd, fs1, fs2", 0xFE00707FUL, 0x20001053UL},
++  {"fsgnjx.s", "fd, fs1, fs2", 0xFE00707FUL, 0x20002053UL},
++  {"fmin.s", "fd, fs1, fs2", 0xFE00707FUL, 0x28000053UL},
++  {"fmax.s", "fd, fs1, fs2", 0xFE00707FUL, 0x28001053UL},
++  {"fsgnj.d", "fd, fs1, fs2", 0xFE00707FUL, 0x22000053UL},
++  {"fsgnjn.d", "fd, fs1, fs2", 0xFE00707FUL, 0x22001053UL},
++  {"fsgnjx.d", "fd, fs1, fs2", 0xFE00707FUL, 0x22002053UL},
++  {"fmin.d", "fd, fs1, fs2", 0xFE00707FUL, 0x2A000053UL},
++  {"fmax.d", "fd, fs1, fs2", 0xFE00707FUL, 0x2A001053UL},
++  {"feq.s", "rd, fs1, fs2", 0xFE00707FUL, 0xA0002053UL},
++  {"flt.s", "rd, fs1, fs2", 0xFE00707FUL, 0xA0001053UL},
++  {"fle.s", "rd, fs1, fs2", 0xFE00707FUL, 0xA0000053UL},
++  {"feq.d", "rd, fs1, fs2", 0xFE00707FUL, 0xA2002053UL},
++  {"flt.d", "rd, fs1, fs2", 0xFE00707FUL, 0xA2001053UL},
++  {"fle.d", "rd, fs1, fs2", 0xFE00707FUL, 0xA2000053UL},
++  {"slli", "rd, rs1, shamt6", 0xFC00707FUL, 0x00001013UL},
++  {"srli", "rd, rs1, shamt6", 0xFC00707FUL, 0x00005013UL},
++  {"srai", "rd, rs1, shamt6", 0xFC00707FUL, 0x40005013UL},
++  {"rori", "rd, rs1, shamt6", 0xFC00707FUL, 0x60005013UL},
++  {"bseti", "rd, rs1, shamt6", 0xFC00707FUL, 0x28001013UL},
++  {"bclri", "rd, rs1, shamt6", 0xFC00707FUL, 0x48001013UL},
++  {"binvi", "rd, rs1, shamt6", 0xFC00707FUL, 0x68001013UL},
++  {"bexti", "rd, rs1, shamt6", 0xFC00707FUL, 0x48005013UL},
++  {"prefetch", "imm12(rs1)", 0x00007FFFUL, 0x0000300FUL},
++  {"sc.w", "rd, rs2, (rs1)", 0xF800707FUL, 0x1800202FUL},
++  {"cas.w", "rd, rs2, (rs1)", 0xF800707FUL, 0x2800202FUL},
++  {"amoswap.w", "rd, rs2, (rs1)", 0xF800707FUL, 0x0800202FUL},
++  {"amoadd.w", "rd, rs2, (rs1)", 0xF800707FUL, 0x0000202FUL},
++  {"amoxor.w", "rd, rs2, (rs1)", 0xF800707FUL, 0x2000202FUL},
++  {"amoand.w", "rd, rs2, (rs1)", 0xF800707FUL, 0x6000202FUL},
++  {"amoor.w", "rd, rs2, (rs1)", 0xF800707FUL, 0x4000202FUL},
++  {"amomin.w", "rd, rs2, (rs1)", 0xF800707FUL, 0x8000202FUL},
++  {"amomax.w", "rd, rs2, (rs1)", 0xF800707FUL, 0xA000202FUL},
++  {"amominu.w", "rd, rs2, (rs1)", 0xF800707FUL, 0xC000202FUL},
++  {"amomaxu.w", "rd, rs2, (rs1)", 0xF800707FUL, 0xE000202FUL},
++  {"sc.d", "rd, rs2, (rs1)", 0xF800707FUL, 0x1800302FUL},
++  {"cas.d", "rd, rs2, (rs1)", 0xF800707FUL, 0x2800302FUL},
++  {"amoswap.d", "rd, rs2, (rs1)", 0xF800707FUL, 0x0800302FUL},
++  {"amoadd.d", "rd, rs2, (rs1)", 0xF800707FUL, 0x0000302FUL},
++  {"amoxor.d", "rd, rs2, (rs1)", 0xF800707FUL, 0x2000302FUL},
++  {"amoand.d", "rd, rs2, (rs1)", 0xF800707FUL, 0x6000302FUL},
++  {"amoor.d", "rd, rs2, (rs1)", 0xF800707FUL, 0x4000302FUL},
++  {"amomin.d", "rd, rs2, (rs1)", 0xF800707FUL, 0x8000302FUL},
++  {"amomax.d", "rd, rs2, (rs1)", 0xF800707FUL, 0xA000302FUL},
++  {"amominu.d", "rd, rs2, (rs1)", 0xF800707FUL, 0xC000302FUL},
++  {"amomaxu.d", "rd, rs2, (rs1)", 0xF800707FUL, 0xE000302FUL},
++  {"fadd.s", "fd, fs1, fs2, rm", 0xFE00007FUL, 0x00000053UL},
++  {"fsub.s", "fd, fs1, fs2, rm", 0xFE00007FUL, 0x08000053UL},
++  {"fmul.s", "fd, fs1, fs2, rm", 0xFE00007FUL, 0x10000053UL},
++  {"fdiv.s", "fd, fs1, fs2, rm", 0xFE00007FUL, 0x18000053UL},
++  {"fadd.d", "fd, fs1, fs2, rm", 0xFE00007FUL, 0x02000053UL},
++  {"fsub.d", "fd, fs1, fs2, rm", 0xFE00007FUL, 0x0A000053UL},
++  {"fmul.d", "fd, fs1, fs2, rm", 0xFE00007FUL, 0x12000053UL},
++  {"fdiv.d", "fd, fs1, fs2, rm", 0xFE00007FUL, 0x1A000053UL},
++  {"addi", "rd, rs1, imm12", 0x0000707FUL, 0x00000013UL},
++  {"slti", "rd, rs1, imm12", 0x0000707FUL, 0x00002013UL},
++  {"sltiu", "rd, rs1, imm12", 0x0000707FUL, 0x00003013UL},
++  {"xori", "rd, rs1, imm12", 0x0000707FUL, 0x00004013UL},
++  {"ori", "rd, rs1, imm12", 0x0000707FUL, 0x00006013UL},
++  {"andi", "rd, rs1, imm12", 0x0000707FUL, 0x00007013UL},
++  {"addiw", "rd, rs1, imm12", 0x0000707FUL, 0x0000001BUL},
++  {"lb", "rd, imm12(rs1)", 0x0000707FUL, 0x00000003UL},
++  {"lh", "rd, imm12(rs1)", 0x0000707FUL, 0x00001003UL},
++  {"lw", "rd, imm12(rs1)", 0x0000707FUL, 0x00002003UL},
++  {"ld", "rd, imm12(rs1)", 0x0000707FUL, 0x00003003UL},
++  {"lbu", "rd, imm12(rs1)", 0x0000707FUL, 0x00004003UL},
++  {"lhu", "rd, imm12(rs1)", 0x0000707FUL, 0x00005003UL},
++  {"lwu", "rd, imm12(rs1)", 0x0000707FUL, 0x00006003UL},
++  {"sb", "rs2, imm12(rs1)", 0x0000707FUL, 0x00000023UL},
++  {"sh", "rs2, imm12(rs1)", 0x0000707FUL, 0x00001023UL},
++  {"sw", "rs2, imm12(rs1)", 0x0000707FUL, 0x00002023UL},
++  {"sd", "rs2, imm12(rs1)", 0x0000707FUL, 0x00003023UL},
++  {"jalr", "rd, rs1, imm12", 0x0000707FUL, 0x00000067UL},
++  {"beq", "rs1, rs2, label", 0x0000707FUL, 0x00000063UL},
++  {"bne", "rs1, rs2, label", 0x0000707FUL, 0x00001063UL},
++  {"blt", "rs1, rs2, label", 0x0000707FUL, 0x00004063UL},
++  {"bge", "rs1, rs2, label", 0x0000707FUL, 0x00005063UL},
++  {"bltu", "rs1, rs2, label", 0x0000707FUL, 0x00006063UL},
++  {"bgeu", "rs1, rs2, label", 0x0000707FUL, 0x00007063UL},
++  {"flw", "fd, imm12(rs1)", 0x0000707FUL, 0x00002007UL},
++  {"fld", "fd, imm12(rs1)", 0x0000707FUL, 0x00003007UL},
++  {"fsw", "fs2, imm12(rs1)", 0x0000707FUL, 0x00002027UL},
++  {"fsd", "fs2, imm12(rs1)", 0x0000707FUL, 0x00003027UL},
++  {"csrrw", "rd, csr, rs1", 0x0000707FUL, 0x00001073UL},
++  {"csrrs", "rd, csr, rs1", 0x0000707FUL, 0x00002073UL},
++  {"csrrc", "rd, csr, rs1", 0x0000707FUL, 0x00003073UL},
++  {"csrrwi", "rd, csr, uimm5", 0x0000707FUL, 0x00005073UL},
++  {"csrrsi", "rd, csr, uimm5", 0x0000707FUL, 0x00006073UL},
++  {"csrrci", "rd, csr, uimm5", 0x0000707FUL, 0x00007073UL},
++  {"fmadd.s", "fd, fs1, fs2, fs3, rm", 0x0600007FUL, 0x00000043UL},
++  {"fmadd.d", "fd, fs1, fs2, fs3, rm", 0x0600007FUL, 0x02000043UL},
++  {"fmsub.s", "fd, fs1, fs2, fs3, rm", 0x0600007FUL, 0x00000047UL},
++  {"fmsub.d", "fd, fs1, fs2, fs3, rm", 0x0600007FUL, 0x02000047UL},
++  {"fnmsub.s", "fd, fs1, fs2, fs3, rm", 0x0600007FUL, 0x0000004BUL},
++  {"fnmsub.d", "fd, fs1, fs2, fs3, rm", 0x0600007FUL, 0x0200004BUL},
++  {"fnmadd.s", "fd, fs1, fs2, fs3, rm", 0x0600007FUL, 0x0000004FUL},
++  {"fnmadd.d", "fd, fs1, fs2, fs3, rm", 0x0600007FUL, 0x0200004FUL},
++  {"lui", "rd, imm20", 0x0000007FUL, 0x00000037UL},
++  {"auipc", "rd, imm20", 0x0000007FUL, 0x00000017UL},
++  {"jal", "rd, label", 0x0000007FUL, 0x0000006FUL},
++};
++const unsigned int ga_num_opcodes = sizeof ga_opcodes / sizeof ga_opcodes[0];
+diff --git a/binutils-2.25/opcodes/gaspardarc-dis.c b/binutils-2.25/opcodes/gaspardarc-dis.c
+new file mode 100644
+--- /dev/null
++++ b/binutils-2.25/opcodes/gaspardarc-dis.c
+@@ -0,0 +1,66 @@
++/* GaspardARC disassembler. GPL-3.0-or-later. */
++#include "sysdep.h"
++#include "dis-asm.h"
++#include "opcode/gaspardarc.h"
++static bfd_signed_vma sx (bfd_vma v, unsigned n)
++{ return (bfd_signed_vma) ((v ^ ((bfd_vma) 1 << (n-1))) - ((bfd_vma) 1 << (n-1))); }
++int print_insn_gaspardarc (bfd_vma pc, disassemble_info *info)
++{
++  bfd_byte bytes[4]; unsigned long w; unsigned i, j;
++  int err = info->read_memory_func (pc, bytes, 4, info);
++  if (err) { info->memory_error_func (err, pc, info); return -1; }
++  w = bfd_getl32 (bytes);
++  for (i=0; i<ga_num_opcodes; ++i)
++    if ((w & ga_opcodes[i].mask) == ga_opcodes[i].match)
++      {
++        const struct ga_opcode *op = &ga_opcodes[i];
++        char args[100], *t, *next; int first=1;
++        info->fprintf_func (info->stream, "%s", op->name);
++        if ((w & 0x7f)==0x2f)
++          { if (w & (1UL<<26)) info->fprintf_func(info->stream,".aq");
++            if (w & (1UL<<25)) info->fprintf_func(info->stream,".rl"); }
++        strcpy(args,op->args);
++        for (t=args; t && *t; t=next)
++          {
++            next=strchr(t,','); if(next) *next++=0;
++            while(*t==' ') ++t;
++            info->fprintf_func(info->stream,first?"\t":", "); first=0;
++            if (strstr(t,"(rs1)"))
++              {
++                if (strncmp(t,"imm12",5)==0)
++                  info->fprintf_func(info->stream,"%ld",(long)sx(
++                    ((w&0x7f)==0x23 || (w&0x7f)==0x27)
++                    ? ((w>>25)<<5)|((w>>7)&31) : w>>20,12));
++                info->fprintf_func(info->stream,"(%s)",ga_gpr_names[(w>>15)&31]);
++              }
++            else if (!strcmp(t,"label"))
++              {
++                bfd_signed_vma d = (w&0x7f)==0x6f ? sx(w>>12,20)*4
++                  : sx(((w>>25)<<5)|((w>>7)&31),12)*4;
++                info->print_address_func(pc+d,info);
++              }
++            else if (!strcmp(t,"rm"))
++              { static const char *const rm[]={"rne","rtz","rdn","rup","rmm","reserved5","reserved6","dyn"};
++                info->fprintf_func(info->stream,"%s",rm[(w>>12)&7]); }
++            else if (!strcmp(t,"csr")) info->fprintf_func(info->stream,"0x%lx",w>>20);
++            else if (!strcmp(t,"imm20")) info->fprintf_func(info->stream,"0x%lx",w>>12);
++            else if (!strcmp(t,"imm12")) info->fprintf_func(info->stream,"%ld",(long)sx(w>>20,12));
++            else if (!strcmp(t,"imm8")) info->fprintf_func(info->stream,"%lu",(w>>20)&255);
++            else if (!strcmp(t,"shamt6") || !strcmp(t,"shamt5")) info->fprintf_func(info->stream,"%lu",(w>>20)&(!strcmp(t,"shamt6")?63:31));
++            else if (!strcmp(t,"uimm5")) info->fprintf_func(info->stream,"%lu",(w>>15)&31);
++            else if (!strcmp(t,"constante"))
++              { static const char *const fli[]={"0.0","1.0","-1.0","0.5","2.0","0.25","4.0","0.125","8.0","16.0","0.0625","3.0","1.5","0.75","inf","-inf","nan"};
++                j=(w>>15)&31; info->fprintf_func(info->stream,"%s",j<17?fli[j]:"reserved"); }
++            else if (!strcmp(t,"pred") || !strcmp(t,"succ"))
++              { unsigned f=(w>>(!strcmp(t,"pred")?24:20))&15;
++                if(!f) info->fprintf_func(info->stream,"0");
++                for(j=0;j<4;++j) if(f&(8>>j)) info->fprintf_func(info->stream,"%c","iorw"[j]); }
++            else
++              { unsigned shift= (!strcmp(t,"rd")||!strcmp(t,"fd"))?7:
++                  (!strcmp(t,"rs1")||!strcmp(t,"fs1"))?15:!strcmp(t,"fs3")?27:20;
++                info->fprintf_func(info->stream,"%s",t[0]=='f'?ga_fpr_names[(w>>shift)&31]:ga_gpr_names[(w>>shift)&31]); }
++          }
++        return 4;
++      }
++  info->fprintf_func(info->stream,".word\t0x%08lx",w); return 4;
++}
+diff --git a/binutils-2.25/opcodes/Makefile.am b/binutils-2.25/opcodes/Makefile.am
+--- a/binutils-2.25/opcodes/Makefile.am
++++ b/binutils-2.25/opcodes/Makefile.am
+@@ -196,6 +196,8 @@
+ 	mips16-opc.c \
+ 	mmix-dis.c \
+ 	mmix-opc.c \
++	gaspardarc-dis.c \
++	gaspardarc-opc.c \
+ 	moxie-dis.c \
+ 	moxie-opc.c \
+ 	msp430-decode.c \
+diff --git a/binutils-2.25/opcodes/Makefile.in b/binutils-2.25/opcodes/Makefile.in
+--- a/binutils-2.25/opcodes/Makefile.in
++++ b/binutils-2.25/opcodes/Makefile.in
+@@ -469,6 +469,8 @@
+ 	mips16-opc.c \
+ 	mmix-dis.c \
+ 	mmix-opc.c \
++	gaspardarc-dis.c \
++	gaspardarc-opc.c \
+ 	moxie-dis.c \
+ 	moxie-opc.c \
+ 	msp430-decode.c \
+@@ -869,7 +871,9 @@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mips16-opc.Plo@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mmix-dis.Plo@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mmix-opc.Plo@am__quote@
++@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gaspardarc-dis.Plo@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moxie-dis.Plo@am__quote@
++@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gaspardarc-opc.Plo@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/moxie-opc.Plo@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/msp430-decode.Plo@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/msp430-dis.Plo@am__quote@
+diff --git a/binutils-2.25/opcodes/configure.ac b/binutils-2.25/opcodes/configure.ac
+--- a/binutils-2.25/opcodes/configure.ac
++++ b/binutils-2.25/opcodes/configure.ac
+@@ -266,6 +266,7 @@
+ 	bfd_dlx_arch)		ta="$ta dlx-dis.lo" ;;
+ 	bfd_fr30_arch)		ta="$ta fr30-asm.lo fr30-desc.lo fr30-dis.lo fr30-ibld.lo fr30-opc.lo" using_cgen=yes ;;
+ 	bfd_frv_arch)		ta="$ta frv-asm.lo frv-desc.lo frv-dis.lo frv-ibld.lo frv-opc.lo" using_cgen=yes ;;
++	bfd_gaspardarc_arch)		ta="$ta gaspardarc-dis.lo gaspardarc-opc.lo" ;;
+ 	bfd_moxie_arch)		ta="$ta moxie-dis.lo moxie-opc.lo" ;;
+ 	bfd_h8300_arch)		ta="$ta h8300-dis.lo" ;;
+ 	bfd_h8500_arch)		ta="$ta h8500-dis.lo" ;;
+diff --git a/binutils-2.25/opcodes/configure b/binutils-2.25/opcodes/configure
+--- a/binutils-2.25/opcodes/configure
++++ b/binutils-2.25/opcodes/configure
+@@ -12549,6 +12549,7 @@
+ 	bfd_dlx_arch)		ta="$ta dlx-dis.lo" ;;
+ 	bfd_fr30_arch)		ta="$ta fr30-asm.lo fr30-desc.lo fr30-dis.lo fr30-ibld.lo fr30-opc.lo" using_cgen=yes ;;
+ 	bfd_frv_arch)		ta="$ta frv-asm.lo frv-desc.lo frv-dis.lo frv-ibld.lo frv-opc.lo" using_cgen=yes ;;
++	bfd_gaspardarc_arch)		ta="$ta gaspardarc-dis.lo gaspardarc-opc.lo" ;;
+ 	bfd_moxie_arch)		ta="$ta moxie-dis.lo moxie-opc.lo" ;;
+ 	bfd_h8300_arch)		ta="$ta h8300-dis.lo" ;;
+ 	bfd_h8500_arch)		ta="$ta h8500-dis.lo" ;;
+diff --git a/binutils-2.25/include/dis-asm.h b/binutils-2.25/include/dis-asm.h
+--- a/binutils-2.25/include/dis-asm.h
++++ b/binutils-2.25/include/dis-asm.h
+@@ -271,6 +271,7 @@
+ extern int print_insn_mmix		(bfd_vma, disassemble_info *);
+ extern int print_insn_mn10200		(bfd_vma, disassemble_info *);
+ extern int print_insn_mn10300		(bfd_vma, disassemble_info *);
++extern int print_insn_gaspardarc (bfd_vma, disassemble_info *);
+ extern int print_insn_moxie		(bfd_vma, disassemble_info *);
+ extern int print_insn_msp430		(bfd_vma, disassemble_info *);
+ extern int print_insn_mt                (bfd_vma, disassemble_info *);
+diff --git a/binutils-2.25/opcodes/disassemble.c b/binutils-2.25/opcodes/disassemble.c
+--- a/binutils-2.25/opcodes/disassemble.c
++++ b/binutils-2.25/opcodes/disassemble.c
+@@ -62,6 +62,7 @@
+ #define ARCH_mmix
+ #define ARCH_mn10200
+ #define ARCH_mn10300
++#define ARCH_gaspardarc
+ #define ARCH_moxie
+ #define ARCH_mt
+ #define ARCH_msp430
+@@ -498,6 +499,11 @@
+       disassemble = print_insn_frv;
+       break;
+ #endif
++#ifdef ARCH_gaspardarc
++    case bfd_arch_gaspardarc:
++      disassemble = print_insn_gaspardarc;
++      break;
++#endif
+ #ifdef ARCH_moxie
+     case bfd_arch_moxie:
+       disassemble = print_insn_moxie;

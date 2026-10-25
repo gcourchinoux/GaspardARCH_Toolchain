@@ -1,0 +1,1074 @@
+$ ROOT\.gaspardarc-work\build-binutils\gas\as-new.exe ROOT\GaspardARCH\Tests\isa_risc64_test.S -o ROOT\.gaspardarc-work\isa.o
+
+exit=0
+
+$ ROOT\.gaspardarc-work\build-binutils\ld\ld-new.exe -Ttext=0 -Tdata=0x10000 ROOT\.gaspardarc-work\isa.o -o ROOT\.gaspardarc-work\isa.elf
+
+exit=0
+
+$ C:\msys64\mingw64\bin\python.exe ROOT\GaspardARCH\Patchs\verifier_elf.py ROOT\.gaspardarc-work\isa.elf
+885/885 mots conformes ; 0 différences
+
+exit=0
+
+$ ROOT\.gaspardarc-work\build-binutils\binutils\readelf.exe -h -r ROOT\.gaspardarc-work\isa.o
+ELF Header:
+  Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00 
+  Class:                             ELF64
+  Data:                              2's complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              REL (Relocatable file)
+  Machine:                           GaspardARC (private ABI v0)
+  Version:                           0x1
+  Entry point address:               0x0
+  Start of program headers:          0 (bytes into file)
+  Start of section headers:          5088 (bytes into file)
+  Flags:                             0x0
+  Size of this header:               64 (bytes)
+  Size of program headers:           0 (bytes)
+  Number of program headers:         0
+  Size of section headers:           64 (bytes)
+  Number of section headers:         8
+  Section header string table index: 5
+
+Relocation section '.rela.text' at offset 0xfd8 contains 43 entries:
+  Offset          Info           Type           Sym. Value    Sym. Name + Addend
+000000000a90  000800000003 R_GASPARDARC_BRAN 0000000000000af8 .Lbr_fwd + 0
+000000000a94  000900000003 R_GASPARDARC_BRAN 0000000000000a8c .Lbr_back + 0
+000000000a98  000800000003 R_GASPARDARC_BRAN 0000000000000af8 .Lbr_fwd + 0
+000000000a9c  000800000003 R_GASPARDARC_BRAN 0000000000000af8 .Lbr_fwd + 0
+000000000aa0  000900000003 R_GASPARDARC_BRAN 0000000000000a8c .Lbr_back + 0
+000000000aa4  000800000003 R_GASPARDARC_BRAN 0000000000000af8 .Lbr_fwd + 0
+000000000aa8  000800000003 R_GASPARDARC_BRAN 0000000000000af8 .Lbr_fwd + 0
+000000000aac  000900000003 R_GASPARDARC_BRAN 0000000000000a8c .Lbr_back + 0
+000000000ab0  000800000003 R_GASPARDARC_BRAN 0000000000000af8 .Lbr_fwd + 0
+000000000ab4  000800000003 R_GASPARDARC_BRAN 0000000000000af8 .Lbr_fwd + 0
+000000000ab8  000900000003 R_GASPARDARC_BRAN 0000000000000a8c .Lbr_back + 0
+000000000abc  000800000003 R_GASPARDARC_BRAN 0000000000000af8 .Lbr_fwd + 0
+000000000ac0  000800000003 R_GASPARDARC_BRAN 0000000000000af8 .Lbr_fwd + 0
+000000000ac4  000900000003 R_GASPARDARC_BRAN 0000000000000a8c .Lbr_back + 0
+000000000ac8  000800000003 R_GASPARDARC_BRAN 0000000000000af8 .Lbr_fwd + 0
+000000000acc  000800000003 R_GASPARDARC_BRAN 0000000000000af8 .Lbr_fwd + 0
+000000000ad0  000900000003 R_GASPARDARC_BRAN 0000000000000a8c .Lbr_back + 0
+000000000ad4  000800000003 R_GASPARDARC_BRAN 0000000000000af8 .Lbr_fwd + 0
+000000000ad8  000800000004 R_GASPARDARC_JAL  0000000000000af8 .Lbr_fwd + 0
+000000000adc  000900000004 R_GASPARDARC_JAL  0000000000000a8c .Lbr_back + 0
+000000000ae0  000800000004 R_GASPARDARC_JAL  0000000000000af8 .Lbr_fwd + 0
+000000000b18  000900000003 R_GASPARDARC_BRAN 0000000000000a8c .Lbr_back + 0
+000000000b1c  000900000003 R_GASPARDARC_BRAN 0000000000000a8c .Lbr_back + 0
+000000000b20  000900000003 R_GASPARDARC_BRAN 0000000000000a8c .Lbr_back + 0
+000000000b24  000900000003 R_GASPARDARC_BRAN 0000000000000a8c .Lbr_back + 0
+000000000b28  000900000003 R_GASPARDARC_BRAN 0000000000000a8c .Lbr_back + 0
+000000000b2c  000900000003 R_GASPARDARC_BRAN 0000000000000a8c .Lbr_back + 0
+000000000b30  000900000003 R_GASPARDARC_BRAN 0000000000000a8c .Lbr_back + 0
+000000000b34  000900000003 R_GASPARDARC_BRAN 0000000000000a8c .Lbr_back + 0
+000000000b38  000900000003 R_GASPARDARC_BRAN 0000000000000a8c .Lbr_back + 0
+000000000b3c  000900000003 R_GASPARDARC_BRAN 0000000000000a8c .Lbr_back + 0
+000000000b40  000900000004 R_GASPARDARC_JAL  0000000000000a8c .Lbr_back + 0
+000000000b44  000800000004 R_GASPARDARC_JAL  0000000000000af8 .Lbr_fwd + 0
+000000000b54  000400000005 R_GASPARDARC_PCRE 0000000000000dc8 func_near + 0
+000000000b58  000400000006 R_GASPARDARC_PCRE 0000000000000dc8 func_near + 0
+000000000b5c  000500000005 R_GASPARDARC_PCRE 0000000000000dd0 func_far + 0
+000000000b60  000500000006 R_GASPARDARC_PCRE 0000000000000dd0 func_far + 0
+000000000b64  000600000005 R_GASPARDARC_PCRE 0000000000000000 data_word + 0
+000000000b68  000600000006 R_GASPARDARC_PCRE 0000000000000000 data_word + 0
+000000000b6c  000400000005 R_GASPARDARC_PCRE 0000000000000dc8 func_near + 0
+000000000b70  000400000006 R_GASPARDARC_PCRE 0000000000000dc8 func_near + 0
+000000000b74  000700000005 R_GASPARDARC_PCRE 0000000000000018 data_str + 0
+000000000b78  000700000006 R_GASPARDARC_PCRE 0000000000000018 data_str + 0
+
+exit=0
+
+$ ROOT\.gaspardarc-work\build-binutils\binutils\objdump.exe -d ROOT\.gaspardarc-work\isa.elf
+
+C:\projets\compilo-gaspardos\.gaspardarc-work\isa.elf:     file format elf64-gaspardarc
+
+
+Disassembly of section .text:
+
+0000000000000000 <_start>:
+   0:	33 85 c5 00 	add	a0, a1, a2
+   4:	b3 8f ad 01 	add	t6, s11, s10
+   8:	33 00 11 00 	add	zero, sp, ra
+   c:	33 85 c5 40 	sub	a0, a1, a2
+  10:	b3 8f ad 41 	sub	t6, s11, s10
+  14:	33 00 11 40 	sub	zero, sp, ra
+  18:	33 f5 c5 00 	and	a0, a1, a2
+  1c:	b3 ff ad 01 	and	t6, s11, s10
+  20:	33 70 11 00 	and	zero, sp, ra
+  24:	33 e5 c5 00 	or	a0, a1, a2
+  28:	b3 ef ad 01 	or	t6, s11, s10
+  2c:	33 60 11 00 	or	zero, sp, ra
+  30:	33 c5 c5 00 	xor	a0, a1, a2
+  34:	b3 cf ad 01 	xor	t6, s11, s10
+  38:	33 40 11 00 	xor	zero, sp, ra
+  3c:	33 95 c5 00 	sll	a0, a1, a2
+  40:	b3 9f ad 01 	sll	t6, s11, s10
+  44:	33 10 11 00 	sll	zero, sp, ra
+  48:	33 d5 c5 00 	srl	a0, a1, a2
+  4c:	b3 df ad 01 	srl	t6, s11, s10
+  50:	33 50 11 00 	srl	zero, sp, ra
+  54:	33 d5 c5 40 	sra	a0, a1, a2
+  58:	b3 df ad 41 	sra	t6, s11, s10
+  5c:	33 50 11 40 	sra	zero, sp, ra
+  60:	33 a5 c5 00 	slt	a0, a1, a2
+  64:	b3 af ad 01 	slt	t6, s11, s10
+  68:	33 20 11 00 	slt	zero, sp, ra
+  6c:	33 b5 c5 00 	sltu	a0, a1, a2
+  70:	b3 bf ad 01 	sltu	t6, s11, s10
+  74:	33 30 11 00 	sltu	zero, sp, ra
+  78:	13 85 05 00 	addi	a0, a1, 0
+  7c:	93 8f fd 7f 	addi	t6, s11, 2047
+  80:	13 00 01 80 	addi	zero, sp, -2048
+  84:	13 a5 05 00 	slti	a0, a1, 0
+  88:	93 af fd 7f 	slti	t6, s11, 2047
+  8c:	13 20 01 80 	slti	zero, sp, -2048
+  90:	13 b5 05 00 	sltiu	a0, a1, 0
+  94:	93 bf fd 7f 	sltiu	t6, s11, 2047
+  98:	13 30 01 80 	sltiu	zero, sp, -2048
+  9c:	13 c5 05 00 	xori	a0, a1, 0
+  a0:	93 cf fd 7f 	xori	t6, s11, 2047
+  a4:	13 40 01 80 	xori	zero, sp, -2048
+  a8:	13 e5 05 00 	ori	a0, a1, 0
+  ac:	93 ef fd 7f 	ori	t6, s11, 2047
+  b0:	13 60 01 80 	ori	zero, sp, -2048
+  b4:	13 f5 05 00 	andi	a0, a1, 0
+  b8:	93 ff fd 7f 	andi	t6, s11, 2047
+  bc:	13 70 01 80 	andi	zero, sp, -2048
+  c0:	13 95 15 00 	slli	a0, a1, 1
+  c4:	93 9f fd 03 	slli	t6, s11, 63
+  c8:	13 10 01 00 	slli	zero, sp, 0
+  cc:	13 d5 15 00 	srli	a0, a1, 1
+  d0:	93 df fd 03 	srli	t6, s11, 63
+  d4:	13 50 01 00 	srli	zero, sp, 0
+  d8:	13 d5 15 40 	srai	a0, a1, 1
+  dc:	93 df fd 43 	srai	t6, s11, 63
+  e0:	13 50 01 40 	srai	zero, sp, 0
+  e4:	3b 85 c5 00 	addw	a0, a1, a2
+  e8:	bb 8f ad 01 	addw	t6, s11, s10
+  ec:	3b 00 11 00 	addw	zero, sp, ra
+  f0:	3b 85 c5 40 	subw	a0, a1, a2
+  f4:	bb 8f ad 41 	subw	t6, s11, s10
+  f8:	3b 00 11 40 	subw	zero, sp, ra
+  fc:	3b 95 c5 00 	sllw	a0, a1, a2
+ 100:	bb 9f ad 01 	sllw	t6, s11, s10
+ 104:	3b 10 11 00 	sllw	zero, sp, ra
+ 108:	3b d5 c5 00 	srlw	a0, a1, a2
+ 10c:	bb df ad 01 	srlw	t6, s11, s10
+ 110:	3b 50 11 00 	srlw	zero, sp, ra
+ 114:	3b d5 c5 40 	sraw	a0, a1, a2
+ 118:	bb df ad 41 	sraw	t6, s11, s10
+ 11c:	3b 50 11 40 	sraw	zero, sp, ra
+ 120:	1b 85 05 00 	addiw	a0, a1, 0
+ 124:	9b 8f fd 7f 	addiw	t6, s11, 2047
+ 128:	1b 00 01 80 	addiw	zero, sp, -2048
+ 12c:	1b 95 15 00 	slliw	a0, a1, 1
+ 130:	9b 9f fd 01 	slliw	t6, s11, 31
+ 134:	1b 10 01 00 	slliw	zero, sp, 0
+ 138:	1b d5 15 00 	srliw	a0, a1, 1
+ 13c:	9b df fd 01 	srliw	t6, s11, 31
+ 140:	1b 50 01 00 	srliw	zero, sp, 0
+ 144:	1b d5 15 40 	sraiw	a0, a1, 1
+ 148:	9b df fd 41 	sraiw	t6, s11, 31
+ 14c:	1b 50 01 40 	sraiw	zero, sp, 0
+ 150:	37 55 34 12 	lui	a0, 0x12345
+ 154:	b7 ff ff ff 	lui	t6, 0xfffff
+ 158:	37 00 00 00 	lui	zero, 0x0
+ 15c:	17 55 34 12 	auipc	a0, 0x12345
+ 160:	97 ff ff ff 	auipc	t6, 0xfffff
+ 164:	17 00 00 00 	auipc	zero, 0x0
+ 168:	33 d5 c5 0e 	czero.eqz	a0, a1, a2
+ 16c:	b3 df ad 0f 	czero.eqz	t6, s11, s10
+ 170:	33 50 11 0e 	czero.eqz	zero, sp, ra
+ 174:	33 f5 c5 0e 	czero.nez	a0, a1, a2
+ 178:	b3 ff ad 0f 	czero.nez	t6, s11, s10
+ 17c:	33 70 11 0e 	czero.nez	zero, sp, ra
+ 180:	33 f5 c5 40 	andn	a0, a1, a2
+ 184:	b3 ff ad 41 	andn	t6, s11, s10
+ 188:	33 70 11 40 	andn	zero, sp, ra
+ 18c:	33 e5 c5 40 	orn	a0, a1, a2
+ 190:	b3 ef ad 41 	orn	t6, s11, s10
+ 194:	33 60 11 40 	orn	zero, sp, ra
+ 198:	33 c5 c5 40 	xnor	a0, a1, a2
+ 19c:	b3 cf ad 41 	xnor	t6, s11, s10
+ 1a0:	33 40 11 40 	xnor	zero, sp, ra
+ 1a4:	33 c5 c5 0a 	min	a0, a1, a2
+ 1a8:	b3 cf ad 0b 	min	t6, s11, s10
+ 1ac:	33 40 11 0a 	min	zero, sp, ra
+ 1b0:	33 d5 c5 0a 	minu	a0, a1, a2
+ 1b4:	b3 df ad 0b 	minu	t6, s11, s10
+ 1b8:	33 50 11 0a 	minu	zero, sp, ra
+ 1bc:	33 e5 c5 0a 	max	a0, a1, a2
+ 1c0:	b3 ef ad 0b 	max	t6, s11, s10
+ 1c4:	33 60 11 0a 	max	zero, sp, ra
+ 1c8:	33 f5 c5 0a 	maxu	a0, a1, a2
+ 1cc:	b3 ff ad 0b 	maxu	t6, s11, s10
+ 1d0:	33 70 11 0a 	maxu	zero, sp, ra
+ 1d4:	33 85 c5 02 	mul	a0, a1, a2
+ 1d8:	b3 8f ad 03 	mul	t6, s11, s10
+ 1dc:	33 00 11 02 	mul	zero, sp, ra
+ 1e0:	33 95 c5 02 	mulh	a0, a1, a2
+ 1e4:	b3 9f ad 03 	mulh	t6, s11, s10
+ 1e8:	33 10 11 02 	mulh	zero, sp, ra
+ 1ec:	33 a5 c5 02 	mulhsu	a0, a1, a2
+ 1f0:	b3 af ad 03 	mulhsu	t6, s11, s10
+ 1f4:	33 20 11 02 	mulhsu	zero, sp, ra
+ 1f8:	33 b5 c5 02 	mulhu	a0, a1, a2
+ 1fc:	b3 bf ad 03 	mulhu	t6, s11, s10
+ 200:	33 30 11 02 	mulhu	zero, sp, ra
+ 204:	33 c5 c5 02 	div	a0, a1, a2
+ 208:	b3 cf ad 03 	div	t6, s11, s10
+ 20c:	33 40 11 02 	div	zero, sp, ra
+ 210:	33 d5 c5 02 	divu	a0, a1, a2
+ 214:	b3 df ad 03 	divu	t6, s11, s10
+ 218:	33 50 11 02 	divu	zero, sp, ra
+ 21c:	33 e5 c5 02 	rem	a0, a1, a2
+ 220:	b3 ef ad 03 	rem	t6, s11, s10
+ 224:	33 60 11 02 	rem	zero, sp, ra
+ 228:	33 f5 c5 02 	remu	a0, a1, a2
+ 22c:	b3 ff ad 03 	remu	t6, s11, s10
+ 230:	33 70 11 02 	remu	zero, sp, ra
+ 234:	3b 85 c5 02 	mulw	a0, a1, a2
+ 238:	bb 8f ad 03 	mulw	t6, s11, s10
+ 23c:	3b 00 11 02 	mulw	zero, sp, ra
+ 240:	3b c5 c5 02 	divw	a0, a1, a2
+ 244:	bb cf ad 03 	divw	t6, s11, s10
+ 248:	3b 40 11 02 	divw	zero, sp, ra
+ 24c:	3b d5 c5 02 	divuw	a0, a1, a2
+ 250:	bb df ad 03 	divuw	t6, s11, s10
+ 254:	3b 50 11 02 	divuw	zero, sp, ra
+ 258:	3b e5 c5 02 	remw	a0, a1, a2
+ 25c:	bb ef ad 03 	remw	t6, s11, s10
+ 260:	3b 60 11 02 	remw	zero, sp, ra
+ 264:	3b f5 c5 02 	remuw	a0, a1, a2
+ 268:	bb ff ad 03 	remuw	t6, s11, s10
+ 26c:	3b 70 11 02 	remuw	zero, sp, ra
+ 270:	13 95 05 60 	clz	a0, a1
+ 274:	93 9f 0d 60 	clz	t6, s11
+ 278:	13 10 01 60 	clz	zero, sp
+ 27c:	13 95 15 60 	ctz	a0, a1
+ 280:	93 9f 1d 60 	ctz	t6, s11
+ 284:	13 10 11 60 	ctz	zero, sp
+ 288:	13 95 25 60 	cpop	a0, a1
+ 28c:	93 9f 2d 60 	cpop	t6, s11
+ 290:	13 10 21 60 	cpop	zero, sp
+ 294:	13 95 45 60 	sext.b	a0, a1
+ 298:	93 9f 4d 60 	sext.b	t6, s11
+ 29c:	13 10 41 60 	sext.b	zero, sp
+ 2a0:	13 95 55 60 	sext.h	a0, a1
+ 2a4:	93 9f 5d 60 	sext.h	t6, s11
+ 2a8:	13 10 51 60 	sext.h	zero, sp
+ 2ac:	13 95 65 60 	zext.h	a0, a1
+ 2b0:	93 9f 6d 60 	zext.h	t6, s11
+ 2b4:	13 10 61 60 	zext.h	zero, sp
+ 2b8:	13 d5 85 6b 	rev8	a0, a1
+ 2bc:	93 df 8d 6b 	rev8	t6, s11
+ 2c0:	13 50 81 6b 	rev8	zero, sp
+ 2c4:	33 95 c5 60 	rol	a0, a1, a2
+ 2c8:	b3 9f ad 61 	rol	t6, s11, s10
+ 2cc:	33 10 11 60 	rol	zero, sp, ra
+ 2d0:	33 d5 c5 60 	ror	a0, a1, a2
+ 2d4:	b3 df ad 61 	ror	t6, s11, s10
+ 2d8:	33 50 11 60 	ror	zero, sp, ra
+ 2dc:	13 d5 15 60 	rori	a0, a1, 1
+ 2e0:	93 df fd 63 	rori	t6, s11, 63
+ 2e4:	13 50 01 60 	rori	zero, sp, 0
+ 2e8:	33 95 c5 28 	bset	a0, a1, a2
+ 2ec:	b3 9f ad 29 	bset	t6, s11, s10
+ 2f0:	33 10 11 28 	bset	zero, sp, ra
+ 2f4:	33 95 c5 48 	bclr	a0, a1, a2
+ 2f8:	b3 9f ad 49 	bclr	t6, s11, s10
+ 2fc:	33 10 11 48 	bclr	zero, sp, ra
+ 300:	33 95 c5 68 	binv	a0, a1, a2
+ 304:	b3 9f ad 69 	binv	t6, s11, s10
+ 308:	33 10 11 68 	binv	zero, sp, ra
+ 30c:	33 d5 c5 48 	bext	a0, a1, a2
+ 310:	b3 df ad 49 	bext	t6, s11, s10
+ 314:	33 50 11 48 	bext	zero, sp, ra
+ 318:	13 95 15 28 	bseti	a0, a1, 1
+ 31c:	93 9f fd 2b 	bseti	t6, s11, 63
+ 320:	13 10 01 28 	bseti	zero, sp, 0
+ 324:	13 95 15 48 	bclri	a0, a1, 1
+ 328:	93 9f fd 4b 	bclri	t6, s11, 63
+ 32c:	13 10 01 48 	bclri	zero, sp, 0
+ 330:	13 95 15 68 	binvi	a0, a1, 1
+ 334:	93 9f fd 6b 	binvi	t6, s11, 63
+ 338:	13 10 01 68 	binvi	zero, sp, 0
+ 33c:	13 d5 15 48 	bexti	a0, a1, 1
+ 340:	93 df fd 4b 	bexti	t6, s11, 63
+ 344:	13 50 01 48 	bexti	zero, sp, 0
+ 348:	03 85 05 00 	lb	a0, 0(a1)
+ 34c:	83 8f fd 7f 	lb	t6, 2047(s11)
+ 350:	03 00 01 80 	lb	zero, -2048(sp)
+ 354:	03 95 05 00 	lh	a0, 0(a1)
+ 358:	83 9f fd 7f 	lh	t6, 2047(s11)
+ 35c:	03 10 01 80 	lh	zero, -2048(sp)
+ 360:	03 a5 05 00 	lw	a0, 0(a1)
+ 364:	83 af fd 7f 	lw	t6, 2047(s11)
+ 368:	03 20 01 80 	lw	zero, -2048(sp)
+ 36c:	03 b5 05 00 	ld	a0, 0(a1)
+ 370:	83 bf fd 7f 	ld	t6, 2047(s11)
+ 374:	03 30 01 80 	ld	zero, -2048(sp)
+ 378:	03 c5 05 00 	lbu	a0, 0(a1)
+ 37c:	83 cf fd 7f 	lbu	t6, 2047(s11)
+ 380:	03 40 01 80 	lbu	zero, -2048(sp)
+ 384:	03 d5 05 00 	lhu	a0, 0(a1)
+ 388:	83 df fd 7f 	lhu	t6, 2047(s11)
+ 38c:	03 50 01 80 	lhu	zero, -2048(sp)
+ 390:	03 e5 05 00 	lwu	a0, 0(a1)
+ 394:	83 ef fd 7f 	lwu	t6, 2047(s11)
+ 398:	03 60 01 80 	lwu	zero, -2048(sp)
+ 39c:	23 80 c5 00 	sb	a2, 0(a1)
+ 3a0:	a3 8f ad 7f 	sb	s10, 2047(s11)
+ 3a4:	23 00 11 80 	sb	ra, -2048(sp)
+ 3a8:	23 90 c5 00 	sh	a2, 0(a1)
+ 3ac:	a3 9f ad 7f 	sh	s10, 2047(s11)
+ 3b0:	23 10 11 80 	sh	ra, -2048(sp)
+ 3b4:	23 a0 c5 00 	sw	a2, 0(a1)
+ 3b8:	a3 af ad 7f 	sw	s10, 2047(s11)
+ 3bc:	23 20 11 80 	sw	ra, -2048(sp)
+ 3c0:	23 b0 c5 00 	sd	a2, 0(a1)
+ 3c4:	a3 bf ad 7f 	sd	s10, 2047(s11)
+ 3c8:	23 30 11 80 	sd	ra, -2048(sp)
+ 3cc:	0f b0 05 00 	prefetch	0(a1)
+ 3d0:	0f b0 fd 7f 	prefetch	2047(s11)
+ 3d4:	0f 30 01 80 	prefetch	-2048(sp)
+ 3d8:	0f a0 25 00 	cbo.flush	(a1)
+ 3dc:	0f a0 2d 00 	cbo.flush	(s11)
+ 3e0:	0f 20 21 00 	cbo.flush	(sp)
+ 3e4:	0f a0 45 00 	cbo.zero	(a1)
+ 3e8:	0f a0 4d 00 	cbo.zero	(s11)
+ 3ec:	0f 20 41 00 	cbo.zero	(sp)
+ 3f0:	2f a5 05 10 	lr.w	a0, (a1)
+ 3f4:	af af 0d 10 	lr.w	t6, (s11)
+ 3f8:	2f 20 01 10 	lr.w	zero, (sp)
+ 3fc:	2f a5 c5 18 	sc.w	a0, a2, (a1)
+ 400:	af af ad 19 	sc.w	t6, s10, (s11)
+ 404:	2f 20 11 18 	sc.w	zero, ra, (sp)
+ 408:	2f a5 c5 28 	cas.w	a0, a2, (a1)
+ 40c:	af af ad 29 	cas.w	t6, s10, (s11)
+ 410:	2f 20 11 28 	cas.w	zero, ra, (sp)
+ 414:	2f a5 c5 08 	amoswap.w	a0, a2, (a1)
+ 418:	af af ad 09 	amoswap.w	t6, s10, (s11)
+ 41c:	2f 20 11 08 	amoswap.w	zero, ra, (sp)
+ 420:	2f a5 c5 00 	amoadd.w	a0, a2, (a1)
+ 424:	af af ad 01 	amoadd.w	t6, s10, (s11)
+ 428:	2f 20 11 00 	amoadd.w	zero, ra, (sp)
+ 42c:	2f a5 c5 20 	amoxor.w	a0, a2, (a1)
+ 430:	af af ad 21 	amoxor.w	t6, s10, (s11)
+ 434:	2f 20 11 20 	amoxor.w	zero, ra, (sp)
+ 438:	2f a5 c5 60 	amoand.w	a0, a2, (a1)
+ 43c:	af af ad 61 	amoand.w	t6, s10, (s11)
+ 440:	2f 20 11 60 	amoand.w	zero, ra, (sp)
+ 444:	2f a5 c5 40 	amoor.w	a0, a2, (a1)
+ 448:	af af ad 41 	amoor.w	t6, s10, (s11)
+ 44c:	2f 20 11 40 	amoor.w	zero, ra, (sp)
+ 450:	2f a5 c5 80 	amomin.w	a0, a2, (a1)
+ 454:	af af ad 81 	amomin.w	t6, s10, (s11)
+ 458:	2f 20 11 80 	amomin.w	zero, ra, (sp)
+ 45c:	2f a5 c5 a0 	amomax.w	a0, a2, (a1)
+ 460:	af af ad a1 	amomax.w	t6, s10, (s11)
+ 464:	2f 20 11 a0 	amomax.w	zero, ra, (sp)
+ 468:	2f a5 c5 c0 	amominu.w	a0, a2, (a1)
+ 46c:	af af ad c1 	amominu.w	t6, s10, (s11)
+ 470:	2f 20 11 c0 	amominu.w	zero, ra, (sp)
+ 474:	2f a5 c5 e0 	amomaxu.w	a0, a2, (a1)
+ 478:	af af ad e1 	amomaxu.w	t6, s10, (s11)
+ 47c:	2f 20 11 e0 	amomaxu.w	zero, ra, (sp)
+ 480:	2f b5 05 10 	lr.d	a0, (a1)
+ 484:	af bf 0d 10 	lr.d	t6, (s11)
+ 488:	2f 30 01 10 	lr.d	zero, (sp)
+ 48c:	2f b5 c5 18 	sc.d	a0, a2, (a1)
+ 490:	af bf ad 19 	sc.d	t6, s10, (s11)
+ 494:	2f 30 11 18 	sc.d	zero, ra, (sp)
+ 498:	2f b5 c5 28 	cas.d	a0, a2, (a1)
+ 49c:	af bf ad 29 	cas.d	t6, s10, (s11)
+ 4a0:	2f 30 11 28 	cas.d	zero, ra, (sp)
+ 4a4:	2f b5 c5 08 	amoswap.d	a0, a2, (a1)
+ 4a8:	af bf ad 09 	amoswap.d	t6, s10, (s11)
+ 4ac:	2f 30 11 08 	amoswap.d	zero, ra, (sp)
+ 4b0:	2f b5 c5 00 	amoadd.d	a0, a2, (a1)
+ 4b4:	af bf ad 01 	amoadd.d	t6, s10, (s11)
+ 4b8:	2f 30 11 00 	amoadd.d	zero, ra, (sp)
+ 4bc:	2f b5 c5 20 	amoxor.d	a0, a2, (a1)
+ 4c0:	af bf ad 21 	amoxor.d	t6, s10, (s11)
+ 4c4:	2f 30 11 20 	amoxor.d	zero, ra, (sp)
+ 4c8:	2f b5 c5 60 	amoand.d	a0, a2, (a1)
+ 4cc:	af bf ad 61 	amoand.d	t6, s10, (s11)
+ 4d0:	2f 30 11 60 	amoand.d	zero, ra, (sp)
+ 4d4:	2f b5 c5 40 	amoor.d	a0, a2, (a1)
+ 4d8:	af bf ad 41 	amoor.d	t6, s10, (s11)
+ 4dc:	2f 30 11 40 	amoor.d	zero, ra, (sp)
+ 4e0:	2f b5 c5 80 	amomin.d	a0, a2, (a1)
+ 4e4:	af bf ad 81 	amomin.d	t6, s10, (s11)
+ 4e8:	2f 30 11 80 	amomin.d	zero, ra, (sp)
+ 4ec:	2f b5 c5 a0 	amomax.d	a0, a2, (a1)
+ 4f0:	af bf ad a1 	amomax.d	t6, s10, (s11)
+ 4f4:	2f 30 11 a0 	amomax.d	zero, ra, (sp)
+ 4f8:	2f b5 c5 c0 	amominu.d	a0, a2, (a1)
+ 4fc:	af bf ad c1 	amominu.d	t6, s10, (s11)
+ 500:	2f 30 11 c0 	amominu.d	zero, ra, (sp)
+ 504:	2f b5 c5 e0 	amomaxu.d	a0, a2, (a1)
+ 508:	af bf ad e1 	amomaxu.d	t6, s10, (s11)
+ 50c:	2f 30 11 e0 	amomaxu.d	zero, ra, (sp)
+ 510:	53 f5 c5 00 	fadd.s	fa0, fa1, fa2, dyn
+ 514:	d3 9f ad 01 	fadd.s	ft11, fs11, fs10, rtz
+ 518:	53 a0 20 00 	fadd.s	ft0, ft1, ft2, rdn
+ 51c:	53 f5 c5 08 	fsub.s	fa0, fa1, fa2, dyn
+ 520:	d3 9f ad 09 	fsub.s	ft11, fs11, fs10, rtz
+ 524:	53 a0 20 08 	fsub.s	ft0, ft1, ft2, rdn
+ 528:	53 f5 c5 10 	fmul.s	fa0, fa1, fa2, dyn
+ 52c:	d3 9f ad 11 	fmul.s	ft11, fs11, fs10, rtz
+ 530:	53 a0 20 10 	fmul.s	ft0, ft1, ft2, rdn
+ 534:	53 f5 c5 18 	fdiv.s	fa0, fa1, fa2, dyn
+ 538:	d3 9f ad 19 	fdiv.s	ft11, fs11, fs10, rtz
+ 53c:	53 a0 20 18 	fdiv.s	ft0, ft1, ft2, rdn
+ 540:	53 f5 05 58 	fsqrt.s	fa0, fa1, dyn
+ 544:	d3 9f 0d 58 	fsqrt.s	ft11, fs11, rtz
+ 548:	53 a0 00 58 	fsqrt.s	ft0, ft1, rdn
+ 54c:	53 85 c5 20 	fsgnj.s	fa0, fa1, fa2
+ 550:	d3 8f ad 21 	fsgnj.s	ft11, fs11, fs10
+ 554:	53 80 20 20 	fsgnj.s	ft0, ft1, ft2
+ 558:	53 95 c5 20 	fsgnjn.s	fa0, fa1, fa2
+ 55c:	d3 9f ad 21 	fsgnjn.s	ft11, fs11, fs10
+ 560:	53 90 20 20 	fsgnjn.s	ft0, ft1, ft2
+ 564:	53 a5 c5 20 	fsgnjx.s	fa0, fa1, fa2
+ 568:	d3 af ad 21 	fsgnjx.s	ft11, fs11, fs10
+ 56c:	53 a0 20 20 	fsgnjx.s	ft0, ft1, ft2
+ 570:	53 85 c5 28 	fmin.s	fa0, fa1, fa2
+ 574:	d3 8f ad 29 	fmin.s	ft11, fs11, fs10
+ 578:	53 80 20 28 	fmin.s	ft0, ft1, ft2
+ 57c:	53 95 c5 28 	fmax.s	fa0, fa1, fa2
+ 580:	d3 9f ad 29 	fmax.s	ft11, fs11, fs10
+ 584:	53 90 20 28 	fmax.s	ft0, ft1, ft2
+ 588:	53 f5 45 40 	fround.s	fa0, fa1, dyn
+ 58c:	d3 9f 4d 40 	fround.s	ft11, fs11, rtz
+ 590:	53 a0 40 40 	fround.s	ft0, ft1, rdn
+ 594:	53 85 10 f0 	fli.s	fa0, 1.0
+ 598:	d3 0f 11 f0 	fli.s	ft11, -1.0
+ 59c:	53 00 17 f0 	fli.s	ft0, inf
+ 5a0:	53 f5 c5 02 	fadd.d	fa0, fa1, fa2, dyn
+ 5a4:	d3 9f ad 03 	fadd.d	ft11, fs11, fs10, rtz
+ 5a8:	53 a0 20 02 	fadd.d	ft0, ft1, ft2, rdn
+ 5ac:	53 f5 c5 0a 	fsub.d	fa0, fa1, fa2, dyn
+ 5b0:	d3 9f ad 0b 	fsub.d	ft11, fs11, fs10, rtz
+ 5b4:	53 a0 20 0a 	fsub.d	ft0, ft1, ft2, rdn
+ 5b8:	53 f5 c5 12 	fmul.d	fa0, fa1, fa2, dyn
+ 5bc:	d3 9f ad 13 	fmul.d	ft11, fs11, fs10, rtz
+ 5c0:	53 a0 20 12 	fmul.d	ft0, ft1, ft2, rdn
+ 5c4:	53 f5 c5 1a 	fdiv.d	fa0, fa1, fa2, dyn
+ 5c8:	d3 9f ad 1b 	fdiv.d	ft11, fs11, fs10, rtz
+ 5cc:	53 a0 20 1a 	fdiv.d	ft0, ft1, ft2, rdn
+ 5d0:	53 f5 05 5a 	fsqrt.d	fa0, fa1, dyn
+ 5d4:	d3 9f 0d 5a 	fsqrt.d	ft11, fs11, rtz
+ 5d8:	53 a0 00 5a 	fsqrt.d	ft0, ft1, rdn
+ 5dc:	53 85 c5 22 	fsgnj.d	fa0, fa1, fa2
+ 5e0:	d3 8f ad 23 	fsgnj.d	ft11, fs11, fs10
+ 5e4:	53 80 20 22 	fsgnj.d	ft0, ft1, ft2
+ 5e8:	53 95 c5 22 	fsgnjn.d	fa0, fa1, fa2
+ 5ec:	d3 9f ad 23 	fsgnjn.d	ft11, fs11, fs10
+ 5f0:	53 90 20 22 	fsgnjn.d	ft0, ft1, ft2
+ 5f4:	53 a5 c5 22 	fsgnjx.d	fa0, fa1, fa2
+ 5f8:	d3 af ad 23 	fsgnjx.d	ft11, fs11, fs10
+ 5fc:	53 a0 20 22 	fsgnjx.d	ft0, ft1, ft2
+ 600:	53 85 c5 2a 	fmin.d	fa0, fa1, fa2
+ 604:	d3 8f ad 2b 	fmin.d	ft11, fs11, fs10
+ 608:	53 80 20 2a 	fmin.d	ft0, ft1, ft2
+ 60c:	53 95 c5 2a 	fmax.d	fa0, fa1, fa2
+ 610:	d3 9f ad 2b 	fmax.d	ft11, fs11, fs10
+ 614:	53 90 20 2a 	fmax.d	ft0, ft1, ft2
+ 618:	53 f5 45 42 	fround.d	fa0, fa1, dyn
+ 61c:	d3 9f 4d 42 	fround.d	ft11, fs11, rtz
+ 620:	53 a0 40 42 	fround.d	ft0, ft1, rdn
+ 624:	53 85 10 f2 	fli.d	fa0, 1.0
+ 628:	d3 0f 11 f2 	fli.d	ft11, -1.0
+ 62c:	53 00 17 f2 	fli.d	ft0, inf
+ 630:	43 f5 c5 68 	fmadd.s	fa0, fa1, fa2, fa3, dyn
+ 634:	c3 9f ad c9 	fmadd.s	ft11, fs11, fs10, fs9, rtz
+ 638:	43 a0 20 18 	fmadd.s	ft0, ft1, ft2, ft3, rdn
+ 63c:	43 f5 c5 6a 	fmadd.d	fa0, fa1, fa2, fa3, dyn
+ 640:	c3 9f ad cb 	fmadd.d	ft11, fs11, fs10, fs9, rtz
+ 644:	43 a0 20 1a 	fmadd.d	ft0, ft1, ft2, ft3, rdn
+ 648:	47 f5 c5 68 	fmsub.s	fa0, fa1, fa2, fa3, dyn
+ 64c:	c7 9f ad c9 	fmsub.s	ft11, fs11, fs10, fs9, rtz
+ 650:	47 a0 20 18 	fmsub.s	ft0, ft1, ft2, ft3, rdn
+ 654:	47 f5 c5 6a 	fmsub.d	fa0, fa1, fa2, fa3, dyn
+ 658:	c7 9f ad cb 	fmsub.d	ft11, fs11, fs10, fs9, rtz
+ 65c:	47 a0 20 1a 	fmsub.d	ft0, ft1, ft2, ft3, rdn
+ 660:	4b f5 c5 68 	fnmsub.s	fa0, fa1, fa2, fa3, dyn
+ 664:	cb 9f ad c9 	fnmsub.s	ft11, fs11, fs10, fs9, rtz
+ 668:	4b a0 20 18 	fnmsub.s	ft0, ft1, ft2, ft3, rdn
+ 66c:	4b f5 c5 6a 	fnmsub.d	fa0, fa1, fa2, fa3, dyn
+ 670:	cb 9f ad cb 	fnmsub.d	ft11, fs11, fs10, fs9, rtz
+ 674:	4b a0 20 1a 	fnmsub.d	ft0, ft1, ft2, ft3, rdn
+ 678:	4f f5 c5 68 	fnmadd.s	fa0, fa1, fa2, fa3, dyn
+ 67c:	cf 9f ad c9 	fnmadd.s	ft11, fs11, fs10, fs9, rtz
+ 680:	4f a0 20 18 	fnmadd.s	ft0, ft1, ft2, ft3, rdn
+ 684:	4f f5 c5 6a 	fnmadd.d	fa0, fa1, fa2, fa3, dyn
+ 688:	cf 9f ad cb 	fnmadd.d	ft11, fs11, fs10, fs9, rtz
+ 68c:	4f a0 20 1a 	fnmadd.d	ft0, ft1, ft2, ft3, rdn
+ 690:	53 f5 05 c0 	fcvt.w.s	a0, fa1, dyn
+ 694:	d3 9f 0d c0 	fcvt.w.s	t6, fs11, rtz
+ 698:	53 a0 00 c0 	fcvt.w.s	zero, ft1, rdn
+ 69c:	53 f5 05 d0 	fcvt.s.w	fa0, a1, dyn
+ 6a0:	d3 9f 0d d0 	fcvt.s.w	ft11, s11, rtz
+ 6a4:	53 20 01 d0 	fcvt.s.w	ft0, sp, rdn
+ 6a8:	53 f5 15 c0 	fcvt.wu.s	a0, fa1, dyn
+ 6ac:	d3 9f 1d c0 	fcvt.wu.s	t6, fs11, rtz
+ 6b0:	53 a0 10 c0 	fcvt.wu.s	zero, ft1, rdn
+ 6b4:	53 f5 15 d0 	fcvt.s.wu	fa0, a1, dyn
+ 6b8:	d3 9f 1d d0 	fcvt.s.wu	ft11, s11, rtz
+ 6bc:	53 20 11 d0 	fcvt.s.wu	ft0, sp, rdn
+ 6c0:	53 f5 25 c0 	fcvt.l.s	a0, fa1, dyn
+ 6c4:	d3 9f 2d c0 	fcvt.l.s	t6, fs11, rtz
+ 6c8:	53 a0 20 c0 	fcvt.l.s	zero, ft1, rdn
+ 6cc:	53 f5 25 d0 	fcvt.s.l	fa0, a1, dyn
+ 6d0:	d3 9f 2d d0 	fcvt.s.l	ft11, s11, rtz
+ 6d4:	53 20 21 d0 	fcvt.s.l	ft0, sp, rdn
+ 6d8:	53 f5 35 c0 	fcvt.lu.s	a0, fa1, dyn
+ 6dc:	d3 9f 3d c0 	fcvt.lu.s	t6, fs11, rtz
+ 6e0:	53 a0 30 c0 	fcvt.lu.s	zero, ft1, rdn
+ 6e4:	53 f5 35 d0 	fcvt.s.lu	fa0, a1, dyn
+ 6e8:	d3 9f 3d d0 	fcvt.s.lu	ft11, s11, rtz
+ 6ec:	53 20 31 d0 	fcvt.s.lu	ft0, sp, rdn
+ 6f0:	53 f5 05 c2 	fcvt.w.d	a0, fa1, dyn
+ 6f4:	d3 9f 0d c2 	fcvt.w.d	t6, fs11, rtz
+ 6f8:	53 a0 00 c2 	fcvt.w.d	zero, ft1, rdn
+ 6fc:	53 85 05 d2 	fcvt.d.w	fa0, a1
+ 700:	d3 8f 0d d2 	fcvt.d.w	ft11, s11
+ 704:	53 00 01 d2 	fcvt.d.w	ft0, sp
+ 708:	53 f5 15 c2 	fcvt.wu.d	a0, fa1, dyn
+ 70c:	d3 9f 1d c2 	fcvt.wu.d	t6, fs11, rtz
+ 710:	53 a0 10 c2 	fcvt.wu.d	zero, ft1, rdn
+ 714:	53 85 15 d2 	fcvt.d.wu	fa0, a1
+ 718:	d3 8f 1d d2 	fcvt.d.wu	ft11, s11
+ 71c:	53 00 11 d2 	fcvt.d.wu	ft0, sp
+ 720:	53 f5 25 c2 	fcvt.l.d	a0, fa1, dyn
+ 724:	d3 9f 2d c2 	fcvt.l.d	t6, fs11, rtz
+ 728:	53 a0 20 c2 	fcvt.l.d	zero, ft1, rdn
+ 72c:	53 f5 25 d2 	fcvt.d.l	fa0, a1, dyn
+ 730:	d3 9f 2d d2 	fcvt.d.l	ft11, s11, rtz
+ 734:	53 20 21 d2 	fcvt.d.l	ft0, sp, rdn
+ 738:	53 f5 35 c2 	fcvt.lu.d	a0, fa1, dyn
+ 73c:	d3 9f 3d c2 	fcvt.lu.d	t6, fs11, rtz
+ 740:	53 a0 30 c2 	fcvt.lu.d	zero, ft1, rdn
+ 744:	53 f5 35 d2 	fcvt.d.lu	fa0, a1, dyn
+ 748:	d3 9f 3d d2 	fcvt.d.lu	ft11, s11, rtz
+ 74c:	53 20 31 d2 	fcvt.d.lu	ft0, sp, rdn
+ 750:	53 f5 15 40 	fcvt.s.d	fa0, fa1, dyn
+ 754:	d3 9f 1d 40 	fcvt.s.d	ft11, fs11, rtz
+ 758:	53 a0 10 40 	fcvt.s.d	ft0, ft1, rdn
+ 75c:	53 85 05 42 	fcvt.d.s	fa0, fa1
+ 760:	d3 8f 0d 42 	fcvt.d.s	ft11, fs11
+ 764:	53 80 00 42 	fcvt.d.s	ft0, ft1
+ 768:	53 85 05 e0 	fmv.x.w	a0, fa1
+ 76c:	d3 8f 0d e0 	fmv.x.w	t6, fs11
+ 770:	53 80 00 e0 	fmv.x.w	zero, ft1
+ 774:	53 85 05 f0 	fmv.w.x	fa0, a1
+ 778:	d3 8f 0d f0 	fmv.w.x	ft11, s11
+ 77c:	53 00 01 f0 	fmv.w.x	ft0, sp
+ 780:	53 85 05 e2 	fmv.x.d	a0, fa1
+ 784:	d3 8f 0d e2 	fmv.x.d	t6, fs11
+ 788:	53 80 00 e2 	fmv.x.d	zero, ft1
+ 78c:	53 85 05 f2 	fmv.d.x	fa0, a1
+ 790:	d3 8f 0d f2 	fmv.d.x	ft11, s11
+ 794:	53 00 01 f2 	fmv.d.x	ft0, sp
+ 798:	53 a5 c5 a0 	feq.s	a0, fa1, fa2
+ 79c:	d3 af ad a1 	feq.s	t6, fs11, fs10
+ 7a0:	53 a0 20 a0 	feq.s	zero, ft1, ft2
+ 7a4:	53 95 c5 a0 	flt.s	a0, fa1, fa2
+ 7a8:	d3 9f ad a1 	flt.s	t6, fs11, fs10
+ 7ac:	53 90 20 a0 	flt.s	zero, ft1, ft2
+ 7b0:	53 85 c5 a0 	fle.s	a0, fa1, fa2
+ 7b4:	d3 8f ad a1 	fle.s	t6, fs11, fs10
+ 7b8:	53 80 20 a0 	fle.s	zero, ft1, ft2
+ 7bc:	53 95 05 e0 	fclass.s	a0, fa1
+ 7c0:	d3 9f 0d e0 	fclass.s	t6, fs11
+ 7c4:	53 90 00 e0 	fclass.s	zero, ft1
+ 7c8:	53 a5 c5 a2 	feq.d	a0, fa1, fa2
+ 7cc:	d3 af ad a3 	feq.d	t6, fs11, fs10
+ 7d0:	53 a0 20 a2 	feq.d	zero, ft1, ft2
+ 7d4:	53 95 c5 a2 	flt.d	a0, fa1, fa2
+ 7d8:	d3 9f ad a3 	flt.d	t6, fs11, fs10
+ 7dc:	53 90 20 a2 	flt.d	zero, ft1, ft2
+ 7e0:	53 85 c5 a2 	fle.d	a0, fa1, fa2
+ 7e4:	d3 8f ad a3 	fle.d	t6, fs11, fs10
+ 7e8:	53 80 20 a2 	fle.d	zero, ft1, ft2
+ 7ec:	53 95 05 e2 	fclass.d	a0, fa1
+ 7f0:	d3 9f 0d e2 	fclass.d	t6, fs11
+ 7f4:	53 90 00 e2 	fclass.d	zero, ft1
+ 7f8:	07 a5 05 00 	flw	fa0, 0(a1)
+ 7fc:	87 af fd 7f 	flw	ft11, 2047(s11)
+ 800:	07 20 01 80 	flw	ft0, -2048(sp)
+ 804:	07 b5 05 00 	fld	fa0, 0(a1)
+ 808:	87 bf fd 7f 	fld	ft11, 2047(s11)
+ 80c:	07 30 01 80 	fld	ft0, -2048(sp)
+ 810:	27 a0 c5 00 	fsw	fa2, 0(a1)
+ 814:	a7 af ad 7f 	fsw	fs10, 2047(s11)
+ 818:	27 20 21 80 	fsw	ft2, -2048(sp)
+ 81c:	27 b0 c5 00 	fsd	fa2, 0(a1)
+ 820:	a7 bf ad 7f 	fsd	fs10, 2047(s11)
+ 824:	27 30 21 80 	fsd	ft2, -2048(sp)
+ 828:	73 00 10 00 	break
+ 82c:	73 00 10 00 	break
+ 830:	73 00 10 00 	break
+ 834:	73 00 20 10 	retry
+ 838:	73 00 20 10 	retry
+ 83c:	73 00 20 10 	retry
+ 840:	73 00 30 10 	done
+ 844:	73 00 30 10 	done
+ 848:	73 00 30 10 	done
+ 84c:	73 00 50 10 	wfi
+ 850:	73 00 50 10 	wfi
+ 854:	73 00 50 10 	wfi
+ 858:	73 95 25 00 	csrrw	a0, 0x2, a1
+ 85c:	f3 9f 0d 10 	csrrw	t6, 0x100, s11
+ 860:	73 10 21 10 	csrrw	zero, 0x102, sp
+ 864:	73 a5 25 00 	csrrs	a0, 0x2, a1
+ 868:	f3 af 0d 10 	csrrs	t6, 0x100, s11
+ 86c:	73 20 21 10 	csrrs	zero, 0x102, sp
+ 870:	73 b5 25 00 	csrrc	a0, 0x2, a1
+ 874:	f3 bf 0d 10 	csrrc	t6, 0x100, s11
+ 878:	73 30 21 10 	csrrc	zero, 0x102, sp
+ 87c:	73 55 20 00 	csrrwi	a0, 0x2, 0
+ 880:	f3 df 0f 10 	csrrwi	t6, 0x100, 31
+ 884:	73 50 25 10 	csrrwi	zero, 0x102, 10
+ 888:	73 65 20 00 	csrrsi	a0, 0x2, 0
+ 88c:	f3 ef 0f 10 	csrrsi	t6, 0x100, 31
+ 890:	73 60 25 10 	csrrsi	zero, 0x102, 10
+ 894:	73 75 20 00 	csrrci	a0, 0x2, 0
+ 898:	f3 ff 0f 10 	csrrci	t6, 0x100, 31
+ 89c:	73 70 25 10 	csrrci	zero, 0x102, 10
+ 8a0:	53 85 c5 02 	fadd.d	fa0, fa1, fa2, rne
+ 8a4:	53 85 05 c2 	fcvt.w.d	a0, fa1, rne
+ 8a8:	43 85 c5 68 	fmadd.s	fa0, fa1, fa2, fa3, rne
+ 8ac:	53 95 c5 02 	fadd.d	fa0, fa1, fa2, rtz
+ 8b0:	53 95 05 c2 	fcvt.w.d	a0, fa1, rtz
+ 8b4:	43 95 c5 68 	fmadd.s	fa0, fa1, fa2, fa3, rtz
+ 8b8:	53 a5 c5 02 	fadd.d	fa0, fa1, fa2, rdn
+ 8bc:	53 a5 05 c2 	fcvt.w.d	a0, fa1, rdn
+ 8c0:	43 a5 c5 68 	fmadd.s	fa0, fa1, fa2, fa3, rdn
+ 8c4:	53 b5 c5 02 	fadd.d	fa0, fa1, fa2, rup
+ 8c8:	53 b5 05 c2 	fcvt.w.d	a0, fa1, rup
+ 8cc:	43 b5 c5 68 	fmadd.s	fa0, fa1, fa2, fa3, rup
+ 8d0:	53 c5 c5 02 	fadd.d	fa0, fa1, fa2, rmm
+ 8d4:	53 c5 05 c2 	fcvt.w.d	a0, fa1, rmm
+ 8d8:	43 c5 c5 68 	fmadd.s	fa0, fa1, fa2, fa3, rmm
+ 8dc:	53 f5 c5 02 	fadd.d	fa0, fa1, fa2, dyn
+ 8e0:	53 f5 05 c2 	fcvt.w.d	a0, fa1, dyn
+ 8e4:	43 f5 c5 68 	fmadd.s	fa0, fa1, fa2, fa3, dyn
+ 8e8:	2f a5 05 14 	lr.w.aq	a0, (a1)
+ 8ec:	2f a5 05 12 	lr.w.rl	a0, (a1)
+ 8f0:	2f a5 05 16 	lr.w.aq.rl	a0, (a1)
+ 8f4:	2f b5 05 14 	lr.d.aq	a0, (a1)
+ 8f8:	2f b5 05 12 	lr.d.rl	a0, (a1)
+ 8fc:	2f b5 05 16 	lr.d.aq.rl	a0, (a1)
+ 900:	2f a5 c5 1c 	sc.w.aq	a0, a2, (a1)
+ 904:	2f a5 c5 1a 	sc.w.rl	a0, a2, (a1)
+ 908:	2f a5 c5 1e 	sc.w.aq.rl	a0, a2, (a1)
+ 90c:	2f b5 c5 2c 	cas.d.aq	a0, a2, (a1)
+ 910:	2f b5 c5 2a 	cas.d.rl	a0, a2, (a1)
+ 914:	2f b5 c5 2e 	cas.d.aq.rl	a0, a2, (a1)
+ 918:	2f b5 c5 0c 	amoswap.d.aq	a0, a2, (a1)
+ 91c:	2f b5 c5 0a 	amoswap.d.rl	a0, a2, (a1)
+ 920:	2f b5 c5 0e 	amoswap.d.aq.rl	a0, a2, (a1)
+ 924:	2f a5 c5 04 	amoadd.w.aq	a0, a2, (a1)
+ 928:	2f a5 c5 02 	amoadd.w.rl	a0, a2, (a1)
+ 92c:	2f a5 c5 06 	amoadd.w.aq.rl	a0, a2, (a1)
+ 930:	2f b5 c5 e4 	amomaxu.d.aq	a0, a2, (a1)
+ 934:	2f b5 c5 e2 	amomaxu.d.rl	a0, a2, (a1)
+ 938:	2f b5 c5 e6 	amomaxu.d.aq.rl	a0, a2, (a1)
+ 93c:	53 05 10 f0 	fli.s	fa0, 0.0
+ 940:	d3 0d 10 f2 	fli.d	fs11, 0.0
+ 944:	53 85 10 f0 	fli.s	fa0, 1.0
+ 948:	d3 8d 10 f2 	fli.d	fs11, 1.0
+ 94c:	53 05 11 f0 	fli.s	fa0, -1.0
+ 950:	d3 0d 11 f2 	fli.d	fs11, -1.0
+ 954:	53 85 11 f0 	fli.s	fa0, 0.5
+ 958:	d3 8d 11 f2 	fli.d	fs11, 0.5
+ 95c:	53 05 12 f0 	fli.s	fa0, 2.0
+ 960:	d3 0d 12 f2 	fli.d	fs11, 2.0
+ 964:	53 85 12 f0 	fli.s	fa0, 0.25
+ 968:	d3 8d 12 f2 	fli.d	fs11, 0.25
+ 96c:	53 05 13 f0 	fli.s	fa0, 4.0
+ 970:	d3 0d 13 f2 	fli.d	fs11, 4.0
+ 974:	53 85 13 f0 	fli.s	fa0, 0.125
+ 978:	d3 8d 13 f2 	fli.d	fs11, 0.125
+ 97c:	53 05 14 f0 	fli.s	fa0, 8.0
+ 980:	d3 0d 14 f2 	fli.d	fs11, 8.0
+ 984:	53 85 14 f0 	fli.s	fa0, 16.0
+ 988:	d3 8d 14 f2 	fli.d	fs11, 16.0
+ 98c:	53 05 15 f0 	fli.s	fa0, 0.0625
+ 990:	d3 0d 15 f2 	fli.d	fs11, 0.0625
+ 994:	53 85 15 f0 	fli.s	fa0, 3.0
+ 998:	d3 8d 15 f2 	fli.d	fs11, 3.0
+ 99c:	53 05 16 f0 	fli.s	fa0, 1.5
+ 9a0:	d3 0d 16 f2 	fli.d	fs11, 1.5
+ 9a4:	53 85 16 f0 	fli.s	fa0, 0.75
+ 9a8:	d3 8d 16 f2 	fli.d	fs11, 0.75
+ 9ac:	53 05 17 f0 	fli.s	fa0, inf
+ 9b0:	d3 0d 17 f2 	fli.d	fs11, inf
+ 9b4:	53 85 17 f0 	fli.s	fa0, -inf
+ 9b8:	d3 8d 17 f2 	fli.d	fs11, -inf
+ 9bc:	53 05 18 f0 	fli.s	fa0, nan
+ 9c0:	d3 0d 18 f2 	fli.d	fs11, nan
+ 9c4:	0f 00 f0 0f 	fence	iorw, iorw
+ 9c8:	0f 00 30 03 	fence	rw, rw
+ 9cc:	0f 00 f0 0f 	fence	iorw, iorw
+ 9d0:	0f 00 10 02 	fence	r, w
+ 9d4:	0f 00 20 01 	fence	w, r
+ 9d8:	0f 00 c0 0c 	fence	io, io
+ 9dc:	0f 10 00 00 	fence.i
+ 9e0:	0f 00 00 01 	pause
+ 9e4:	73 00 00 20 	trap	0
+ 9e8:	73 00 f0 2f 	trap	255
+ 9ec:	73 00 00 28 	trap	128
+ 9f0:	73 00 10 20 	trap	1
+ 9f4:	73 00 10 00 	break
+ 9f8:	00 00 00 00 	illegal
+ 9fc:	73 00 20 10 	retry
+ a00:	73 00 30 10 	done
+ a04:	73 00 50 10 	wfi
+ a08:	73 00 00 12 	tlbflush	zero, zero
+ a0c:	73 00 05 12 	tlbflush	a0, zero
+ a10:	73 00 b5 12 	tlbflush	a0, a1
+ a14:	73 00 00 12 	tlbflush	zero, zero
+ a18:	73 80 bf 13 	tlbflush	t6, s11
+ a1c:	73 25 00 00 	csrrs	a0, 0x0, zero
+ a20:	73 25 10 00 	csrrs	a0, 0x1, zero
+ a24:	73 25 20 00 	csrrs	a0, 0x2, zero
+ a28:	73 25 00 c0 	csrrs	a0, 0xc00, zero
+ a2c:	73 25 10 c0 	csrrs	a0, 0xc01, zero
+ a30:	73 25 20 c0 	csrrs	a0, 0xc02, zero
+ a34:	73 25 00 10 	csrrs	a0, 0x100, zero
+ a38:	73 25 10 10 	csrrs	a0, 0x101, zero
+ a3c:	73 25 20 10 	csrrs	a0, 0x102, zero
+ a40:	73 25 30 10 	csrrs	a0, 0x103, zero
+ a44:	73 25 40 10 	csrrs	a0, 0x104, zero
+ a48:	73 25 50 10 	csrrs	a0, 0x105, zero
+ a4c:	73 25 60 10 	csrrs	a0, 0x106, zero
+ a50:	73 25 70 10 	csrrs	a0, 0x107, zero
+ a54:	73 25 80 10 	csrrs	a0, 0x108, zero
+ a58:	73 25 90 10 	csrrs	a0, 0x109, zero
+ a5c:	73 25 a0 10 	csrrs	a0, 0x10a, zero
+ a60:	73 25 b0 10 	csrrs	a0, 0x10b, zero
+ a64:	73 25 00 d0 	csrrs	a0, 0xd00, zero
+ a68:	73 25 10 d0 	csrrs	a0, 0xd01, zero
+ a6c:	73 90 05 00 	csrrw	zero, 0x0, a1
+ a70:	73 90 15 00 	csrrw	zero, 0x1, a1
+ a74:	73 90 25 00 	csrrw	zero, 0x2, a1
+ a78:	73 90 05 10 	csrrw	zero, 0x100, a1
+ a7c:	73 90 b5 10 	csrrw	zero, 0x10b, a1
+ a80:	73 90 05 c0 	csrrw	zero, 0xc00, a1
+ a84:	73 90 15 d0 	csrrw	zero, 0xd01, a1
+ a88:	73 90 f5 ff 	csrrw	zero, 0xfff, a1
+
+0000000000000a8c <.Lbr_back>:
+ a8c:	13 00 00 00 	addi	zero, zero, 0
+ a90:	63 0d b5 00 	beq	a0, a1, af8 <.Lbr_fwd>
+ a94:	63 8f 0f fe 	beq	t6, zero, a8c <.Lbr_back>
+ a98:	63 0c b0 01 	beq	zero, s11, af8 <.Lbr_fwd>
+ a9c:	e3 1b b5 00 	bne	a0, a1, af8 <.Lbr_fwd>
+ aa0:	e3 9d 0f fe 	bne	t6, zero, a8c <.Lbr_back>
+ aa4:	e3 1a b0 01 	bne	zero, s11, af8 <.Lbr_fwd>
+ aa8:	63 4a b5 00 	blt	a0, a1, af8 <.Lbr_fwd>
+ aac:	63 cc 0f fe 	blt	t6, zero, a8c <.Lbr_back>
+ ab0:	63 49 b0 01 	blt	zero, s11, af8 <.Lbr_fwd>
+ ab4:	e3 58 b5 00 	bge	a0, a1, af8 <.Lbr_fwd>
+ ab8:	e3 da 0f fe 	bge	t6, zero, a8c <.Lbr_back>
+ abc:	e3 57 b0 01 	bge	zero, s11, af8 <.Lbr_fwd>
+ ac0:	63 67 b5 00 	bltu	a0, a1, af8 <.Lbr_fwd>
+ ac4:	63 e9 0f fe 	bltu	t6, zero, a8c <.Lbr_back>
+ ac8:	63 66 b0 01 	bltu	zero, s11, af8 <.Lbr_fwd>
+ acc:	e3 75 b5 00 	bgeu	a0, a1, af8 <.Lbr_fwd>
+ ad0:	e3 f7 0f fe 	bgeu	t6, zero, a8c <.Lbr_back>
+ ad4:	e3 74 b0 01 	bgeu	zero, s11, af8 <.Lbr_fwd>
+ ad8:	ef 80 00 00 	jal	ra, af8 <.Lbr_fwd>
+ adc:	6f c0 fe ff 	jal	zero, a8c <.Lbr_back>
+ ae0:	ef 60 00 00 	jal	ra, af8 <.Lbr_fwd>
+ ae4:	e7 00 05 00 	jalr	ra, a0, 0
+ ae8:	67 80 0f 80 	jalr	zero, t6, -2048
+ aec:	e7 05 f6 7f 	jalr	a1, a2, 2047
+ af0:	e7 00 05 00 	jalr	ra, a0, 0
+ af4:	e7 05 86 00 	jalr	a1, a2, 8
+
+0000000000000af8 <.Lbr_fwd>:
+ af8:	13 00 00 00 	addi	zero, zero, 0
+ afc:	13 85 05 00 	addi	a0, a1, 0
+ b00:	93 0f 00 00 	addi	t6, zero, 0
+ b04:	13 00 00 00 	addi	zero, zero, 0
+ b08:	13 c5 f5 ff 	xori	a0, a1, -1
+ b0c:	33 05 b0 40 	sub	a0, zero, a1
+ b10:	13 b5 15 00 	sltiu	a0, a1, 1
+ b14:	33 35 b0 00 	sltu	a0, zero, a1
+ b18:	e3 0e 05 fc 	beq	a0, zero, a8c <.Lbr_back>
+ b1c:	63 1e 05 fc 	bne	a0, zero, a8c <.Lbr_back>
+ b20:	e3 4d 05 fc 	blt	a0, zero, a8c <.Lbr_back>
+ b24:	63 5d 05 fc 	bge	a0, zero, a8c <.Lbr_back>
+ b28:	e3 4c a0 fc 	blt	zero, a0, a8c <.Lbr_back>
+ b2c:	63 5c a0 fc 	bge	zero, a0, a8c <.Lbr_back>
+ b30:	e3 cb a5 fc 	blt	a1, a0, a8c <.Lbr_back>
+ b34:	63 db a5 fc 	bge	a1, a0, a8c <.Lbr_back>
+ b38:	e3 ea a5 fc 	bltu	a1, a0, a8c <.Lbr_back>
+ b3c:	63 fa a5 fc 	bgeu	a1, a0, a8c <.Lbr_back>
+ b40:	6f 30 fd ff 	jal	zero, a8c <.Lbr_back>
+ b44:	6f d0 fe ff 	jal	zero, af8 <.Lbr_fwd>
+ b48:	67 00 05 00 	jalr	zero, a0, 0
+ b4c:	67 80 00 00 	jalr	zero, ra, 0
+ b50:	67 80 00 00 	jalr	zero, ra, 0
+ b54:	97 00 00 00 	auipc	ra, 0x0
+ b58:	e7 80 40 27 	jalr	ra, ra, 628
+ b5c:	97 00 00 00 	auipc	ra, 0x0
+ b60:	e7 80 40 27 	jalr	ra, ra, 628
+ b64:	17 f5 00 00 	auipc	a0, 0xf
+ b68:	13 05 c5 49 	addi	a0, a0, 1180
+ b6c:	97 0f 00 00 	auipc	t6, 0x0
+ b70:	93 8f cf 25 	addi	t6, t6, 604
+ b74:	97 f5 00 00 	auipc	a1, 0xf
+ b78:	93 85 45 4a 	addi	a1, a1, 1188
+ b7c:	53 85 b5 20 	fsgnj.s	fa0, fa1, fa1
+ b80:	53 85 b5 22 	fsgnj.d	fa0, fa1, fa1
+ b84:	53 95 b5 20 	fsgnjn.s	fa0, fa1, fa1
+ b88:	53 95 b5 22 	fsgnjn.d	fa0, fa1, fa1
+ b8c:	53 a5 b5 20 	fsgnjx.s	fa0, fa1, fa1
+ b90:	d3 af bd 23 	fsgnjx.d	ft11, fs11, fs11
+ b94:	73 25 20 00 	csrrs	a0, 0x2, zero
+ b98:	73 10 25 00 	csrrw	zero, 0x2, a0
+ b9c:	73 95 25 00 	csrrw	a0, 0x2, a1
+ ba0:	73 25 10 00 	csrrs	a0, 0x1, zero
+ ba4:	73 90 15 00 	csrrw	zero, 0x1, a1
+ ba8:	73 95 15 00 	csrrw	a0, 0x1, a1
+ bac:	73 25 00 00 	csrrs	a0, 0x0, zero
+ bb0:	73 90 05 00 	csrrw	zero, 0x0, a1
+ bb4:	73 95 05 00 	csrrw	a0, 0x0, a1
+ bb8:	73 25 00 10 	csrrs	a0, 0x100, zero
+ bbc:	73 10 05 10 	csrrw	zero, 0x100, a0
+ bc0:	73 a0 85 10 	csrrs	zero, 0x108, a1
+ bc4:	73 b0 85 10 	csrrc	zero, 0x108, a1
+ bc8:	73 d0 77 10 	csrrwi	zero, 0x107, 15
+ bcc:	73 60 02 10 	csrrsi	zero, 0x100, 4
+ bd0:	73 70 02 10 	csrrci	zero, 0x100, 4
+ bd4:	73 e0 00 10 	csrrsi	zero, 0x100, 1
+ bd8:	73 f0 00 10 	csrrci	zero, 0x100, 1
+ bdc:	73 25 00 c0 	csrrs	a0, 0xc00, zero
+ be0:	f3 25 10 c0 	csrrs	a1, 0xc01, zero
+ be4:	73 26 20 c0 	csrrs	a2, 0xc02, zero
+ be8:	73 25 00 d0 	csrrs	a0, 0xd00, zero
+ bec:	73 10 a5 10 	csrrw	zero, 0x10a, a0
+ bf0:	13 05 00 00 	addi	a0, zero, 0
+ bf4:	13 05 10 00 	addi	a0, zero, 1
+ bf8:	13 05 f0 ff 	addi	a0, zero, -1
+ bfc:	13 05 f0 7f 	addi	a0, zero, 2047
+ c00:	13 05 00 80 	addi	a0, zero, -2048
+ c04:	37 15 00 00 	lui	a0, 0x1
+ c08:	1b 05 05 80 	addiw	a0, a0, -2048
+ c0c:	37 f5 ff ff 	lui	a0, 0xfffff
+ c10:	1b 05 f5 7f 	addiw	a0, a0, 2047
+ c14:	13 05 f0 7f 	addi	a0, zero, 2047
+ c18:	37 15 00 00 	lui	a0, 0x1
+ c1c:	1b 05 05 80 	addiw	a0, a0, -2048
+ c20:	37 15 00 00 	lui	a0, 0x1
+ c24:	1b 05 f5 ff 	addiw	a0, a0, -1
+ c28:	37 05 00 80 	lui	a0, 0x80000
+ c2c:	1b 05 f5 ff 	addiw	a0, a0, -1
+ c30:	37 05 00 80 	lui	a0, 0x80000
+ c34:	13 05 10 00 	addi	a0, zero, 1
+ c38:	13 15 f5 01 	slli	a0, a0, 31
+ c3c:	13 05 10 00 	addi	a0, zero, 1
+ c40:	13 15 05 02 	slli	a0, a0, 32
+ c44:	13 05 f5 ff 	addi	a0, a0, -1
+ c48:	37 55 34 12 	lui	a0, 0x12345
+ c4c:	1b 05 85 67 	addiw	a0, a0, 1656
+ c50:	37 b5 cb ed 	lui	a0, 0xedcbb
+ c54:	1b 05 85 98 	addiw	a0, a0, -1656
+ c58:	13 05 10 00 	addi	a0, zero, 1
+ c5c:	13 15 05 02 	slli	a0, a0, 32
+ c60:	37 75 24 00 	lui	a0, 0x247
+ c64:	1b 05 d5 8a 	addiw	a0, a0, -1875
+ c68:	13 15 e5 00 	slli	a0, a0, 14
+ c6c:	13 05 d5 c4 	addi	a0, a0, -947
+ c70:	13 15 c5 00 	slli	a0, a0, 12
+ c74:	13 05 75 5e 	addi	a0, a0, 1511
+ c78:	13 15 d5 00 	slli	a0, a0, 13
+ c7c:	13 05 05 ef 	addi	a0, a0, -272
+ c80:	37 95 db ff 	lui	a0, 0xffdb9
+ c84:	1b 05 35 75 	addiw	a0, a0, 1875
+ c88:	13 15 e5 00 	slli	a0, a0, 14
+ c8c:	13 05 35 3b 	addi	a0, a0, 947
+ c90:	13 15 c5 00 	slli	a0, a0, 12
+ c94:	13 05 95 a1 	addi	a0, a0, -1511
+ c98:	13 15 d5 00 	slli	a0, a0, 13
+ c9c:	13 05 05 11 	addi	a0, a0, 272
+ ca0:	13 05 10 00 	addi	a0, zero, 1
+ ca4:	13 15 f5 03 	slli	a0, a0, 63
+ ca8:	13 05 f5 ff 	addi	a0, a0, -1
+ cac:	13 05 f0 ff 	addi	a0, zero, -1
+ cb0:	13 15 f5 03 	slli	a0, a0, 63
+ cb4:	13 05 f0 ff 	addi	a0, zero, -1
+ cb8:	37 05 ff 00 	lui	a0, 0xff0
+ cbc:	1b 05 f5 0f 	addiw	a0, a0, 255
+ cc0:	13 15 05 01 	slli	a0, a0, 16
+ cc4:	13 05 f5 0f 	addi	a0, a0, 255
+ cc8:	13 15 05 01 	slli	a0, a0, 16
+ ccc:	13 05 f5 0f 	addi	a0, a0, 255
+ cd0:	37 b5 de ff 	lui	a0, 0xffdeb
+ cd4:	1b 05 f5 db 	addiw	a0, a0, -577
+ cd8:	13 15 e5 00 	slli	a0, a0, 14
+ cdc:	13 05 35 bf 	addi	a0, a0, -1037
+ ce0:	13 15 c5 00 	slli	a0, a0, 12
+ ce4:	13 05 b5 bf 	addi	a0, a0, -1029
+ ce8:	13 15 e5 00 	slli	a0, a0, 14
+ cec:	13 05 e5 ab 	addi	a0, a0, -1346
+ cf0:	b7 5f 34 12 	lui	t6, 0x12345
+ cf4:	9b 8f 8f 67 	addiw	t6, t6, 1656
+ cf8:	13 00 10 00 	addi	zero, zero, 1
+ cfc:	33 80 20 00 	add	zero, ra, sp
+ d00:	b3 01 52 00 	add	gp, tp, t0
+ d04:	33 83 83 00 	add	t1, t2, s0
+ d08:	b3 04 b5 00 	add	s1, a0, a1
+ d0c:	33 86 e6 00 	add	a2, a3, a4
+ d10:	b3 07 18 01 	add	a5, a6, a7
+ d14:	33 89 49 01 	add	s2, s3, s4
+ d18:	b3 0a 7b 01 	add	s5, s6, s7
+ d1c:	33 8c ac 01 	add	s8, s9, s10
+ d20:	b3 0d de 01 	add	s11, t3, t4
+ d24:	33 8f 0f 00 	add	t5, t6, zero
+ d28:	33 80 20 40 	sub	zero, ra, sp
+ d2c:	b3 01 52 40 	sub	gp, tp, t0
+ d30:	33 83 83 40 	sub	t1, t2, s0
+ d34:	b3 04 b5 40 	sub	s1, a0, a1
+ d38:	33 86 e6 40 	sub	a2, a3, a4
+ d3c:	b3 07 18 41 	sub	a5, a6, a7
+ d40:	33 89 49 41 	sub	s2, s3, s4
+ d44:	b3 0a 7b 41 	sub	s5, s6, s7
+ d48:	33 8c ac 41 	sub	s8, s9, s10
+ d4c:	b3 0d de 41 	sub	s11, t3, t4
+ d50:	33 8f 0f 40 	sub	t5, t6, zero
+ d54:	33 c0 20 00 	xor	zero, ra, sp
+ d58:	b3 41 52 00 	xor	gp, tp, t0
+ d5c:	33 c3 83 00 	xor	t1, t2, s0
+ d60:	33 c4 a4 00 	xor	s0, s1, a0
+ d64:	b3 45 d6 00 	xor	a1, a2, a3
+ d68:	33 c7 07 01 	xor	a4, a5, a6
+ d6c:	b3 48 39 01 	xor	a7, s2, s3
+ d70:	33 ca 6a 01 	xor	s4, s5, s6
+ d74:	b3 4b 9c 01 	xor	s7, s8, s9
+ d78:	33 cd cd 01 	xor	s10, s11, t3
+ d7c:	b3 4e ff 01 	xor	t4, t5, t6
+ d80:	53 f0 20 02 	fadd.d	ft0, ft1, ft2, dyn
+ d84:	53 f2 62 02 	fadd.d	ft4, ft5, ft6, dyn
+ d88:	53 f4 a4 02 	fadd.d	fs0, fs1, fa0, dyn
+ d8c:	53 f6 e6 02 	fadd.d	fa2, fa3, fa4, dyn
+ d90:	53 f8 28 03 	fadd.d	fa6, fa7, fs2, dyn
+ d94:	53 fa 6a 03 	fadd.d	fs4, fs5, fs6, dyn
+ d98:	53 fc ac 03 	fadd.d	fs8, fs9, fs10, dyn
+ d9c:	53 fe ee 03 	fadd.d	ft8, ft9, ft10, dyn
+ da0:	53 f0 20 10 	fmul.s	ft0, ft1, ft2, dyn
+ da4:	d3 71 52 10 	fmul.s	ft3, ft4, ft5, dyn
+ da8:	53 f3 83 10 	fmul.s	ft6, ft7, fs0, dyn
+ dac:	d3 74 b5 10 	fmul.s	fs1, fa0, fa1, dyn
+ db0:	53 f6 e6 10 	fmul.s	fa2, fa3, fa4, dyn
+ db4:	d3 77 18 11 	fmul.s	fa5, fa6, fa7, dyn
+ db8:	53 f9 49 11 	fmul.s	fs2, fs3, fs4, dyn
+ dbc:	d3 7a 7b 11 	fmul.s	fs5, fs6, fs7, dyn
+ dc0:	53 fc ac 11 	fmul.s	fs8, fs9, fs10, dyn
+ dc4:	d3 7d de 11 	fmul.s	fs11, ft8, ft9, dyn
+
+0000000000000dc8 <func_near>:
+ dc8:	67 80 00 00 	jalr	zero, ra, 0
+ dcc:	00 00 00 00 	illegal
+
+0000000000000dd0 <func_far>:
+ dd0:	13 00 00 00 	addi	zero, zero, 0
+ dd4:	67 80 00 00 	jalr	zero, ra, 0
+
+exit=0
+
+$ ROOT\.gaspardarc-work\build-binutils\gas\as-new.exe ROOT\.gaspardarc-work\tree\GaspardARCH\Tests\invalid.s -o ROOT\.gaspardarc-work\invalid.o
+C:\projets\compilo-gaspardos\.gaspardarc-work\tree\GaspardARCH\Tests\invalid.s: Assembler messages:
+C:\projets\compilo-gaspardos\.gaspardarc-work\tree\GaspardARCH\Tests\invalid.s:2: Error: invalid integer register `r32'
+C:\projets\compilo-gaspardos\.gaspardarc-work\tree\GaspardARCH\Tests\invalid.s:3: Error: immediate out of range `2048'
+C:\projets\compilo-gaspardos\.gaspardarc-work\tree\GaspardARCH\Tests\invalid.s:4: Error: immediate out of range `64'
+C:\projets\compilo-gaspardos\.gaspardarc-work\tree\GaspardARCH\Tests\invalid.s:5: Error: immediate out of range `32'
+C:\projets\compilo-gaspardos\.gaspardarc-work\tree\GaspardARCH\Tests\invalid.s:6: Error: immediate out of range `256'
+C:\projets\compilo-gaspardos\.gaspardarc-work\tree\GaspardARCH\Tests\invalid.s:7: Error: immediate out of range `4096'
+C:\projets\compilo-gaspardos\.gaspardarc-work\tree\GaspardARCH\Tests\invalid.s:8: Error: invalid rounding mode
+C:\projets\compilo-gaspardos\.gaspardarc-work\tree\GaspardARCH\Tests\invalid.s:9: Error: unsupported FLI constant
+C:\projets\compilo-gaspardos\.gaspardarc-work\tree\GaspardARCH\Tests\invalid.s:10: Error: aq/rl suffix requires atomic instruction
+C:\projets\compilo-gaspardos\.gaspardarc-work\tree\GaspardARCH\Tests\invalid.s:11: Error: branch offset out of range or unaligned
+
+exit=1
+
+$ ROOT\.gaspardarc-work\build-binutils\gas\as-new.exe ROOT\.gaspardarc-work\tree\GaspardARCH\Tests\reloc-a.s -o ROOT\.gaspardarc-work\reloc-a.o
+
+exit=0
+
+$ ROOT\.gaspardarc-work\build-binutils\gas\as-new.exe ROOT\.gaspardarc-work\tree\GaspardARCH\Tests\reloc-b.s -o ROOT\.gaspardarc-work\reloc-b.o
+
+exit=0
+
+$ ROOT\.gaspardarc-work\build-binutils\ld\ld-new.exe -Ttext=0 -Tdata=0x10000 ROOT\.gaspardarc-work\reloc-a.o ROOT\.gaspardarc-work\reloc-b.o -o ROOT\.gaspardarc-work\direct.elf
+
+exit=0
+
+$ ROOT\.gaspardarc-work\build-binutils\ld\ld-new.exe -r ROOT\.gaspardarc-work\reloc-a.o ROOT\.gaspardarc-work\reloc-b.o -o ROOT\.gaspardarc-work\partial.o
+
+exit=0
+
+$ ROOT\.gaspardarc-work\build-binutils\ld\ld-new.exe -Ttext=0 -Tdata=0x10000 ROOT\.gaspardarc-work\partial.o -o ROOT\.gaspardarc-work\partial.elf
+
+exit=0
+
+$ ROOT\.gaspardarc-work\build-binutils\gas\as-new.exe ROOT\.gaspardarc-work\overflow.s -o ROOT\.gaspardarc-work\overflow.o
+
+exit=0
+
+$ ROOT\.gaspardarc-work\build-binutils\ld\ld-new.exe -Ttext=0 --defsym ext=8192 ROOT\.gaspardarc-work\overflow.o -o ROOT\.gaspardarc-work\overflow.elf
+C:\projets\compilo-gaspardos\.gaspardarc-work\overflow.o: In function `_start':
+(.text+0x0): relocation truncated to fit: R_GASPARDARC_BRANCH against symbol `ext' defined in *ABS* section in C:\projets\compilo-gaspardos\.gaspardarc-work\overflow.elf
+
+exit=1
+
+$ ROOT\.gaspardarc-work\build-binutils\gas\as-new.exe ROOT\.gaspardarc-work\overflow.s -o ROOT\.gaspardarc-work\overflow.o
+
+exit=0
+
+$ ROOT\.gaspardarc-work\build-binutils\ld\ld-new.exe -Ttext=0 --defsym ext=2097152 ROOT\.gaspardarc-work\overflow.o -o ROOT\.gaspardarc-work\overflow.elf
+C:\projets\compilo-gaspardos\.gaspardarc-work\overflow.o: In function `_start':
+(.text+0x0): relocation truncated to fit: R_GASPARDARC_JAL against symbol `ext' defined in *ABS* section in C:\projets\compilo-gaspardos\.gaspardarc-work\overflow.elf
+
+exit=1
+
+$ ROOT\.gaspardarc-work\build-binutils\gas\as-new.exe ROOT\.gaspardarc-work\overflow.s -o ROOT\.gaspardarc-work\overflow.o
+
+exit=0
+
+$ ROOT\.gaspardarc-work\build-binutils\ld\ld-new.exe -Ttext=0 --defsym ext=2 ROOT\.gaspardarc-work\overflow.o -o ROOT\.gaspardarc-work\overflow.elf
+C:\projets\compilo-gaspardos\.gaspardarc-work\overflow.o: In function `_start':
+(.text+0x0): warning: internal error: out of range error
+
+exit=1
+
+$ ROOT\.gaspardarc-work\build-binutils\gas\as-new.exe ROOT\.gaspardarc-work\overflow.s -o ROOT\.gaspardarc-work\overflow.o
+
+exit=0
+
+$ ROOT\.gaspardarc-work\build-binutils\ld\ld-new.exe -Ttext=0 --defsym ext=2147483648 ROOT\.gaspardarc-work\overflow.o -o ROOT\.gaspardarc-work\overflow.elf
+C:\projets\compilo-gaspardos\.gaspardarc-work\overflow.o: In function `_start':
+(.text+0x0): relocation truncated to fit: R_GASPARDARC_PCREL_HI20 against symbol `ext' defined in *ABS* section in C:\projets\compilo-gaspardos\.gaspardarc-work\overflow.elf
+
+exit=1
+
+$ ROOT\.gaspardarc-work\build-binutils\binutils\objcopy.exe ROOT\.gaspardarc-work\isa.o ROOT\.gaspardarc-work\copied.o
+
+exit=0
+
+$ ROOT\.gaspardarc-work\build-binutils\ld\ld-new.exe -Ttext=0 -Tdata=0x10000 ROOT\.gaspardarc-work\copied.o -o ROOT\.gaspardarc-work\copied.elf
+
+exit=0
+
+$ ROOT\.gaspardarc-work\build-binutils\binutils\objcopy.exe -O binary -j .text ROOT\.gaspardarc-work\isa.elf ROOT\.gaspardarc-work\isa.bin
+
+exit=0

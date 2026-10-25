@@ -1,0 +1,97 @@
+diff --git a/binutils-2.25/ld/configure.tgt b/binutils-2.25/ld/configure.tgt
+--- a/binutils-2.25/ld/configure.tgt
++++ b/binutils-2.25/ld/configure.tgt
+@@ -189,6 +189,7 @@
+ frv-*-*linux*)		targ_emul=elf32frvfd ;;
+ frv-*-*)		targ_emul=elf32frv ; targ_extra_emuls="elf32frvfd"
+ 			;;
++gaspardarc-*-elf) targ_emul=elf64gaspardarc ;;
+ moxie-*-moxiebox*)	targ_emul=moxiebox
+ 			;;
+ moxie-*-*)		targ_emul=elf32moxie
+diff --git a/binutils-2.25/ld/emulparams/elf64gaspardarc.sh b/binutils-2.25/ld/emulparams/elf64gaspardarc.sh
+new file mode 100644
+--- /dev/null
++++ b/binutils-2.25/ld/emulparams/elf64gaspardarc.sh
+@@ -0,0 +1,10 @@
++SCRIPT_NAME=elf
++ELFSIZE=64
++TEMPLATE_NAME=elf32
++OUTPUT_FORMAT="elf64-gaspardarc"
++ARCH=gaspardarc
++MACHINE=
++ENTRY=_start
++EMBEDDED=yes
++TEXT_START_ADDR=0x10000
++MAXPAGESIZE="CONSTANT (MAXPAGESIZE)"
+diff --git a/binutils-2.25/ld/Makefile.am b/binutils-2.25/ld/Makefile.am
+--- a/binutils-2.25/ld/Makefile.am
++++ b/binutils-2.25/ld/Makefile.am
+@@ -466,6 +466,7 @@
+ 	eelf64lppc.c \
+ 	eelf64ltsmip.c \
+ 	eelf64ltsmip_fbsd.c \
++	eelf64gaspardarc.c \
+ 	eelf64mmix.c \
+ 	eelf64ppc.c \
+ 	eelf64ppc_fbsd.c \
+@@ -1870,6 +1871,9 @@
+   $(srcdir)/emulparams/elf64btsmip_fbsd.sh $(srcdir)/emulparams/elf64bmip-defs.sh \
+   $(srcdir)/emulparams/elf32bmipn32-defs.sh $(ELF_DEPS) \
+   $(srcdir)/emultempl/mipself.em $(srcdir)/scripttempl/elf.sc ${GEN_DEPENDS}
++
++eelf64gaspardarc.c: $(srcdir)/emulparams/elf64gaspardarc.sh $(ELF_DEPS) \
++  $(srcdir)/scripttempl/elf.sc ${GEN_DEPENDS}
+ 
+ eelf64mmix.c: $(srcdir)/emulparams/elf64mmix.sh \
+   $(ELF_DEPS) $(srcdir)/emultempl/mmix-elfnmmo.em \
+diff --git a/binutils-2.25/ld/Makefile.in b/binutils-2.25/ld/Makefile.in
+--- a/binutils-2.25/ld/Makefile.in
++++ b/binutils-2.25/ld/Makefile.in
+@@ -773,6 +773,7 @@
+ 	eelf64lppc.c \
+ 	eelf64ltsmip.c \
+ 	eelf64ltsmip_fbsd.c \
++	eelf64gaspardarc.c \
+ 	eelf64mmix.c \
+ 	eelf64ppc.c \
+ 	eelf64ppc_fbsd.c \
+@@ -3312,6 +3313,9 @@
+   $(srcdir)/emulparams/elf32bmipn32-defs.sh $(ELF_DEPS) \
+   $(srcdir)/emultempl/mipself.em $(srcdir)/scripttempl/elf.sc ${GEN_DEPENDS}
+ 
++eelf64gaspardarc.c: $(srcdir)/emulparams/elf64gaspardarc.sh $(ELF_DEPS) \
++  $(srcdir)/scripttempl/elf.sc ${GEN_DEPENDS}
++
+ eelf64mmix.c: $(srcdir)/emulparams/elf64mmix.sh \
+   $(ELF_DEPS) $(srcdir)/emultempl/mmix-elfnmmo.em \
+   $(srcdir)/emultempl/mmixelf.em $(srcdir)/scripttempl/elf.sc ${GEN_DEPENDS}
+diff --git a/binutils-2.25/binutils/readelf.c b/binutils-2.25/binutils/readelf.c
+--- a/binutils-2.25/binutils/readelf.c
++++ b/binutils-2.25/binutils/readelf.c
+@@ -129,6 +129,7 @@
+ #include "elf/mn10200.h"
+ #include "elf/mn10300.h"
+ #include "elf/moxie.h"
++#include "elf/gaspardarc.h"
+ #include "elf/mt.h"
+ #include "elf/msp430.h"
+ #include "elf/nds32.h"
+@@ -1221,6 +1222,9 @@
+ 	  rtype = elf_mmix_reloc_type (type);
+ 	  break;
+ 
++	case EM_GASPARDARC:
++	  rtype = elf_gaspardarc_reloc_type (type);
++	  break;
+ 	case EM_MOXIE:
+ 	  rtype = elf_moxie_reloc_type (type);
+ 	  break;
+@@ -2057,6 +2061,7 @@
+     case EM_MN10300:		return "mn10300";
+     case EM_CYGNUS_MN10200:
+     case EM_MN10200:		return "mn10200";
++    case EM_GASPARDARC: return "GaspardARC (private ABI v0)";
+     case EM_MOXIE:		return "Moxie";
+     case EM_CYGNUS_FR30:
+     case EM_FR30:		return "Fujitsu FR30";

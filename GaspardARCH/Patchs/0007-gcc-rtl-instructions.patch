@@ -1,0 +1,311 @@
+diff --git a/gcc-4.6.4/gcc/config/gaspardarc/gaspardarc.md b/gcc-4.6.4/gcc/config/gaspardarc/gaspardarc.md
+new file mode 100644
+--- /dev/null
++++ b/gcc-4.6.4/gcc/config/gaspardarc/gaspardarc.md
+@@ -0,0 +1,287 @@
++;; GaspardARC integer core. GPL-3.0-or-later.
++(include "predicates.md")
++(include "constraints.md")
++(define_attr "length" "" (const_int 4))
++(define_insn "nop" [(const_int 0)] "" "nop")
++
++(define_expand "movqi" [(set (match_operand:QI 0 "nonimmediate_operand" "") (match_operand:QI 1 "general_operand" ""))]
++ "" { gaspardarc_expand_move(operands); })
++(define_insn "*movqi" [(set (match_operand:QI 0 "nonimmediate_operand" "=r,r,m,r")
++ (match_operand:QI 1 "general_operand" "r,m,r,i"))] ""
++ { return gaspardarc_output_move(operands); } [(set_attr "length" "4,4,4,32")])
++
++(define_expand "movhi" [(set (match_operand:HI 0 "nonimmediate_operand" "") (match_operand:HI 1 "general_operand" ""))]
++ "" { gaspardarc_expand_move(operands); })
++(define_insn "*movhi" [(set (match_operand:HI 0 "nonimmediate_operand" "=r,r,m,r")
++ (match_operand:HI 1 "general_operand" "r,m,r,i"))] ""
++ { return gaspardarc_output_move(operands); } [(set_attr "length" "4,4,4,32")])
++
++(define_expand "movsi" [(set (match_operand:SI 0 "nonimmediate_operand" "") (match_operand:SI 1 "general_operand" ""))]
++ "" { gaspardarc_expand_move(operands); })
++(define_insn "*movsi" [(set (match_operand:SI 0 "nonimmediate_operand" "=r,r,m,r")
++ (match_operand:SI 1 "general_operand" "r,m,r,i"))] ""
++ { return gaspardarc_output_move(operands); } [(set_attr "length" "4,4,4,32")])
++
++(define_expand "movdi" [(set (match_operand:DI 0 "nonimmediate_operand" "") (match_operand:DI 1 "general_operand" ""))]
++ "" { gaspardarc_expand_move(operands); })
++(define_insn "*movdi" [(set (match_operand:DI 0 "nonimmediate_operand" "=r,r,m,r")
++ (match_operand:DI 1 "general_operand" "r,m,r,i"))] ""
++ { return gaspardarc_output_move(operands); } [(set_attr "length" "4,4,4,32")])
++
++(define_expand "movsf" [(set (match_operand:SF 0 "nonimmediate_operand" "") (match_operand:SF 1 "general_operand" ""))]
++ "" { gaspardarc_expand_move(operands); })
++(define_insn "*movsf" [(set (match_operand:SF 0 "nonimmediate_operand" "=r,r,m,r")
++ (match_operand:SF 1 "general_operand" "r,m,r,i"))] ""
++ { return gaspardarc_output_move(operands); } [(set_attr "length" "4,4,4,32")])
++
++(define_expand "movdf" [(set (match_operand:DF 0 "nonimmediate_operand" "") (match_operand:DF 1 "general_operand" ""))]
++ "" { gaspardarc_expand_move(operands); })
++(define_insn "*movdf" [(set (match_operand:DF 0 "nonimmediate_operand" "=r,r,m,r")
++ (match_operand:DF 1 "general_operand" "r,m,r,i"))] ""
++ { return gaspardarc_output_move(operands); } [(set_attr "length" "4,4,4,32")])
++
++(define_insn "addsi3" [(set (match_operand:SI 0 "register_operand" "=r,r")
++ (plus:SI (match_operand:SI 1 "register_operand" "r,r")
++ (match_operand:SI 2 "ga_arith_operand" "r,I")))] ""
++ "@
++ addw\t%0,%1,%2
++ addiw\t%0,%1,%2")
++
++(define_insn "subsi3" [(set (match_operand:SI 0 "register_operand" "=r")
++ (minus:SI (match_operand:SI 1 "register_operand" "r")
++ (match_operand:SI 2 "register_operand" "r")))] "" "subw\t%0,%1,%2")
++
++(define_insn "mulsi3" [(set (match_operand:SI 0 "register_operand" "=r")
++ (mult:SI (match_operand:SI 1 "register_operand" "r")
++ (match_operand:SI 2 "register_operand" "r")))] "" "mulw\t%0,%1,%2")
++
++(define_insn "divsi3" [(set (match_operand:SI 0 "register_operand" "=r")
++ (div:SI (match_operand:SI 1 "register_operand" "r")
++ (match_operand:SI 2 "register_operand" "r")))] "" "divw\t%0,%1,%2")
++
++(define_insn "udivsi3" [(set (match_operand:SI 0 "register_operand" "=r")
++ (udiv:SI (match_operand:SI 1 "register_operand" "r")
++ (match_operand:SI 2 "register_operand" "r")))] "" "divuw\t%0,%1,%2")
++
++(define_insn "modsi3" [(set (match_operand:SI 0 "register_operand" "=r")
++ (mod:SI (match_operand:SI 1 "register_operand" "r")
++ (match_operand:SI 2 "register_operand" "r")))] "" "remw\t%0,%1,%2")
++
++(define_insn "umodsi3" [(set (match_operand:SI 0 "register_operand" "=r")
++ (umod:SI (match_operand:SI 1 "register_operand" "r")
++ (match_operand:SI 2 "register_operand" "r")))] "" "remuw\t%0,%1,%2")
++
++(define_insn "andsi3" [(set (match_operand:SI 0 "register_operand" "=r")
++ (and:SI (match_operand:SI 1 "register_operand" "r")
++ (match_operand:SI 2 "register_operand" "r")))] "" "and\t%0,%1,%2")
++
++(define_insn "iorsi3" [(set (match_operand:SI 0 "register_operand" "=r")
++ (ior:SI (match_operand:SI 1 "register_operand" "r")
++ (match_operand:SI 2 "register_operand" "r")))] "" "or\t%0,%1,%2")
++
++(define_insn "xorsi3" [(set (match_operand:SI 0 "register_operand" "=r")
++ (xor:SI (match_operand:SI 1 "register_operand" "r")
++ (match_operand:SI 2 "register_operand" "r")))] "" "xor\t%0,%1,%2")
++
++(define_insn "ashlsi3" [(set (match_operand:SI 0 "register_operand" "=r,r")
++ (ashift:SI (match_operand:SI 1 "register_operand" "r,r")
++ (match_operand:SI 2 "ga_shift_operand" "r,J")))] ""
++ "@
++ sllw\t%0,%1,%2
++ slliw\t%0,%1,%2")
++
++(define_insn "ashrsi3" [(set (match_operand:SI 0 "register_operand" "=r,r")
++ (ashiftrt:SI (match_operand:SI 1 "register_operand" "r,r")
++ (match_operand:SI 2 "ga_shift_operand" "r,J")))] ""
++ "@
++ sraw\t%0,%1,%2
++ sraiw\t%0,%1,%2")
++
++(define_insn "lshrsi3" [(set (match_operand:SI 0 "register_operand" "=r,r")
++ (lshiftrt:SI (match_operand:SI 1 "register_operand" "r,r")
++ (match_operand:SI 2 "ga_shift_operand" "r,J")))] ""
++ "@
++ srlw\t%0,%1,%2
++ srliw\t%0,%1,%2")
++
++(define_insn "negsi2" [(set (match_operand:SI 0 "register_operand" "=r")
++ (neg:SI (match_operand:SI 1 "register_operand" "r")))] "" "neg\t%0,%1")
++
++(define_insn "one_cmplsi2" [(set (match_operand:SI 0 "register_operand" "=r")
++ (not:SI (match_operand:SI 1 "register_operand" "r")))] "" "not\t%0,%1")
++
++(define_insn "adddi3" [(set (match_operand:DI 0 "register_operand" "=r,r")
++ (plus:DI (match_operand:DI 1 "register_operand" "r,r")
++ (match_operand:DI 2 "ga_arith_operand" "r,I")))] ""
++ "@
++ add\t%0,%1,%2
++ addi\t%0,%1,%2")
++
++(define_insn "subdi3" [(set (match_operand:DI 0 "register_operand" "=r")
++ (minus:DI (match_operand:DI 1 "register_operand" "r")
++ (match_operand:DI 2 "register_operand" "r")))] "" "sub\t%0,%1,%2")
++
++(define_insn "muldi3" [(set (match_operand:DI 0 "register_operand" "=r")
++ (mult:DI (match_operand:DI 1 "register_operand" "r")
++ (match_operand:DI 2 "register_operand" "r")))] "" "mul\t%0,%1,%2")
++
++(define_insn "divdi3" [(set (match_operand:DI 0 "register_operand" "=r")
++ (div:DI (match_operand:DI 1 "register_operand" "r")
++ (match_operand:DI 2 "register_operand" "r")))] "" "div\t%0,%1,%2")
++
++(define_insn "udivdi3" [(set (match_operand:DI 0 "register_operand" "=r")
++ (udiv:DI (match_operand:DI 1 "register_operand" "r")
++ (match_operand:DI 2 "register_operand" "r")))] "" "divu\t%0,%1,%2")
++
++(define_insn "moddi3" [(set (match_operand:DI 0 "register_operand" "=r")
++ (mod:DI (match_operand:DI 1 "register_operand" "r")
++ (match_operand:DI 2 "register_operand" "r")))] "" "rem\t%0,%1,%2")
++
++(define_insn "umoddi3" [(set (match_operand:DI 0 "register_operand" "=r")
++ (umod:DI (match_operand:DI 1 "register_operand" "r")
++ (match_operand:DI 2 "register_operand" "r")))] "" "remu\t%0,%1,%2")
++
++(define_insn "anddi3" [(set (match_operand:DI 0 "register_operand" "=r,r")
++ (and:DI (match_operand:DI 1 "register_operand" "r,r")
++ (match_operand:DI 2 "ga_arith_operand" "r,I")))] ""
++ "@
++ and\t%0,%1,%2
++ andi\t%0,%1,%2")
++
++(define_insn "iordi3" [(set (match_operand:DI 0 "register_operand" "=r,r")
++ (ior:DI (match_operand:DI 1 "register_operand" "r,r")
++ (match_operand:DI 2 "ga_arith_operand" "r,I")))] ""
++ "@
++ or\t%0,%1,%2
++ ori\t%0,%1,%2")
++
++(define_insn "xordi3" [(set (match_operand:DI 0 "register_operand" "=r,r")
++ (xor:DI (match_operand:DI 1 "register_operand" "r,r")
++ (match_operand:DI 2 "ga_arith_operand" "r,I")))] ""
++ "@
++ xor\t%0,%1,%2
++ xori\t%0,%1,%2")
++
++(define_insn "ashldi3" [(set (match_operand:DI 0 "register_operand" "=r,r")
++ (ashift:DI (match_operand:DI 1 "register_operand" "r,r")
++ (match_operand:DI 2 "ga_shift_operand" "r,K")))] ""
++ "@
++ sll\t%0,%1,%2
++ slli\t%0,%1,%2")
++
++(define_insn "ashrdi3" [(set (match_operand:DI 0 "register_operand" "=r,r")
++ (ashiftrt:DI (match_operand:DI 1 "register_operand" "r,r")
++ (match_operand:DI 2 "ga_shift_operand" "r,K")))] ""
++ "@
++ sra\t%0,%1,%2
++ srai\t%0,%1,%2")
++
++(define_insn "lshrdi3" [(set (match_operand:DI 0 "register_operand" "=r,r")
++ (lshiftrt:DI (match_operand:DI 1 "register_operand" "r,r")
++ (match_operand:DI 2 "ga_shift_operand" "r,K")))] ""
++ "@
++ srl\t%0,%1,%2
++ srli\t%0,%1,%2")
++
++(define_insn "negdi2" [(set (match_operand:DI 0 "register_operand" "=r")
++ (neg:DI (match_operand:DI 1 "register_operand" "r")))] "" "neg\t%0,%1")
++
++(define_insn "one_cmpldi2" [(set (match_operand:DI 0 "register_operand" "=r")
++ (not:DI (match_operand:DI 1 "register_operand" "r")))] "" "not\t%0,%1")
++
++(define_insn "extendqidi2" [(set (match_operand:DI 0 "register_operand" "=&r,r")
++ (sign_extend:DI (match_operand:QI 1 "nonimmediate_operand" "r,m")))] ""
++ "@
++ slli\t%0,%1,56; srai\t%0,%0,56
++ lb\t%0,%1"
++ [(set_attr "length" "8,4")])
++
++(define_insn "zero_extendqidi2" [(set (match_operand:DI 0 "register_operand" "=&r,r")
++ (zero_extend:DI (match_operand:QI 1 "nonimmediate_operand" "r,m")))] ""
++ "@
++ slli\t%0,%1,56; srli\t%0,%0,56
++ lbu\t%0,%1"
++ [(set_attr "length" "8,4")])
++
++(define_insn "extendhidi2" [(set (match_operand:DI 0 "register_operand" "=&r,r")
++ (sign_extend:DI (match_operand:HI 1 "nonimmediate_operand" "r,m")))] ""
++ "@
++ slli\t%0,%1,48; srai\t%0,%0,48
++ lh\t%0,%1"
++ [(set_attr "length" "8,4")])
++
++(define_insn "zero_extendhidi2" [(set (match_operand:DI 0 "register_operand" "=&r,r")
++ (zero_extend:DI (match_operand:HI 1 "nonimmediate_operand" "r,m")))] ""
++ "@
++ slli\t%0,%1,48; srli\t%0,%0,48
++ lhu\t%0,%1"
++ [(set_attr "length" "8,4")])
++
++(define_insn "extendsidi2" [(set (match_operand:DI 0 "register_operand" "=&r,r")
++ (sign_extend:DI (match_operand:SI 1 "nonimmediate_operand" "r,m")))] ""
++ "@
++ slli\t%0,%1,32; srai\t%0,%0,32
++ lw\t%0,%1"
++ [(set_attr "length" "8,4")])
++
++(define_insn "zero_extendsidi2" [(set (match_operand:DI 0 "register_operand" "=&r,r")
++ (zero_extend:DI (match_operand:SI 1 "nonimmediate_operand" "r,m")))] ""
++ "@
++ slli\t%0,%1,32; srli\t%0,%0,32
++ lwu\t%0,%1"
++ [(set_attr "length" "8,4")])
++
++(define_insn "trunchiqi2" [(set (match_operand:QI 0 "register_operand" "=r")
++ (truncate:QI (match_operand:HI 1 "register_operand" "r")))] "" "mv\t%0,%1")
++
++(define_insn "truncsiqi2" [(set (match_operand:QI 0 "register_operand" "=r")
++ (truncate:QI (match_operand:SI 1 "register_operand" "r")))] "" "mv\t%0,%1")
++
++(define_insn "truncsihi2" [(set (match_operand:HI 0 "register_operand" "=r")
++ (truncate:HI (match_operand:SI 1 "register_operand" "r")))] "" "mv\t%0,%1")
++
++(define_insn "truncdiqi2" [(set (match_operand:QI 0 "register_operand" "=r")
++ (truncate:QI (match_operand:DI 1 "register_operand" "r")))] "" "mv\t%0,%1")
++
++(define_insn "truncdihi2" [(set (match_operand:HI 0 "register_operand" "=r")
++ (truncate:HI (match_operand:DI 1 "register_operand" "r")))] "" "mv\t%0,%1")
++
++(define_insn "truncdisi2" [(set (match_operand:SI 0 "register_operand" "=r")
++ (truncate:SI (match_operand:DI 1 "register_operand" "r")))] "" "mv\t%0,%1")
++
++(define_code_iterator ga_cond [eq ne lt ge ltu geu])
++(define_code_attr ga_branch [(eq "beq") (ne "bne") (lt "blt") (ge "bge") (ltu "bltu") (geu "bgeu")])
++(define_insn "cbranchdi4"
++ [(set (pc) (if_then_else
++   (match_operator 0 "ga_comparison" [(match_operand:DI 1 "register_operand" "r") (match_operand:DI 2 "register_operand" "r")])
++   (label_ref (match_operand 3 "" "")) (pc)))] ""
++ { switch(GET_CODE(operands[0])) {
++   case EQ:return "beq\t%1,%2,%l3"; case NE:return "bne\t%1,%2,%l3";
++   case LT:return "blt\t%1,%2,%l3"; case GE:return "bge\t%1,%2,%l3";
++   case LTU:return "bltu\t%1,%2,%l3"; case GEU:return "bgeu\t%1,%2,%l3";
++   case GT:return "blt\t%2,%1,%l3"; case LE:return "bge\t%2,%1,%l3";
++   case GTU:return "bltu\t%2,%1,%l3"; case LEU:return "bgeu\t%2,%1,%l3";
++   default:gcc_unreachable(); } })
++(define_expand "cbranchsi4"
++ [(set (pc) (if_then_else (match_operator 0 "ga_comparison"
++ [(match_operand:SI 1 "register_operand" "") (match_operand:SI 2 "register_operand" "")])
++ (label_ref (match_operand 3 "" "")) (pc)))] ""
++ { bool u=unsigned_condition(GET_CODE(operands[0]))==GET_CODE(operands[0])
++     && GET_CODE(operands[0])!=EQ && GET_CODE(operands[0])!=NE;
++   rtx a=convert_to_mode(DImode,operands[1],u),b=convert_to_mode(DImode,operands[2],u);
++   emit_jump_insn(gen_cbranchdi4(gen_rtx_fmt_ee(GET_CODE(operands[0]),DImode,a,b),a,b,operands[3]));DONE; })
++(define_insn "jump" [(set (pc) (label_ref (match_operand 0 "" "")))] "" "j\t%l0")
++(define_insn "indirect_jump" [(set (pc) (match_operand:DI 0 "register_operand" "r"))] "" "jr\t%0")
++(define_expand "call"
++ [(parallel [(call (match_operand 0 "memory_operand" "") (match_operand 1 "general_operand" "")) (clobber (reg:DI 1))])]
++ "" { rtx a=XEXP(operands[0],0); if(!REG_P(a)&&GET_CODE(a)!=SYMBOL_REF) operands[0]=gen_rtx_MEM(QImode,force_reg(DImode,a)); })
++(define_insn "*call" [(call (mem:QI (match_operand:DI 0 "ga_call_operand" "rs")) (match_operand 1 "general_operand" "g")) (clobber (reg:DI 1))]
++ "" {return REG_P(operands[0])?"jalr\tra,%0,0":"call\t%0";} [(set_attr "length" "8")])
++(define_expand "call_value"
++ [(parallel [(set (match_operand 0 "register_operand" "") (call (match_operand 1 "memory_operand" "") (match_operand 2 "general_operand" ""))) (clobber (reg:DI 1))])]
++ "" {rtx a=XEXP(operands[1],0);if(!REG_P(a)&&GET_CODE(a)!=SYMBOL_REF)operands[1]=gen_rtx_MEM(QImode,force_reg(DImode,a));})
++(define_insn "*call_value" [(set (match_operand 0 "register_operand" "=r") (call (mem:QI (match_operand:DI 1 "ga_call_operand" "rs")) (match_operand 2 "general_operand" "g"))) (clobber (reg:DI 1))]
++ "" {return REG_P(operands[1])?"jalr\tra,%1,0":"call\t%1";} [(set_attr "length" "8")])
++(define_expand "prologue" [(const_int 0)] "" {gaspardarc_expand_prologue();DONE;})
++(define_expand "epilogue" [(const_int 0)] "" {gaspardarc_expand_epilogue();DONE;})
++(define_insn "ga_return" [(return)] "reload_completed" "ret")
+diff --git a/gcc-4.6.4/gcc/config/gaspardarc/predicates.md b/gcc-4.6.4/gcc/config/gaspardarc/predicates.md
+new file mode 100644
+--- /dev/null
++++ b/gcc-4.6.4/gcc/config/gaspardarc/predicates.md
+@@ -0,0 +1,5 @@
++;; GPL-3.0-or-later.
++(define_predicate "ga_arith_operand" (ior (match_operand 0 "register_operand") (and (match_code "const_int") (match_test "IN_RANGE(INTVAL(op),-2048,2047)"))))
++(define_predicate "ga_shift_operand" (ior (match_operand 0 "register_operand") (and (match_code "const_int") (match_test "IN_RANGE(INTVAL(op),0,mode==SImode?31:63)"))))
++(define_predicate "ga_comparison" (match_code "eq,ne,lt,le,gt,ge,ltu,leu,gtu,geu"))
++(define_predicate "ga_call_operand" (match_code "reg,symbol_ref"))
+diff --git a/gcc-4.6.4/gcc/config/gaspardarc/constraints.md b/gcc-4.6.4/gcc/config/gaspardarc/constraints.md
+new file mode 100644
+--- /dev/null
++++ b/gcc-4.6.4/gcc/config/gaspardarc/constraints.md
+@@ -0,0 +1,4 @@
++;; GPL-3.0-or-later.
++(define_constraint "I" "Signed twelve-bit immediate." (and (match_code "const_int") (match_test "IN_RANGE(ival,-2048,2047)")))
++(define_constraint "J" "Five-bit shift count." (and (match_code "const_int") (match_test "IN_RANGE(ival,0,31)")))
++(define_constraint "K" "Six-bit shift count." (and (match_code "const_int") (match_test "IN_RANGE(ival,0,63)")))
